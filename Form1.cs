@@ -14,6 +14,7 @@ namespace Qualifying_work
     {
         const int cellSize = 25;
         Npg npg;
+        DataTable currSol;
         public Form1()
         {
             InitializeComponent();
@@ -87,7 +88,7 @@ namespace Qualifying_work
         {
             npg.StartWork();
             DataTable blocksDescs = npg.Query("select * from n1");
-            DataTable solution = npg.Query("select * from n1_s");
+            currSol = npg.Query("select * from n1_s");
             npg.FinishWork();
             int rowC = Convert.ToInt32(blocksDescs.Rows[0][0]);
             int maxRowB = 0;
@@ -140,6 +141,31 @@ namespace Qualifying_work
             else
             {
                 dgvMain[e.ColumnIndex, e.RowIndex].Style.BackColor = Color.Empty;
+            }
+        }
+
+        private void buttonReady_Click(object sender, EventArgs e)
+        {
+            bool ok = true;
+            for (int i = 0; i < dgvMain.RowCount; i++)
+            {
+                for (int j = 0; j < dgvMain.ColumnCount; j++)
+                {
+                    if ((dgvMain[j, i].Style.BackColor == Color.Black) != Convert.ToBoolean(currSol.Rows[i][j]))
+                    {
+                        ok = false;
+                        break;
+                    }
+                }
+                if (!ok) break;
+            }
+            if (ok)
+            {
+                MessageBox.Show("Кросворд розв'язано правильно!");
+            }
+            else
+            {
+                MessageBox.Show("Кросворд розв'язано неправильно!");
             }
         }
 

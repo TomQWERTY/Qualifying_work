@@ -78,6 +78,7 @@ namespace Qualifying_work
             this.buttonReady.TabIndex = 2;
             this.buttonReady.Text = "Готово!";
             this.buttonReady.UseVisualStyleBackColor = true;
+            this.buttonReady.Click += new System.EventHandler(this.buttonReady_Click);
             // 
             // dgvRowDesc
             // 
