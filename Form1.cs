@@ -15,6 +15,7 @@ namespace Qualifying_work
         const int cellSize = 25;
         Npg npg;
         DataTable currSol;
+        int solTime;
         public Form1()
         {
             InitializeComponent();
@@ -130,6 +131,9 @@ namespace Qualifying_work
                     dgvColDesc[j, maxColB - blockCount + t].Value = Convert.ToInt32(blocksDescs.Rows[i][0]);
                 }
             }
+            solTime = 0;
+            timer1.Interval = 1000;
+            timer1.Start();
         }
 
         private void dgvMain_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -146,6 +150,7 @@ namespace Qualifying_work
 
         private void buttonReady_Click(object sender, EventArgs e)
         {
+            timer1.Stop();
             bool ok = true;
             for (int i = 0; i < dgvMain.RowCount; i++)
             {
@@ -161,12 +166,20 @@ namespace Qualifying_work
             }
             if (ok)
             {
-                MessageBox.Show("Кросворд розв'язано правильно!");
+                string time = (solTime / 3600).ToString().PadLeft(2, '0') + ":";
+                solTime %= 3600;
+                time += (solTime / 60).ToString().PadLeft(2, '0') + ":" + (solTime % 60).ToString().PadLeft(2, '0');
+                MessageBox.Show("Кросворд розв'язано правильно! Ваш час - " + time);
             }
             else
             {
                 MessageBox.Show("Кросворд розв'язано неправильно!");
             }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            solTime++;
         }
 
         /*private void ChangeTableColCount(DataGridView dgvColDesc, DataGridView dgvMain, int newCount)

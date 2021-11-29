@@ -29,11 +29,13 @@ namespace Qualifying_work
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.dgvColDesc = new System.Windows.Forms.DataGridView();
             this.buttonDownload = new System.Windows.Forms.Button();
             this.buttonReady = new System.Windows.Forms.Button();
             this.dgvRowDesc = new System.Windows.Forms.DataGridView();
             this.dgvMain = new System.Windows.Forms.DataGridView();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dgvColDesc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRowDesc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).BeginInit();
@@ -122,6 +124,10 @@ namespace Qualifying_work
             this.dgvMain.TabIndex = 4;
             this.dgvMain.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMain_CellClick);
             // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -148,6 +154,7 @@ namespace Qualifying_work
         private System.Windows.Forms.Button buttonReady;
         private System.Windows.Forms.DataGridView dgvRowDesc;
         private System.Windows.Forms.DataGridView dgvMain;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 
