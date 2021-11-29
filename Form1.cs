@@ -13,31 +13,37 @@ namespace Qualifying_work
     public partial class Form1 : Form
     {
         const int cellSize = 25;
+        Npg npg;
         public Form1()
         {
             InitializeComponent();
+            npg = new Npg();
             ResizeDgvs(2, 2, 5, 5);
         }
 
         private void ResizeDgvs(int maxRowB, int maxColB, int newCC, int newRC)
         {
-            for (int i = 0; i < newCC; i++)
+            int oldRowB = dgvRowDesc.ColumnCount;
+            int oldColB = dgvColDesc.RowCount;
+            int oldRC = dgvRowDesc.RowCount;
+            int oldCC = dgvColDesc.ColumnCount;
+            for (int i = oldCC; i < newCC; i++)
             {
                 dgvColDesc.Columns.Add(i.ToString(), i.ToString());
                 dgvColDesc.Columns[i].Width = cellSize;
                 dgvMain.Columns.Add(i.ToString(), i.ToString());
                 dgvMain.Columns[i].Width = cellSize;
             }
-            for (int i = 0; i < maxColB; i++)
+            for (int i = oldColB; i < maxColB; i++)
             {
                 dgvColDesc.Rows.Add();
             }
-            for (int i = 0; i < maxRowB; i++)
+            for (int i = oldRowB; i < maxRowB; i++)
             {
                 dgvRowDesc.Columns.Add(i.ToString(), i.ToString());
                 dgvRowDesc.Columns[i].Width = cellSize;
             }
-            for (int i = 0; i < newRC; i++)
+            for (int i = oldRC; i < newRC; i++)
             {
                 dgvRowDesc.Rows.Add();
                 dgvMain.Rows.Add();
@@ -75,6 +81,66 @@ namespace Qualifying_work
             //        add.Rows.RemoveAt(i);
             //    }
             //}
+        }
+
+        private void buttonDownload_Click(object sender, EventArgs e)
+        {
+            npg.StartWork();
+            DataTable blocksDescs = npg.Query("select * from n1");
+            DataTable solution = npg.Query("select * from n1_s");
+            npg.FinishWork();
+            int rowC = Convert.ToInt32(blocksDescs.Rows[0][0]);
+            int maxRowB = 0;
+            int i = 1;
+            for (int j = 0; j < rowC; i++, j++)
+            {
+                int temp = Convert.ToInt32(blocksDescs.Rows[i][0]);
+                if (temp > maxRowB) maxRowB = temp;
+                i += temp;
+            }
+            int colC = Convert.ToInt32(blocksDescs.Rows[i][0]);
+            i++;
+            int maxColB = 0;
+            for (int j = 0; j < colC; i++, j++)
+            {
+                int temp = Convert.ToInt32(blocksDescs.Rows[i][0]);
+                if (temp > maxColB) maxColB = temp;
+                i += temp;
+            }
+            ResizeDgvs(maxRowB, maxColB, colC, rowC);
+
+            i = 1;
+            for (int j = 0; j < rowC; j++)
+            {
+                int blockCount = Convert.ToInt32(blocksDescs.Rows[i][0]);
+                i++;
+                for (int t = 0; t < blockCount; t++, i++)
+                {
+                    dgvRowDesc[maxRowB - blockCount + t, j].Value = Convert.ToInt32(blocksDescs.Rows[i][0]);
+                }
+            }
+            i++;
+            for (int j = 0; j < colC; j++)
+            {
+                int blockCount = Convert.ToInt32(blocksDescs.Rows[i][0]);
+                i++;
+                for (int t = 0; t < blockCount; t++, i++)
+                {
+                    dgvColDesc[j, maxColB - blockCount + t].Value = Convert.ToInt32(blocksDescs.Rows[i][0]);
+                }
+            }
+        }
+
+        private void dgvMain_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgvMain[e.ColumnIndex, e.RowIndex].Style.BackColor != Color.Black)
+            {
+                dgvMain[e.ColumnIndex, e.RowIndex].Style.BackColor = Color.Black;
+            }
+            else
+            {
+                dgvMain[e.ColumnIndex, e.RowIndex].Style.BackColor = Color.Empty;
+            }
         }
 
         /*private void ChangeTableColCount(DataGridView dgvColDesc, DataGridView dgvMain, int newCount)

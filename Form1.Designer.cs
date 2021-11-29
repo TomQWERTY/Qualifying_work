@@ -68,6 +68,7 @@ namespace Qualifying_work
             this.buttonDownload.TabIndex = 1;
             this.buttonDownload.Text = "Завантажити";
             this.buttonDownload.UseVisualStyleBackColor = true;
+            this.buttonDownload.Click += new System.EventHandler(this.buttonDownload_Click);
             // 
             // buttonReady
             // 
@@ -118,6 +119,7 @@ namespace Qualifying_work
             this.dgvMain.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dgvMain.Size = new System.Drawing.Size(46, 23);
             this.dgvMain.TabIndex = 4;
+            this.dgvMain.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMain_CellClick);
             // 
             // Form1
             // 
