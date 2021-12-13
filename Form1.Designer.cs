@@ -38,6 +38,8 @@ namespace Qualifying_work
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.timerLabel = new System.Windows.Forms.Label();
             this.buttonRecords = new System.Windows.Forms.Button();
+            this.labelUT = new System.Windows.Forms.Label();
+            this.labelUser = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvColDesc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRowDesc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).BeginInit();
@@ -66,7 +68,7 @@ namespace Qualifying_work
             // 
             // buttonDownload
             // 
-            this.buttonDownload.Location = new System.Drawing.Point(12, 27);
+            this.buttonDownload.Location = new System.Drawing.Point(12, 60);
             this.buttonDownload.Name = "buttonDownload";
             this.buttonDownload.Size = new System.Drawing.Size(87, 23);
             this.buttonDownload.TabIndex = 1;
@@ -76,7 +78,7 @@ namespace Qualifying_work
             // 
             // buttonReady
             // 
-            this.buttonReady.Location = new System.Drawing.Point(12, 56);
+            this.buttonReady.Location = new System.Drawing.Point(12, 89);
             this.buttonReady.Name = "buttonReady";
             this.buttonReady.Size = new System.Drawing.Size(87, 23);
             this.buttonReady.TabIndex = 2;
@@ -133,14 +135,14 @@ namespace Qualifying_work
             // timerLabel
             // 
             this.timerLabel.AutoSize = true;
-            this.timerLabel.Location = new System.Drawing.Point(12, 9);
+            this.timerLabel.Location = new System.Drawing.Point(12, 42);
             this.timerLabel.Name = "timerLabel";
             this.timerLabel.Size = new System.Drawing.Size(0, 15);
             this.timerLabel.TabIndex = 5;
             // 
             // buttonRecords
             // 
-            this.buttonRecords.Location = new System.Drawing.Point(12, 85);
+            this.buttonRecords.Location = new System.Drawing.Point(12, 118);
             this.buttonRecords.Name = "buttonRecords";
             this.buttonRecords.Size = new System.Drawing.Size(87, 23);
             this.buttonRecords.TabIndex = 6;
@@ -148,11 +150,30 @@ namespace Qualifying_work
             this.buttonRecords.UseVisualStyleBackColor = true;
             this.buttonRecords.Click += new System.EventHandler(this.buttonRecords_Click);
             // 
+            // labelUT
+            // 
+            this.labelUT.AutoSize = true;
+            this.labelUT.Location = new System.Drawing.Point(12, 9);
+            this.labelUT.Name = "labelUT";
+            this.labelUT.Size = new System.Drawing.Size(71, 15);
+            this.labelUT.TabIndex = 7;
+            this.labelUT.Text = "Користувач";
+            // 
+            // labelUser
+            // 
+            this.labelUser.AutoSize = true;
+            this.labelUser.Location = new System.Drawing.Point(12, 24);
+            this.labelUser.Name = "labelUser";
+            this.labelUser.Size = new System.Drawing.Size(0, 15);
+            this.labelUser.TabIndex = 8;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.labelUser);
+            this.Controls.Add(this.labelUT);
             this.Controls.Add(this.buttonRecords);
             this.Controls.Add(this.timerLabel);
             this.Controls.Add(this.dgvMain);
@@ -180,6 +201,8 @@ namespace Qualifying_work
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label timerLabel;
         private System.Windows.Forms.Button buttonRecords;
+        private System.Windows.Forms.Label labelUT;
+        private System.Windows.Forms.Label labelUser;
     }
 }
 

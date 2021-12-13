@@ -18,13 +18,14 @@ namespace Qualifying_work
         int solTime;
         int cNum;
         string time;
-        public Form1()
+        public Form1(string username_)
         {
             InitializeComponent();
             npg = new Npg();
             ResizeDgvs(2, 2, 5, 5);
             cNum = 1;
             time = "";
+            labelUser.Text = username_;
         }
 
         private void ResizeDgvs(int maxRowB, int maxColB, int newCC, int newRC)
@@ -195,9 +196,18 @@ namespace Qualifying_work
                 }
                 if (!ok) break;
             }
-            if (ok)
+            if (!ok)
             {
                 MessageBox.Show("Кросворд розв'язано правильно! Ваш час - " + time);
+                npg.StartWork();
+                int[] currRec = Array.ConvertAll(
+                    npg.Query("select r_time from records where n_name = \'" + cNum + "\'").Rows[0][0].ToString().Split(':'), Convert.ToInt32);
+                MessageBox.Show(solTime.ToString());
+                MessageBox.Show((currRec[0] * 3600 + currRec[1] * 60 + currRec[2]).ToString());
+                if (solTime < currRec[0] * 3600 + currRec[1] * 60 + currRec[2])
+                {
+                    npg.Query("update records set r_time = \'" + time + "\' where n_name = \'" + cNum + "\'");
+                }
             }
             else
             {
