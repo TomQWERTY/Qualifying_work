@@ -155,9 +155,9 @@ namespace Qualifying_work
             this.labelUT.AutoSize = true;
             this.labelUT.Location = new System.Drawing.Point(12, 9);
             this.labelUT.Name = "labelUT";
-            this.labelUT.Size = new System.Drawing.Size(71, 15);
+            this.labelUT.Size = new System.Drawing.Size(74, 15);
             this.labelUT.TabIndex = 7;
-            this.labelUT.Text = "Користувач";
+            this.labelUT.Text = "Користувач:";
             // 
             // labelUser
             // 

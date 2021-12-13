@@ -23,7 +23,7 @@ namespace Qualifying_work
             InitializeComponent();
             npg = new Npg();
             ResizeDgvs(2, 2, 5, 5);
-            cNum = 1;
+            cNum = 0;
             time = "";
             labelUser.Text = username_;
         }
@@ -119,8 +119,8 @@ namespace Qualifying_work
         {
             npg.StartWork();
             ClearDgvs();
-            DataTable blocksDescs = npg.Query("select * from n" + cNum);
-            currSol = npg.Query("select * from n" + cNum++ + "_s");
+            DataTable blocksDescs = npg.Query("select * from n" + ++cNum);
+            currSol = npg.Query("select * from n" + cNum + "_s");
             npg.FinishWork();
             int rowC = Convert.ToInt32(blocksDescs.Rows[0][0]);
             int maxRowB = 0;
@@ -200,14 +200,16 @@ namespace Qualifying_work
             {
                 MessageBox.Show("Кросворд розв'язано правильно! Ваш час - " + time);
                 npg.StartWork();
-                int[] currRec = Array.ConvertAll(
-                    npg.Query("select r_time from records where n_name = \'" + cNum + "\'").Rows[0][0].ToString().Split(':'), Convert.ToInt32);
+                string readTime = npg.Query("select r_time from records where n_name = \'" + cNum + "\'").Rows[0][0].ToString();
+                int[] currRec = Array.ConvertAll(readTime.Split(':'), Convert.ToInt32);
                 MessageBox.Show(solTime.ToString());
                 MessageBox.Show((currRec[0] * 3600 + currRec[1] * 60 + currRec[2]).ToString());
                 if (solTime < currRec[0] * 3600 + currRec[1] * 60 + currRec[2])
                 {
-                    npg.Query("update records set r_time = \'" + time + "\' where n_name = \'" + cNum + "\'");
+                    npg.Query("update records set r_time = \'" + time + "\', username = \'" + labelUser.Text + "\' where n_name = \'" + cNum + "\'");
+                    MessageBox.Show("Вітаємо, Ви встановили новий рекорд! Колишній рекорд: " + readTime);
                 }
+                npg.FinishWork();
             }
             else
             {
