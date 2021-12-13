@@ -19,3 +19,4 @@ E:\Univer\duplom\Qualifying_work\obj\Debug\net5.0-windows\Qualifying_work.dll
 E:\Univer\duplom\Qualifying_work\obj\Debug\net5.0-windows\ref\Qualifying_work.dll
 E:\Univer\duplom\Qualifying_work\obj\Debug\net5.0-windows\Qualifying_work.pdb
 E:\Univer\duplom\Qualifying_work\obj\Debug\net5.0-windows\Qualifying_work.genruntimeconfig.cache
+E:\Univer\duplom\Qualifying_work\obj\Debug\net5.0-windows\Qualifying_work.FormRecords.resources

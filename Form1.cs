@@ -214,6 +214,12 @@ namespace Qualifying_work
             timerLabel.Text = time;
         }
 
+        private void buttonRecords_Click(object sender, EventArgs e)
+        {
+            FormRecords formR = new FormRecords(npg);
+            formR.ShowDialog();
+        }
+
         /*private void ChangeTableColCount(DataGridView dgvColDesc, DataGridView dgvMain, int newCount)
         {
             if (newCount < 2)

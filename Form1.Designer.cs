@@ -37,6 +37,7 @@ namespace Qualifying_work
             this.dgvMain = new System.Windows.Forms.DataGridView();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.timerLabel = new System.Windows.Forms.Label();
+            this.buttonRecords = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvColDesc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRowDesc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).BeginInit();
@@ -137,11 +138,22 @@ namespace Qualifying_work
             this.timerLabel.Size = new System.Drawing.Size(0, 15);
             this.timerLabel.TabIndex = 5;
             // 
+            // buttonRecords
+            // 
+            this.buttonRecords.Location = new System.Drawing.Point(12, 85);
+            this.buttonRecords.Name = "buttonRecords";
+            this.buttonRecords.Size = new System.Drawing.Size(87, 23);
+            this.buttonRecords.TabIndex = 6;
+            this.buttonRecords.Text = "Рекорди";
+            this.buttonRecords.UseVisualStyleBackColor = true;
+            this.buttonRecords.Click += new System.EventHandler(this.buttonRecords_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.buttonRecords);
             this.Controls.Add(this.timerLabel);
             this.Controls.Add(this.dgvMain);
             this.Controls.Add(this.dgvRowDesc);
@@ -167,6 +179,7 @@ namespace Qualifying_work
         private System.Windows.Forms.DataGridView dgvMain;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label timerLabel;
+        private System.Windows.Forms.Button buttonRecords;
     }
 }
 
