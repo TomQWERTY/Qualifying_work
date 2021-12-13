@@ -16,11 +16,13 @@ namespace Qualifying_work
         Npg npg;
         DataTable currSol;
         int solTime;
+        int cNum;
         public Form1()
         {
             InitializeComponent();
             npg = new Npg();
             ResizeDgvs(2, 2, 5, 5);
+            cNum = 1;
         }
 
         private void ResizeDgvs(int maxRowB, int maxColB, int newCC, int newRC)
@@ -64,7 +66,32 @@ namespace Qualifying_work
             dgvMain.Top = dgvRowDesc.Top;
         }
 
-        private void InitializeDgvs()
+        private void ClearDgvs()
+        {
+            for (int i = 0; i < dgvMain.RowCount; i++)
+            {
+                for (int j = 0; j < dgvMain.ColumnCount; j++)
+                {
+                    dgvMain[j, i].Style.BackColor = Color.Empty;
+                }
+            }
+            for (int i = 0; i < dgvRowDesc.RowCount; i++)
+            {
+                for (int j = 0; j < dgvRowDesc.ColumnCount; j++)
+                {
+                    dgvRowDesc[j, i].Value = "";
+                }
+            }
+            for (int i = 0; i < dgvColDesc.RowCount; i++)
+            {
+                for (int j = 0; j < dgvColDesc.ColumnCount; j++)
+                {
+                    dgvColDesc[j, i].Value = "";
+                }
+            }
+        }
+
+            private void InitializeDgvs()
         {
             //if (main.ColumnCount > 0)
             //{
@@ -88,8 +115,9 @@ namespace Qualifying_work
         private void buttonDownload_Click(object sender, EventArgs e)
         {
             npg.StartWork();
-            DataTable blocksDescs = npg.Query("select * from n1");
-            currSol = npg.Query("select * from n1_s");
+            ClearDgvs();
+            DataTable blocksDescs = npg.Query("select * from n" + cNum);
+            currSol = npg.Query("select * from n" + cNum++ + "_s");
             npg.FinishWork();
             int rowC = Convert.ToInt32(blocksDescs.Rows[0][0]);
             int maxRowB = 0;
