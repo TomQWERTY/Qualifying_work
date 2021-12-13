@@ -17,12 +17,14 @@ namespace Qualifying_work
         DataTable currSol;
         int solTime;
         int cNum;
+        string time;
         public Form1()
         {
             InitializeComponent();
             npg = new Npg();
             ResizeDgvs(2, 2, 5, 5);
             cNum = 1;
+            time = "";
         }
 
         private void ResizeDgvs(int maxRowB, int maxColB, int newCC, int newRC)
@@ -162,6 +164,7 @@ namespace Qualifying_work
             solTime = 0;
             timer1.Interval = 1000;
             timer1.Start();
+            timerLabel.Text = "00:00:00";
         }
 
         private void dgvMain_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -194,9 +197,6 @@ namespace Qualifying_work
             }
             if (ok)
             {
-                string time = (solTime / 3600).ToString().PadLeft(2, '0') + ":";
-                solTime %= 3600;
-                time += (solTime / 60).ToString().PadLeft(2, '0') + ":" + (solTime % 60).ToString().PadLeft(2, '0');
                 MessageBox.Show("Кросворд розв'язано правильно! Ваш час - " + time);
             }
             else
@@ -208,6 +208,10 @@ namespace Qualifying_work
         private void timer1_Tick(object sender, EventArgs e)
         {
             solTime++;
+            time = (solTime / 3600).ToString().PadLeft(2, '0') + ":";
+            solTime %= 3600;
+            time += (solTime / 60).ToString().PadLeft(2, '0') + ":" + (solTime % 60).ToString().PadLeft(2, '0');
+            timerLabel.Text = time;
         }
 
         /*private void ChangeTableColCount(DataGridView dgvColDesc, DataGridView dgvMain, int newCount)

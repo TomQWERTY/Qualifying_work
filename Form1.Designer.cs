@@ -36,6 +36,7 @@ namespace Qualifying_work
             this.dgvRowDesc = new System.Windows.Forms.DataGridView();
             this.dgvMain = new System.Windows.Forms.DataGridView();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.timerLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvColDesc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRowDesc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).BeginInit();
@@ -64,7 +65,7 @@ namespace Qualifying_work
             // 
             // buttonDownload
             // 
-            this.buttonDownload.Location = new System.Drawing.Point(12, 12);
+            this.buttonDownload.Location = new System.Drawing.Point(12, 27);
             this.buttonDownload.Name = "buttonDownload";
             this.buttonDownload.Size = new System.Drawing.Size(87, 23);
             this.buttonDownload.TabIndex = 1;
@@ -74,7 +75,7 @@ namespace Qualifying_work
             // 
             // buttonReady
             // 
-            this.buttonReady.Location = new System.Drawing.Point(12, 41);
+            this.buttonReady.Location = new System.Drawing.Point(12, 56);
             this.buttonReady.Name = "buttonReady";
             this.buttonReady.Size = new System.Drawing.Size(87, 23);
             this.buttonReady.TabIndex = 2;
@@ -128,11 +129,20 @@ namespace Qualifying_work
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // timerLabel
+            // 
+            this.timerLabel.AutoSize = true;
+            this.timerLabel.Location = new System.Drawing.Point(12, 9);
+            this.timerLabel.Name = "timerLabel";
+            this.timerLabel.Size = new System.Drawing.Size(0, 15);
+            this.timerLabel.TabIndex = 5;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.timerLabel);
             this.Controls.Add(this.dgvMain);
             this.Controls.Add(this.dgvRowDesc);
             this.Controls.Add(this.buttonReady);
@@ -144,6 +154,7 @@ namespace Qualifying_work
             ((System.ComponentModel.ISupportInitialize)(this.dgvRowDesc)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -155,6 +166,7 @@ namespace Qualifying_work
         private System.Windows.Forms.DataGridView dgvRowDesc;
         private System.Windows.Forms.DataGridView dgvMain;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Label timerLabel;
     }
 }
 
