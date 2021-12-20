@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace Qualifying_work
 {
@@ -231,6 +232,25 @@ namespace Qualifying_work
         {
             FormRecords formR = new FormRecords(npg);
             formR.ShowDialog();
+        }
+
+        private void buttonWrite_Click(object sender, EventArgs e)
+        {
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                string address = saveFileDialog1.FileName;
+                StreamWriter strwr = new StreamWriter(address);
+                strwr.WriteLine(cNum);
+                for (int i = 0; i < dgvMain.RowCount; i++)
+                {
+                    for (int j = 0; j < dgvMain.ColumnCount; j++)
+                    {
+                        strwr.Write(dgvMain[j, i].Style.BackColor == Color.Black ? '1' : '0');
+                    }
+                    strwr.WriteLine();
+                }
+                strwr.Close();
+            }
         }
 
         /*private void ChangeTableColCount(DataGridView dgvColDesc, DataGridView dgvMain, int newCount)
