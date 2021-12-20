@@ -172,7 +172,15 @@ namespace Qualifying_work
 
         private void dgvMain_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            
+            if (dgvMain[e.ColumnIndex, e.RowIndex].Style.BackColor != Color.Black)
+            {
+                dgvMain[e.ColumnIndex, e.RowIndex].Style.BackColor = Color.Black;
+            }
+            else
+            {
+                dgvMain[e.ColumnIndex, e.RowIndex].Style.BackColor = Color.Empty;
+            }
+            dgvMain.ClearSelection();
         }
 
         private void buttonReady_Click(object sender, EventArgs e)
@@ -223,19 +231,6 @@ namespace Qualifying_work
         {
             FormRecords formR = new FormRecords(npg);
             formR.ShowDialog();
-        }
-
-        private void dgvMain_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            if (dgvMain[e.ColumnIndex, e.RowIndex].Style.BackColor != Color.Black)
-            {
-                dgvMain[e.ColumnIndex, e.RowIndex].Style.BackColor = Color.Black;
-            }
-            else
-            {
-                dgvMain[e.ColumnIndex, e.RowIndex].Style.BackColor = Color.Empty;
-            }
-            dgvMain.ClearSelection();
         }
 
         /*private void ChangeTableColCount(DataGridView dgvColDesc, DataGridView dgvMain, int newCount)

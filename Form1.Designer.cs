@@ -149,7 +149,6 @@ namespace Qualifying_work
             this.dgvMain.Size = new System.Drawing.Size(46, 23);
             this.dgvMain.TabIndex = 4;
             this.dgvMain.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMain_CellClick);
-            this.dgvMain.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvMain_CellMouseClick);
             // 
             // timer1
             // 

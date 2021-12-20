@@ -10,5 +10,8 @@
     <Compile Update="FormRecords.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="SInOrSUpForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
 </Project>
