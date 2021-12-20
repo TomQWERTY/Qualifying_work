@@ -45,6 +45,7 @@ namespace Qualifying_work
             this.buttonWrite = new System.Windows.Forms.Button();
             this.buttonRead = new System.Windows.Forms.Button();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.dgvColDesc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRowDesc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).BeginInit();
@@ -110,7 +111,6 @@ namespace Qualifying_work
             this.dgvRowDesc.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvRowDesc.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvRowDesc.ColumnHeadersVisible = false;
-            this.dgvRowDesc.DefaultCellStyle = dataGridViewCellStyle1;
             this.dgvRowDesc.Enabled = false;
             this.dgvRowDesc.Location = new System.Drawing.Point(105, 98);
             this.dgvRowDesc.MultiSelect = false;
@@ -196,7 +196,7 @@ namespace Qualifying_work
             // 
             this.buttonWrite.Location = new System.Drawing.Point(12, 164);
             this.buttonWrite.Name = "buttonWrite";
-            this.buttonWrite.Size = new System.Drawing.Size(75, 23);
+            this.buttonWrite.Size = new System.Drawing.Size(87, 23);
             this.buttonWrite.TabIndex = 9;
             this.buttonWrite.Text = "Записати";
             this.buttonWrite.UseVisualStyleBackColor = true;
@@ -206,16 +206,21 @@ namespace Qualifying_work
             // 
             this.buttonRead.Location = new System.Drawing.Point(12, 193);
             this.buttonRead.Name = "buttonRead";
-            this.buttonRead.Size = new System.Drawing.Size(75, 23);
+            this.buttonRead.Size = new System.Drawing.Size(87, 23);
             this.buttonRead.TabIndex = 10;
             this.buttonRead.Text = "Зчитати";
             this.buttonRead.UseVisualStyleBackColor = true;
+            this.buttonRead.Click += new System.EventHandler(this.buttonRead_Click);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(383, 450);
+            this.ClientSize = new System.Drawing.Size(383, 224);
             this.Controls.Add(this.buttonRead);
             this.Controls.Add(this.buttonWrite);
             this.Controls.Add(this.labelUser);
@@ -253,6 +258,7 @@ namespace Qualifying_work
         private System.Windows.Forms.Button buttonWrite;
         private System.Windows.Forms.Button buttonRead;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }
 

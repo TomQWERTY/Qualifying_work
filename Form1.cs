@@ -69,7 +69,7 @@ namespace Qualifying_work
             dgvMain.Left = dgvColDesc.Left;
             dgvMain.Top = dgvRowDesc.Top;
             this.Width = dgvMain.Left + dgvMain.Width + 40;
-            this.Height = dgvMain.Top + dgvMain.Height + 50;
+            this.Height = Math.Max(dgvMain.Top + dgvMain.Height + 50, 282);
         }
 
         private void ClearDgvs()
@@ -120,55 +120,7 @@ namespace Qualifying_work
 
         private void buttonDownload_Click(object sender, EventArgs e)
         {
-            npg.StartWork();
-            ClearDgvs();
-            DataTable blocksDescs = npg.Query("select * from n" + ++cNum);
-            currSol = npg.Query("select * from n" + cNum + "_s");
-            npg.FinishWork();
-            int rowC = Convert.ToInt32(blocksDescs.Rows[0][0]);
-            int maxRowB = 0;
-            int i = 1;
-            for (int j = 0; j < rowC; i++, j++)
-            {
-                int temp = Convert.ToInt32(blocksDescs.Rows[i][0]);
-                if (temp > maxRowB) maxRowB = temp;
-                i += temp;
-            }
-            int colC = Convert.ToInt32(blocksDescs.Rows[i][0]);
-            i++;
-            int maxColB = 0;
-            for (int j = 0; j < colC; i++, j++)
-            {
-                int temp = Convert.ToInt32(blocksDescs.Rows[i][0]);
-                if (temp > maxColB) maxColB = temp;
-                i += temp;
-            }
-            ResizeDgvs(maxRowB, maxColB, colC, rowC);
-
-            i = 1;
-            for (int j = 0; j < rowC; j++)
-            {
-                int blockCount = Convert.ToInt32(blocksDescs.Rows[i][0]);
-                i++;
-                for (int t = 0; t < blockCount; t++, i++)
-                {
-                    dgvRowDesc[maxRowB - blockCount + t, j].Value = Convert.ToInt32(blocksDescs.Rows[i][0]);
-                }
-            }
-            i++;
-            for (int j = 0; j < colC; j++)
-            {
-                int blockCount = Convert.ToInt32(blocksDescs.Rows[i][0]);
-                i++;
-                for (int t = 0; t < blockCount; t++, i++)
-                {
-                    dgvColDesc[j, maxColB - blockCount + t].Value = Convert.ToInt32(blocksDescs.Rows[i][0]);
-                }
-            }
-            solTime = 0;
-            timer1.Interval = 1000;
-            timer1.Start();
-            timerLabel.Text = "00:00:00";
+            Download();
         }
 
         private void dgvMain_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -250,6 +202,79 @@ namespace Qualifying_work
                     strwr.WriteLine();
                 }
                 strwr.Close();
+            }
+        }
+
+        private void Download()
+        {
+            npg.StartWork();
+            ClearDgvs();
+            DataTable blocksDescs = npg.Query("select * from n" + ++cNum);
+            currSol = npg.Query("select * from n" + cNum + "_s");
+            npg.FinishWork();
+            int rowC = Convert.ToInt32(blocksDescs.Rows[0][0]);
+            int maxRowB = 0;
+            int i = 1;
+            for (int j = 0; j < rowC; i++, j++)
+            {
+                int temp = Convert.ToInt32(blocksDescs.Rows[i][0]);
+                if (temp > maxRowB) maxRowB = temp;
+                i += temp;
+            }
+            int colC = Convert.ToInt32(blocksDescs.Rows[i][0]);
+            i++;
+            int maxColB = 0;
+            for (int j = 0; j < colC; i++, j++)
+            {
+                int temp = Convert.ToInt32(blocksDescs.Rows[i][0]);
+                if (temp > maxColB) maxColB = temp;
+                i += temp;
+            }
+            ResizeDgvs(maxRowB, maxColB, colC, rowC);
+
+            i = 1;
+            for (int j = 0; j < rowC; j++)
+            {
+                int blockCount = Convert.ToInt32(blocksDescs.Rows[i][0]);
+                i++;
+                for (int t = 0; t < blockCount; t++, i++)
+                {
+                    dgvRowDesc[maxRowB - blockCount + t, j].Value = Convert.ToInt32(blocksDescs.Rows[i][0]);
+                }
+            }
+            i++;
+            for (int j = 0; j < colC; j++)
+            {
+                int blockCount = Convert.ToInt32(blocksDescs.Rows[i][0]);
+                i++;
+                for (int t = 0; t < blockCount; t++, i++)
+                {
+                    dgvColDesc[j, maxColB - blockCount + t].Value = Convert.ToInt32(blocksDescs.Rows[i][0]);
+                }
+            }
+            solTime = 0;
+            timer1.Interval = 1000;
+            timer1.Start();
+            timerLabel.Text = "00:00:00";
+        }
+
+        private void buttonRead_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                string address = openFileDialog1.FileName;
+                StreamReader strrd = new StreamReader(address);
+                cNum = Convert.ToInt32(strrd.ReadLine()) - 1;
+                Download();
+                for (int i = 0; i < dgvMain.RowCount; i++)
+                {
+                    string line = strrd.ReadLine();
+                    for (int j = 0; j < dgvMain.ColumnCount; j++)
+                    {
+                        dgvMain[j, i].Style.BackColor = line[j] == '1' ?  Color.Black : Color.Empty;
+                    }
+                }
+                strrd.Close();
             }
         }
 
