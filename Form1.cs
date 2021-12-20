@@ -19,6 +19,7 @@ namespace Qualifying_work
         int solTime;
         int cNum;
         string time;
+
         public Form1(string username_)
         {
             InitializeComponent();
@@ -27,6 +28,7 @@ namespace Qualifying_work
             cNum = 0;
             time = "";
             labelUser.Text = username_;
+            comboBoxPMode.SelectedIndex = 0;
         }
 
         private void ResizeDgvs(int maxRowB, int maxColB, int newCC, int newRC)
@@ -35,6 +37,24 @@ namespace Qualifying_work
             int oldColB = dgvColDesc.RowCount;
             int oldRC = dgvRowDesc.RowCount;
             int oldCC = dgvColDesc.ColumnCount;
+            for (int i = oldCC - 1; i >= newCC; i--)
+            {
+                dgvColDesc.Columns.RemoveAt(i);
+                dgvMain.Columns.RemoveAt(i);
+            }
+            for (int i = oldColB - 1; i >= maxColB; i--)
+            {
+                dgvColDesc.Rows.RemoveAt(i);
+            }
+            for (int i = oldRowB - 1; i >= maxRowB; i--)
+            {
+                dgvRowDesc.Columns.RemoveAt(i);
+            }
+            for (int i = oldRC - 1; i >= newRC; i--)
+            {
+                dgvRowDesc.Rows.RemoveAt(i);
+                dgvMain.Rows.RemoveAt(i);
+            }
             for (int i = oldCC; i < newCC; i++)
             {
                 dgvColDesc.Columns.Add(i.ToString(), i.ToString());
@@ -69,7 +89,7 @@ namespace Qualifying_work
             dgvMain.Left = dgvColDesc.Left;
             dgvMain.Top = dgvRowDesc.Top;
             this.Width = dgvMain.Left + dgvMain.Width + 40;
-            this.Height = Math.Max(dgvMain.Top + dgvMain.Height + 50, 282);
+            this.Height = Math.Max(dgvMain.Top + dgvMain.Height + 50, 289);
         }
 
         private void ClearDgvs()
@@ -121,6 +141,13 @@ namespace Qualifying_work
         private void buttonDownload_Click(object sender, EventArgs e)
         {
             Download();
+            if (comboBoxPMode.SelectedIndex == 1)
+            {
+                solTime = 0;
+                timer1.Interval = 1000;
+                timer1.Start();
+                timerLabel.Text = "00:00:00";
+            }
         }
 
         private void dgvMain_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -138,7 +165,6 @@ namespace Qualifying_work
 
         private void buttonReady_Click(object sender, EventArgs e)
         {
-            timer1.Stop();
             bool ok = true;
             for (int i = 0; i < dgvMain.RowCount; i++)
             {
@@ -154,16 +180,24 @@ namespace Qualifying_work
             }
             if (ok)
             {
-                MessageBox.Show("Кросворд розв'язано правильно! Ваш час - " + time);
-                npg.StartWork();
-                string readTime = npg.Query("select r_time from records where n_name = \'" + cNum + "\'").Rows[0][0].ToString();
-                int[] currRec = Array.ConvertAll(readTime.Split(':'), Convert.ToInt32);
-                if (solTime < currRec[0] * 3600 + currRec[1] * 60 + currRec[2])
+                if (comboBoxPMode.SelectedIndex == 0)
                 {
-                    npg.Query("update records set r_time = \'" + time + "\', username = \'" + labelUser.Text + "\' where n_name = \'" + cNum + "\'");
-                    MessageBox.Show("Вітаємо, Ви встановили новий рекорд! Колишній рекорд: " + readTime);
+                    MessageBox.Show("Кросворд розв'язано правильно!");
                 }
-                npg.FinishWork();
+                else
+                {
+                    timer1.Stop();
+                    MessageBox.Show("Кросворд розв'язано правильно! Ваш час - " + time);
+                    npg.StartWork();
+                    string readTime = npg.Query("select r_time from records where n_name = \'" + cNum + "\'").Rows[0][0].ToString();
+                    int[] currRec = Array.ConvertAll(readTime.Split(':'), Convert.ToInt32);
+                    if (solTime < currRec[0] * 3600 + currRec[1] * 60 + currRec[2])
+                    {
+                        npg.Query("update records set r_time = \'" + time + "\', username = \'" + labelUser.Text + "\' where n_name = \'" + cNum + "\'");
+                        MessageBox.Show("Вітаємо, Ви встановили новий рекорд! Колишній рекорд: " + readTime);
+                    }
+                    npg.FinishWork();
+                }
             }
             else
             {
@@ -252,10 +286,6 @@ namespace Qualifying_work
                     dgvColDesc[j, maxColB - blockCount + t].Value = Convert.ToInt32(blocksDescs.Rows[i][0]);
                 }
             }
-            solTime = 0;
-            timer1.Interval = 1000;
-            timer1.Start();
-            timerLabel.Text = "00:00:00";
         }
 
         private void buttonRead_Click(object sender, EventArgs e)
@@ -275,6 +305,8 @@ namespace Qualifying_work
                     }
                 }
                 strrd.Close();
+                timer1.Stop();
+                timerLabel.Text = "";
             }
         }
 
