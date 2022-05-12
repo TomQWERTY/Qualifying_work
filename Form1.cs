@@ -19,7 +19,7 @@ namespace Qualifying_work
         int solTime;
         int cNum;
         string time;
-        DataTable blocksDescs;
+        int[] blocksDescs;
 
         public Form1(string username_)
         {
@@ -167,7 +167,7 @@ namespace Qualifying_work
         private void CheckIfCorrect()
         {
             bool ok = true;
-            int rowC = Convert.ToInt32(blocksDescs.Rows[0][0]);
+            int rowC = Convert.ToInt32(blocksDescs[0]);
             int colC = Convert.ToInt32(dgvMain.ColumnCount);
             int i = 0;
             int rowNum = -1;
@@ -180,11 +180,11 @@ namespace Qualifying_work
                     continue;
                 }
                 int k = -1;
-                int rowBlockCount = Convert.ToInt32(blocksDescs.Rows[i][0]);
+                int rowBlockCount = Convert.ToInt32(blocksDescs[i]);
                 for (int j = 0; j < rowBlockCount; j++)
                 {
                     i++;
-                    int currBlockLength = Convert.ToInt32(blocksDescs.Rows[i][0]);
+                    int currBlockLength = Convert.ToInt32(blocksDescs[i]);
                     int blackCount = 0;
 
                     while (blackCount < currBlockLength)
@@ -217,11 +217,11 @@ namespace Qualifying_work
                     continue;
                 }
                 int k = -1;
-                int colBlockCount = Convert.ToInt32(blocksDescs.Rows[i][0]);
+                int colBlockCount = Convert.ToInt32(blocksDescs[i]);
                 for (int j = 0; j < colBlockCount; j++)
                 {
                     i++;
-                    int currBlockLength = Convert.ToInt32(blocksDescs.Rows[i][0]);
+                    int currBlockLength = Convert.ToInt32(blocksDescs[i]);
                     int blackCount = 0;
                     while (blackCount < currBlockLength)
                     {
@@ -312,24 +312,26 @@ namespace Qualifying_work
         {
             npg.StartWork();
             ClearDgvs();
-            blocksDescs = npg.Query("select * from n" + ++cNum);
+            //blocksDescs = npg.Query("select * from n" + ++cNum);
+            var temp_ = npg.Query("select blocks_descriptions from nonograms where idK=" + ++cNum).Rows[0].ItemArray[0];
+            blocksDescs = (int[])temp_;
             currSol = npg.Query("select * from n" + cNum + "_s");
             npg.FinishWork();
-            int rowC = Convert.ToInt32(blocksDescs.Rows[0][0]);
+            int rowC = Convert.ToInt32(blocksDescs[0]);
             int maxRowB = 0;
             int i = 1;
             for (int j = 0; j < rowC; i++, j++)//find a row with the biggest count of blocks
             {
-                int temp = Convert.ToInt32(blocksDescs.Rows[i][0]);
+                int temp = Convert.ToInt32(blocksDescs[i]);
                 if (temp > maxRowB) maxRowB = temp;
                 i += temp;//jump to the next rows block count
             }
-            int colC = Convert.ToInt32(blocksDescs.Rows[i][0]);
+            int colC = Convert.ToInt32(blocksDescs[i]);
             i++;
             int maxColB = 0;
             for (int j = 0; j < colC; i++, j++)//the same with columns
             {
-                int temp = Convert.ToInt32(blocksDescs.Rows[i][0]);
+                int temp = Convert.ToInt32(blocksDescs[i]);
                 if (temp > maxColB) maxColB = temp;
                 i += temp;
             }
@@ -338,21 +340,21 @@ namespace Qualifying_work
             i = 1;
             for (int j = 0; j < rowC; j++)
             {
-                int blockCount = Convert.ToInt32(blocksDescs.Rows[i][0]);
+                int blockCount = Convert.ToInt32(blocksDescs[i]);
                 i++;
                 for (int t = 0; t < blockCount; t++, i++)
                 {
-                    dgvRowDesc[maxRowB - blockCount + t, j].Value = Convert.ToInt32(blocksDescs.Rows[i][0]);
+                    dgvRowDesc[maxRowB - blockCount + t, j].Value = Convert.ToInt32(blocksDescs[i]);
                 }
             }
             i++;
             for (int j = 0; j < colC; j++)
             {
-                int blockCount = Convert.ToInt32(blocksDescs.Rows[i][0]);
+                int blockCount = Convert.ToInt32(blocksDescs[i]);
                 i++;
                 for (int t = 0; t < blockCount; t++, i++)
                 {
-                    dgvColDesc[j, maxColB - blockCount + t].Value = Convert.ToInt32(blocksDescs.Rows[i][0]);
+                    dgvColDesc[j, maxColB - blockCount + t].Value = Convert.ToInt32(blocksDescs[i]);
                 }
             }
         }
