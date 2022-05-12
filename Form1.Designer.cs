@@ -30,8 +30,8 @@ namespace Qualifying_work
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvColDesc = new System.Windows.Forms.DataGridView();
             this.buttonDownload = new System.Windows.Forms.Button();
             this.buttonReady = new System.Windows.Forms.Button();
@@ -47,6 +47,7 @@ namespace Qualifying_work
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.comboBoxPMode = new System.Windows.Forms.ComboBox();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvColDesc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRowDesc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).BeginInit();
@@ -62,16 +63,16 @@ namespace Qualifying_work
             this.dgvColDesc.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvColDesc.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvColDesc.ColumnHeadersVisible = false;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.Transparent;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvColDesc.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.Transparent;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvColDesc.DefaultCellStyle = dataGridViewCellStyle1;
             this.dgvColDesc.Enabled = false;
-            this.dgvColDesc.Location = new System.Drawing.Point(105, 12);
+            this.dgvColDesc.Location = new System.Drawing.Point(90, 10);
             this.dgvColDesc.MultiSelect = false;
             this.dgvColDesc.Name = "dgvColDesc";
             this.dgvColDesc.ReadOnly = true;
@@ -79,14 +80,14 @@ namespace Qualifying_work
             this.dgvColDesc.RowTemplate.Height = 25;
             this.dgvColDesc.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.dgvColDesc.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dgvColDesc.Size = new System.Drawing.Size(196, 71);
+            this.dgvColDesc.Size = new System.Drawing.Size(168, 62);
             this.dgvColDesc.TabIndex = 0;
             // 
             // buttonDownload
             // 
-            this.buttonDownload.Location = new System.Drawing.Point(12, 161);
+            this.buttonDownload.Location = new System.Drawing.Point(10, 140);
             this.buttonDownload.Name = "buttonDownload";
-            this.buttonDownload.Size = new System.Drawing.Size(87, 23);
+            this.buttonDownload.Size = new System.Drawing.Size(75, 20);
             this.buttonDownload.TabIndex = 1;
             this.buttonDownload.Text = "Завантажити";
             this.buttonDownload.UseVisualStyleBackColor = true;
@@ -94,9 +95,9 @@ namespace Qualifying_work
             // 
             // buttonReady
             // 
-            this.buttonReady.Location = new System.Drawing.Point(12, 89);
+            this.buttonReady.Location = new System.Drawing.Point(10, 77);
             this.buttonReady.Name = "buttonReady";
-            this.buttonReady.Size = new System.Drawing.Size(87, 23);
+            this.buttonReady.Size = new System.Drawing.Size(75, 20);
             this.buttonReady.TabIndex = 2;
             this.buttonReady.Text = "Готово!";
             this.buttonReady.UseVisualStyleBackColor = true;
@@ -113,7 +114,7 @@ namespace Qualifying_work
             this.dgvRowDesc.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvRowDesc.ColumnHeadersVisible = false;
             this.dgvRowDesc.Enabled = false;
-            this.dgvRowDesc.Location = new System.Drawing.Point(105, 98);
+            this.dgvRowDesc.Location = new System.Drawing.Point(90, 85);
             this.dgvRowDesc.MultiSelect = false;
             this.dgvRowDesc.Name = "dgvRowDesc";
             this.dgvRowDesc.ReadOnly = true;
@@ -121,7 +122,7 @@ namespace Qualifying_work
             this.dgvRowDesc.RowTemplate.Height = 25;
             this.dgvRowDesc.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.dgvRowDesc.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dgvRowDesc.Size = new System.Drawing.Size(35, 27);
+            this.dgvRowDesc.Size = new System.Drawing.Size(30, 23);
             this.dgvRowDesc.TabIndex = 3;
             // 
             // dgvMain
@@ -134,15 +135,15 @@ namespace Qualifying_work
             this.dgvMain.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvMain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvMain.ColumnHeadersVisible = false;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.Transparent;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Transparent;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvMain.DefaultCellStyle = dataGridViewCellStyle4;
-            this.dgvMain.Location = new System.Drawing.Point(375, 12);
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Transparent;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Transparent;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvMain.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dgvMain.Location = new System.Drawing.Point(321, 10);
             this.dgvMain.MultiSelect = false;
             this.dgvMain.Name = "dgvMain";
             this.dgvMain.ReadOnly = true;
@@ -150,7 +151,7 @@ namespace Qualifying_work
             this.dgvMain.RowTemplate.Height = 25;
             this.dgvMain.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.dgvMain.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dgvMain.Size = new System.Drawing.Size(46, 23);
+            this.dgvMain.Size = new System.Drawing.Size(39, 20);
             this.dgvMain.TabIndex = 4;
             this.dgvMain.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMain_CellClick);
             // 
@@ -161,16 +162,16 @@ namespace Qualifying_work
             // timerLabel
             // 
             this.timerLabel.AutoSize = true;
-            this.timerLabel.Location = new System.Drawing.Point(12, 42);
+            this.timerLabel.Location = new System.Drawing.Point(10, 36);
             this.timerLabel.Name = "timerLabel";
-            this.timerLabel.Size = new System.Drawing.Size(0, 15);
+            this.timerLabel.Size = new System.Drawing.Size(0, 13);
             this.timerLabel.TabIndex = 5;
             // 
             // buttonRecords
             // 
-            this.buttonRecords.Location = new System.Drawing.Point(12, 118);
+            this.buttonRecords.Location = new System.Drawing.Point(10, 102);
             this.buttonRecords.Name = "buttonRecords";
-            this.buttonRecords.Size = new System.Drawing.Size(87, 23);
+            this.buttonRecords.Size = new System.Drawing.Size(75, 20);
             this.buttonRecords.TabIndex = 6;
             this.buttonRecords.Text = "Рекорди";
             this.buttonRecords.UseVisualStyleBackColor = true;
@@ -179,25 +180,25 @@ namespace Qualifying_work
             // labelUT
             // 
             this.labelUT.AutoSize = true;
-            this.labelUT.Location = new System.Drawing.Point(12, 9);
+            this.labelUT.Location = new System.Drawing.Point(10, 8);
             this.labelUT.Name = "labelUT";
-            this.labelUT.Size = new System.Drawing.Size(74, 15);
+            this.labelUT.Size = new System.Drawing.Size(68, 13);
             this.labelUT.TabIndex = 7;
             this.labelUT.Text = "Користувач:";
             // 
             // labelUser
             // 
             this.labelUser.AutoSize = true;
-            this.labelUser.Location = new System.Drawing.Point(12, 24);
+            this.labelUser.Location = new System.Drawing.Point(10, 21);
             this.labelUser.Name = "labelUser";
-            this.labelUser.Size = new System.Drawing.Size(0, 15);
+            this.labelUser.Size = new System.Drawing.Size(0, 13);
             this.labelUser.TabIndex = 8;
             // 
             // buttonWrite
             // 
-            this.buttonWrite.Location = new System.Drawing.Point(12, 190);
+            this.buttonWrite.Location = new System.Drawing.Point(10, 165);
             this.buttonWrite.Name = "buttonWrite";
-            this.buttonWrite.Size = new System.Drawing.Size(87, 23);
+            this.buttonWrite.Size = new System.Drawing.Size(75, 20);
             this.buttonWrite.TabIndex = 9;
             this.buttonWrite.Text = "Записати";
             this.buttonWrite.UseVisualStyleBackColor = true;
@@ -205,9 +206,9 @@ namespace Qualifying_work
             // 
             // buttonRead
             // 
-            this.buttonRead.Location = new System.Drawing.Point(12, 219);
+            this.buttonRead.Location = new System.Drawing.Point(10, 190);
             this.buttonRead.Name = "buttonRead";
-            this.buttonRead.Size = new System.Drawing.Size(87, 23);
+            this.buttonRead.Size = new System.Drawing.Size(75, 20);
             this.buttonRead.TabIndex = 10;
             this.buttonRead.Text = "Зчитати";
             this.buttonRead.UseVisualStyleBackColor = true;
@@ -224,16 +225,27 @@ namespace Qualifying_work
             this.comboBoxPMode.Items.AddRange(new object[] {
             "Тренувальний",
             "Змагальний"});
-            this.comboBoxPMode.Location = new System.Drawing.Point(12, 60);
+            this.comboBoxPMode.Location = new System.Drawing.Point(10, 52);
             this.comboBoxPMode.Name = "comboBoxPMode";
-            this.comboBoxPMode.Size = new System.Drawing.Size(87, 23);
+            this.comboBoxPMode.Size = new System.Drawing.Size(75, 21);
             this.comboBoxPMode.TabIndex = 11;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(13, 216);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 12;
+            this.button1.Text = "test";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(383, 250);
+            this.ClientSize = new System.Drawing.Size(328, 268);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.comboBoxPMode);
             this.Controls.Add(this.buttonRead);
             this.Controls.Add(this.buttonWrite);
@@ -274,6 +286,7 @@ namespace Qualifying_work
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.ComboBox comboBoxPMode;
+        private System.Windows.Forms.Button button1;
     }
 }
 

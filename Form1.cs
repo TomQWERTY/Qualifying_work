@@ -19,6 +19,7 @@ namespace Qualifying_work
         int solTime;
         int cNum;
         string time;
+        DataTable blocksDescs;
 
         public Form1(string username_)
         {
@@ -163,20 +164,83 @@ namespace Qualifying_work
             dgvMain.ClearSelection();
         }
 
-        private void buttonReady_Click(object sender, EventArgs e)
+        private void CheckIfCorrect()
         {
             bool ok = true;
-            for (int i = 0; i < dgvMain.RowCount; i++)
+            int rowC = Convert.ToInt32(blocksDescs.Rows[0][0]);
+            int colC = Convert.ToInt32(dgvMain.ColumnCount);
+            int i = 0;
+            int rowNum = -1;
+            while (rowNum < rowC - 1)
             {
-                for (int j = 0; j < dgvMain.ColumnCount; j++)
+                i++;
+                rowNum++;
+                if (!ok)
                 {
-                    if ((dgvMain[j, i].Style.BackColor == Color.Black) != Convert.ToBoolean(currSol.Rows[i][j]))
+                    continue;
+                }
+                int k = -1;
+                int rowBlockCount = Convert.ToInt32(blocksDescs.Rows[i][0]);
+                for (int j = 0; j < rowBlockCount; j++)
+                {
+                    i++;
+                    int currBlockLength = Convert.ToInt32(blocksDescs.Rows[i][0]);
+                    int blackCount = 0;
+
+                    while (blackCount < currBlockLength)
+                    {
+                        k++;
+                        if (k >= colC)
+                        {
+                            break;
+                        }
+                        if (dgvMain[k, rowNum].Style.BackColor == Color.Black)
+                        {
+                            blackCount++;
+                        }
+                    }
+                    if (blackCount != currBlockLength)
                     {
                         ok = false;
                         break;
                     }
                 }
-                if (!ok) break;
+            }
+            i++;
+            int colNum = -1;
+            while (colNum < rowC - 1)
+            {
+                i++;
+                colNum++;
+                if (!ok)
+                {
+                    continue;
+                }
+                int k = -1;
+                int colBlockCount = Convert.ToInt32(blocksDescs.Rows[i][0]);
+                for (int j = 0; j < colBlockCount; j++)
+                {
+                    i++;
+                    int currBlockLength = Convert.ToInt32(blocksDescs.Rows[i][0]);
+                    int blackCount = 0;
+                    while (blackCount < currBlockLength)
+                    {
+                        k++;
+                        if (k >= rowC)
+                        {
+                            break;
+                        }
+                        if (dgvMain[colNum, k].Style.BackColor == Color.Black)
+                        {
+                            blackCount++;
+                        }
+                    }
+                    if (blackCount != currBlockLength)
+                    {
+                        ok = false;
+                        break;
+                    }
+                }                
             }
             if (ok)
             {
@@ -205,6 +269,11 @@ namespace Qualifying_work
             }
         }
 
+        private void buttonReady_Click(object sender, EventArgs e)
+        {
+            CheckIfCorrect();
+        }
+
         private void timer1_Tick(object sender, EventArgs e)
         {
             solTime++;
@@ -216,8 +285,8 @@ namespace Qualifying_work
 
         private void buttonRecords_Click(object sender, EventArgs e)
         {
-            FormRecords formR = new FormRecords(npg);
-            formR.ShowDialog();
+            //FormRecords formR = new FormRecords(npg);
+            //formR.ShowDialog();
         }
 
         private void buttonWrite_Click(object sender, EventArgs e)
@@ -243,22 +312,22 @@ namespace Qualifying_work
         {
             npg.StartWork();
             ClearDgvs();
-            DataTable blocksDescs = npg.Query("select * from n" + ++cNum);
+            blocksDescs = npg.Query("select * from n" + ++cNum);
             currSol = npg.Query("select * from n" + cNum + "_s");
             npg.FinishWork();
             int rowC = Convert.ToInt32(blocksDescs.Rows[0][0]);
             int maxRowB = 0;
             int i = 1;
-            for (int j = 0; j < rowC; i++, j++)
+            for (int j = 0; j < rowC; i++, j++)//find a row with the biggest count of blocks
             {
                 int temp = Convert.ToInt32(blocksDescs.Rows[i][0]);
                 if (temp > maxRowB) maxRowB = temp;
-                i += temp;
+                i += temp;//jump to the next rows block count
             }
             int colC = Convert.ToInt32(blocksDescs.Rows[i][0]);
             i++;
             int maxColB = 0;
-            for (int j = 0; j < colC; i++, j++)
+            for (int j = 0; j < colC; i++, j++)//the same with columns
             {
                 int temp = Convert.ToInt32(blocksDescs.Rows[i][0]);
                 if (temp > maxColB) maxColB = temp;
@@ -308,6 +377,21 @@ namespace Qualifying_work
                 timer1.Stop();
                 timerLabel.Text = "";
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            for (int i1 = 0; i1 < dgvMain.RowCount; i1++)
+            {
+                for (int j1 = 0; j1 < dgvMain.ColumnCount; j1++)
+                {
+                    if (Convert.ToBoolean(currSol.Rows[i1][j1]))
+                    {
+                        dgvMain[j1, i1].Style.BackColor = Color.Black;
+                    }
+                }
+            }
+            CheckIfCorrect();
         }
 
         /*private void ChangeTableColCount(DataGridView dgvColDesc, DataGridView dgvMain, int newCount)
