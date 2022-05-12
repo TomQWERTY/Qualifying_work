@@ -168,8 +168,8 @@ namespace Qualifying_work
         {
             bool ok = true;
             int rowC = Convert.ToInt32(blocksDescs[0]);
-            int colC = Convert.ToInt32(dgvMain.ColumnCount);
-            int i = 0;
+            int colC = Convert.ToInt32(blocksDescs[1]);
+            int i = 1;
             int rowNum = -1;
             while (rowNum < rowC - 1)
             {
@@ -206,7 +206,6 @@ namespace Qualifying_work
                     }
                 }
             }
-            i++;
             int colNum = -1;
             while (colNum < rowC - 1)
             {
@@ -315,20 +314,20 @@ namespace Qualifying_work
             //blocksDescs = npg.Query("select * from n" + ++cNum);
             var temp_ = npg.Query("select blocks_descriptions from nonograms where idK=" + ++cNum).Rows[0].ItemArray[0];
             blocksDescs = (int[])temp_;
+            var loh = AutoSolve.Solve(blocksDescs);
             currSol = npg.Query("select * from n" + cNum + "_s");
             npg.FinishWork();
             int rowC = Convert.ToInt32(blocksDescs[0]);
+            int colC = Convert.ToInt32(blocksDescs[1]);
             int maxRowB = 0;
-            int i = 1;
+            int maxColB = 0;
+            int i = 2;
             for (int j = 0; j < rowC; i++, j++)//find a row with the biggest count of blocks
             {
                 int temp = Convert.ToInt32(blocksDescs[i]);
                 if (temp > maxRowB) maxRowB = temp;
                 i += temp;//jump to the next rows block count
             }
-            int colC = Convert.ToInt32(blocksDescs[i]);
-            i++;
-            int maxColB = 0;
             for (int j = 0; j < colC; i++, j++)//the same with columns
             {
                 int temp = Convert.ToInt32(blocksDescs[i]);
@@ -337,7 +336,7 @@ namespace Qualifying_work
             }
             ResizeDgvs(maxRowB, maxColB, colC, rowC);
 
-            i = 1;
+            i = 2;
             for (int j = 0; j < rowC; j++)
             {
                 int blockCount = Convert.ToInt32(blocksDescs[i]);
@@ -347,7 +346,6 @@ namespace Qualifying_work
                     dgvRowDesc[maxRowB - blockCount + t, j].Value = Convert.ToInt32(blocksDescs[i]);
                 }
             }
-            i++;
             for (int j = 0; j < colC; j++)
             {
                 int blockCount = Convert.ToInt32(blocksDescs[i]);
