@@ -36,6 +36,11 @@ namespace Qualifying_work
             needRefresh[0] = Enumerable.Repeat(true, rowC).ToArray();
             needRefresh[1] = Enumerable.Repeat(true, colC).ToArray();
 
+            int[,] pict = new int[rowC, colC];
+            for (int i = 0; i < rowC; i++)
+                for (int j = 0; j < colC; j++)
+                    pict[i, j] = 2;
+
             bool linesToAnalyze = false;
             do
             {
@@ -43,7 +48,7 @@ namespace Qualifying_work
                 {
                     if (needRefresh[0][i])
                     {
-                        //AnalyzeLine();
+                        AnalyzeLine(pict, lines, needRefresh, 0, i);
                         linesToAnalyze = true;
                     }
                 }
@@ -51,7 +56,7 @@ namespace Qualifying_work
                 {
                     if (needRefresh[1][i])
                     {
-                        //AnalyzeLine();
+                        AnalyzeLine(pict, lines, needRefresh, 1, i);
                         linesToAnalyze = true;
                     }
                 }
@@ -61,6 +66,55 @@ namespace Qualifying_work
             return res;
         }
 
-        
+        private static void AnalyzeLine(int[,] pict, Line[][] lines, bool[][] needRefresh, int kind, int lineNum)
+        {
+            const int nondef = -1;
+            int lineLength = lines[kind].Length;
+            int[] cells = new int[lineLength];
+            if (kind == 0)
+            {
+                for (int i = 0; i < lineLength; i++)
+                {
+                    cells[i] = pict[lineNum, i];
+                }
+            }
+            else
+            {
+                for (int i = 0; i < lineLength; i++)
+                {
+                    cells[i] = pict[i, lineNum];
+                }
+            }
+            needRefresh[kind][lineNum] = false;
+            int blockCount = lines[kind][lineNum].BlockCount;
+            int[] blL = new int[blockCount];
+            Array.Copy(lines[kind][lineNum].BlocksLengths, blL, blockCount);
+            int[,] next = new int[blL.Sum() + blockCount, 2];
+
+            int posI = 0;
+            for (int i = 0; i < blockCount; i++)
+            {
+                next[posI, 0] = posI;
+                next[posI, 1] = posI + 1;
+                posI++;
+                for (int j = 0; j < blL[i] - 1; j++)
+                {
+                    next[posI + j, 0] = nondef;
+                    next[posI + j, 1] = posI + j + 1;
+                }
+                posI += blL[i] - 1;
+                if (i < blockCount - 1)
+                {
+                    next[posI, 0] = posI + 1;
+                }
+                else
+                {
+                    next[posI, 0] = posI;
+                }
+                next[posI, 1] = nondef;
+                posI++;
+            }
+            posI--;
+        }
     }
 }

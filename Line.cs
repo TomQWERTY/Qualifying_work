@@ -16,5 +16,21 @@ namespace Qualifying_work
             blN = blN_;
             blL = blL_;
         }
+
+        public int BlockCount
+        {
+            get
+            {
+                return blN;
+            }
+        }
+
+        public int[] BlocksLengths
+        {
+            get
+            {
+                return blL;
+            }
+        }
     }
 }
