@@ -89,15 +89,17 @@ namespace Qualifying_work
             int blockCount = lines[kind][lineNum].BlockCount;
             int[] blL = new int[blockCount];
             Array.Copy(lines[kind][lineNum].BlocksLengths, blL, blockCount);
-            int[,] next = new int[blL.Sum() + blockCount, 2];
+            int blockLenghtsSum = blL.Sum();
+            int[,] next = new int[blockLenghtsSum + blockCount, 2];//one "ready for the next block" before every block
 
-            int posI = 0;
+            int posI = -1;
             for (int i = 0; i < blockCount; i++)
             {
+                posI++;//go to "ready for the next block" state
                 next[posI, 0] = posI;
                 next[posI, 1] = posI + 1;
-                posI++;
-                for (int j = 0; j < blL[i] - 1; j++)
+                posI++;//go to the start of block
+                for (int j = 0; j < blL[i] - 1; j++)//all blocks cells except the last one
                 {
                     next[posI + j, 0] = nondef;
                     next[posI + j, 1] = posI + j + 1;
@@ -112,9 +114,41 @@ namespace Qualifying_work
                     next[posI, 0] = posI;
                 }
                 next[posI, 1] = nondef;
-                posI++;
             }
-            posI--;
+
+            int posCount = posI + 1;
+            int freeZeros = lineLength - blockLenghtsSum - (blockCount - 1);
+            int[,] map = new int[freeZeros + 1, posCount];//+1 because situation when no zeros was read is possible too
+            map[0, 0] = 2;
+            for (int i = 0; i < lineLength; i++)
+            {
+                int jMin = i + 1 - freeZeros;
+                if (jMin < 0) jMin = 0;
+                int jMax = i;
+                if (jMax >= posCount) jMax = posCount - 1;
+                for (int j = jMin; j < jMax; j++)
+                {
+                    if (i >= j)//stay in the same position
+                    {
+                        if (map[i - j - 1, j] != 0 && next[j, 0] == j && cells[i] % 2 == 0)
+                        {
+                            map[i - j, j] += 4;
+                        }
+                    }
+                    if (map[i - j, j - 1] != 0)
+                    {
+                        if (next[j - 1, 0] == j && cells[i] % 2 == 0)//go by zero from the previous
+                        {
+                            map[i - j, j] += 2;
+                        }
+                        if (next[j - 1, 1] == j && cells[i] > 0)//go by one from the previous
+                        {
+                            map[i - j, j] += 1;
+                        }
+                    }
+                }
+            }
+
         }
     }
 }
