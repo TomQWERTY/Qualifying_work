@@ -66,7 +66,7 @@ namespace Qualifying_work
             return res;
         }
 
-        private static void AnalyzeLine(int[,] pict, Line[][] lines, bool[][] needRefresh, int kind, int lineNum)
+        private static bool AnalyzeLine(int[,] pict, Line[][] lines, bool[][] needRefresh, int kind, int lineNum)
         {
             const int nondef = -1;
             int lineLength = lines[kind].Length;
@@ -149,6 +149,68 @@ namespace Qualifying_work
                 }
             }
 
+            if (map[freeZeros, posCount - 1] == 0) return false;//cant reach last position
+            for (int i = lineLength - 1; i >= 0; i--)
+            {
+                int jMin = i + 1 - freeZeros;
+                if (jMin < 0) jMin = 0;
+                int jMax = i;
+                if (jMax >= posCount) jMax = posCount - 1;
+                for (int j = jMin; j < jMax; j++)//zero elements from which last position is unreachable
+                {
+                    if (map[i - j, j] != 0)
+                    {
+                        if (j == posCount - 1 && i - j < freeZeros && map[i - j + 1, j] == 0)
+                        {
+                            map[i - j, j] = 0;
+                        }
+                        if (j < posCount - 1 && i - j == freeZeros && map[i - j, j + 1] == 0)
+                        {
+                            map[i - j, j] = 0;
+                        }
+                        if (j < posCount - 1 && i - j < freeZeros && map[i - j + 1, j] == 0 && map[i - j + 1, j] == 0)
+                        {
+                            map[i - j, j] = 0;
+                        }
+                    }
+                }
+                if (cells[i] == 2)
+                {
+                    bool canOne = false, canZero = false;
+                    for (int j = jMin; j < jMax; j++)
+                    {
+                        if (map[i - j, j] > 1)
+                        {
+                            canZero = true;
+                        }
+                        if (map[i - j, j] % 2 != 0)
+                        {
+                            canOne = true;
+                        }
+                    }
+                    if (canOne != canZero)
+                    {
+                        needRefresh[kind * (-1) + 1][i] = true;
+                        if (canOne)
+                        {
+                            cells[i] = 1;
+                        }
+                        else
+                        {
+                            cells[i] = 0;
+                        }
+                        if (kind == 0)
+                        {
+                            pict[lineNum, i] = cells[i];
+                        }
+                        else
+                        {
+                            pict[i, lineNum] = cells[i];
+                        }
+                    }
+                }
+            }
+            return true;
         }
     }
 }
