@@ -32,6 +32,29 @@ namespace Qualifying_work
             comboBoxPMode.SelectedIndex = 0;
         }
 
+        public void Print(int[,] sol)
+        {
+            StreamWriter strwr = new StreamWriter("log1.txt");
+            for (int i1 = 0; i1 < dgvMain.RowCount; i1++)
+            {
+                for (int j1 = 0; j1 < dgvMain.ColumnCount; j1++)
+                {
+                    strwr.Write(sol[i1, j1]);
+                    /*if (sol[i1, j1] == 1)
+                    //if (Convert.ToBoolean(currSol.Rows[i1][j1]))
+                    {
+                        dgvMain[j1, i1].Style.BackColor = Color.Black;
+                    }
+                    else if (sol[i1, j1] == 2)
+                    {
+                        dgvMain[j1, i1].Style.BackColor = Color.DarkGray;
+                    }*/
+                }
+                strwr.WriteLine();
+            }
+            strwr.Close();
+        }
+
         private void ResizeDgvs(int maxRowB, int maxColB, int newCC, int newRC)
         {
             int oldRowB = dgvRowDesc.ColumnCount;
@@ -314,7 +337,6 @@ namespace Qualifying_work
             //blocksDescs = npg.Query("select * from n" + ++cNum);
             var temp_ = npg.Query("select blocks_descriptions from nonograms where idK=" + ++cNum).Rows[0].ItemArray[0];
             blocksDescs = (int[])temp_;
-            var loh = AutoSolve.Solve(blocksDescs);
             currSol = npg.Query("select * from n" + cNum + "_s");
             npg.FinishWork();
             int rowC = Convert.ToInt32(blocksDescs[0]);
@@ -381,18 +403,27 @@ namespace Qualifying_work
 
         private void button1_Click(object sender, EventArgs e)
         {
+            int[,] sol = AutoSolve.Solve(blocksDescs);
             for (int i1 = 0; i1 < dgvMain.RowCount; i1++)
             {
                 for (int j1 = 0; j1 < dgvMain.ColumnCount; j1++)
                 {
-                    if (Convert.ToBoolean(currSol.Rows[i1][j1]))
+                    if (sol[i1, j1] == 1)
+                    //if (Convert.ToBoolean(currSol.Rows[i1][j1]))
                     {
                         dgvMain[j1, i1].Style.BackColor = Color.Black;
+                    }
+                    else if (sol[i1, j1] == 2)
+                    {
+                        dgvMain[j1, i1].Style.BackColor = Color.DarkGray;
                     }
                 }
             }
             CheckIfCorrect();
         }
+
+        
+
 
         /*private void ChangeTableColCount(DataGridView dgvColDesc, DataGridView dgvMain, int newCount)
         {
