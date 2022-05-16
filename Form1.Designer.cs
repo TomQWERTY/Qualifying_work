@@ -48,6 +48,7 @@ namespace Qualifying_work
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.comboBoxPMode = new System.Windows.Forms.ComboBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.createNButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvColDesc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRowDesc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).BeginInit();
@@ -240,11 +241,22 @@ namespace Qualifying_work
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // createNButton
+            // 
+            this.createNButton.Location = new System.Drawing.Point(10, 245);
+            this.createNButton.Name = "createNButton";
+            this.createNButton.Size = new System.Drawing.Size(75, 23);
+            this.createNButton.TabIndex = 13;
+            this.createNButton.Text = "create new";
+            this.createNButton.UseVisualStyleBackColor = true;
+            this.createNButton.Click += new System.EventHandler(this.createNButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(328, 268);
+            this.ClientSize = new System.Drawing.Size(328, 308);
+            this.Controls.Add(this.createNButton);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.comboBoxPMode);
             this.Controls.Add(this.buttonRead);
@@ -287,6 +299,7 @@ namespace Qualifying_work
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.ComboBox comboBoxPMode;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button createNButton;
     }
 }
 

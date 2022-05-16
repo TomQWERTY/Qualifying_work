@@ -32,29 +32,6 @@ namespace Qualifying_work
             comboBoxPMode.SelectedIndex = 0;
         }
 
-        public void Print(int[,] sol)
-        {
-            StreamWriter strwr = new StreamWriter("log1.txt");
-            for (int i1 = 0; i1 < dgvMain.RowCount; i1++)
-            {
-                for (int j1 = 0; j1 < dgvMain.ColumnCount; j1++)
-                {
-                    strwr.Write(sol[i1, j1]);
-                    /*if (sol[i1, j1] == 1)
-                    //if (Convert.ToBoolean(currSol.Rows[i1][j1]))
-                    {
-                        dgvMain[j1, i1].Style.BackColor = Color.Black;
-                    }
-                    else if (sol[i1, j1] == 2)
-                    {
-                        dgvMain[j1, i1].Style.BackColor = Color.DarkGray;
-                    }*/
-                }
-                strwr.WriteLine();
-            }
-            strwr.Close();
-        }
-
         private void ResizeDgvs(int maxRowB, int maxColB, int newCC, int newRC)
         {
             int oldRowB = dgvRowDesc.ColumnCount;
@@ -139,27 +116,6 @@ namespace Qualifying_work
                     dgvColDesc[j, i].Value = "";
                 }
             }
-        }
-
-            private void InitializeDgvs()
-        {
-            //if (main.ColumnCount > 0)
-            //{
-            //    for (int i = main.ColumnCount - 1; i >= 0; i--)
-            //    {
-            //        main.Columns.RemoveAt(i);
-            //        add.Columns.RemoveAt(i);
-            //    }
-            //}
-           
-            //if (main.RowCount > 0)
-            //{
-            //    for (int i = main.RowCount - 1; i >= 0; i--)
-            //    {
-            //        main.Rows.RemoveAt(i);
-            //        add.Rows.RemoveAt(i);
-            //    }
-            //}
         }
 
         private void buttonDownload_Click(object sender, EventArgs e)
@@ -337,7 +293,7 @@ namespace Qualifying_work
             //blocksDescs = npg.Query("select * from n" + ++cNum);
             var temp_ = npg.Query("select blocks_descriptions from nonograms where idK=" + ++cNum).Rows[0].ItemArray[0];
             blocksDescs = (int[])temp_;
-            currSol = npg.Query("select * from n" + cNum + "_s");
+            //currSol = npg.Query("select * from n" + cNum + "_s");
             npg.FinishWork();
             int rowC = Convert.ToInt32(blocksDescs[0]);
             int colC = Convert.ToInt32(blocksDescs[1]);
@@ -422,7 +378,13 @@ namespace Qualifying_work
             CheckIfCorrect();
         }
 
-        
+        private void createNButton_Click(object sender, EventArgs e)
+        {
+            FormCreateN fcn = new FormCreateN(npg);
+            fcn.ShowDialog();
+        }
+
+
 
 
         /*private void ChangeTableColCount(DataGridView dgvColDesc, DataGridView dgvMain, int newCount)
