@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Reflection;
 
 namespace Qualifying_work
 {
@@ -15,7 +16,6 @@ namespace Qualifying_work
     {
         const int cellSize = 25;
         Npg npg;
-        DataTable currSol;
         int solTime;
         int cNum;
         string time;
@@ -24,6 +24,9 @@ namespace Qualifying_work
         public Form1(string username_)
         {
             InitializeComponent();
+            typeof(DataGridView).InvokeMember("DoubleBuffered", BindingFlags.NonPublic |
+                BindingFlags.Instance | BindingFlags.SetProperty, null,
+                dgvMain, new object[] { true });
             npg = new Npg();
             ResizeDgvs(2, 2, 5, 5);
             cNum = 0;
@@ -135,10 +138,12 @@ namespace Qualifying_work
             if (dgvMain[e.ColumnIndex, e.RowIndex].Style.BackColor != Color.Black)
             {
                 dgvMain[e.ColumnIndex, e.RowIndex].Style.BackColor = Color.Black;
+                dgvMain[e.ColumnIndex, e.RowIndex].Style.SelectionBackColor = Color.White;
             }
             else
             {
-                dgvMain[e.ColumnIndex, e.RowIndex].Style.BackColor = Color.Empty;
+                dgvMain[e.ColumnIndex, e.RowIndex].Style.BackColor = Color.White;
+                dgvMain[e.ColumnIndex, e.RowIndex].Style.SelectionBackColor = Color.Black;
             }
             dgvMain.ClearSelection();
         }
@@ -265,6 +270,9 @@ namespace Qualifying_work
         {
             //FormRecords formR = new FormRecords(npg);
             //formR.ShowDialog();
+            MessageBox.Show(dgvColDesc[0, 0].Value.ToString());
+            dgvColDesc[0, 0].Value = "10";
+            MessageBox.Show(dgvColDesc[0, 0].Value.ToString());
         }
 
         private void buttonWrite_Click(object sender, EventArgs e)
@@ -333,6 +341,7 @@ namespace Qualifying_work
                     dgvColDesc[j, maxColB - blockCount + t].Value = Convert.ToInt32(blocksDescs[i]);
                 }
             }
+            dgvMain.ClearSelection();
         }
 
         private void buttonRead_Click(object sender, EventArgs e)
@@ -382,6 +391,23 @@ namespace Qualifying_work
         {
             FormCreateN fcn = new FormCreateN(npg);
             fcn.ShowDialog();
+        }
+
+        private void dgvMain_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgvMain[e.ColumnIndex, e.RowIndex].Style.BackColor != Color.Black)
+            {
+                dgvMain[e.ColumnIndex, e.RowIndex].Style.SelectionBackColor = Color.Black;
+            }
+            else
+            {
+                dgvMain[e.ColumnIndex, e.RowIndex].Style.SelectionBackColor = Color.White;
+            }
+        }
+
+        private void dgvMain_MouseEnter(object sender, EventArgs e)
+        {
+            dgvMain.ClearSelection();
         }
 
 

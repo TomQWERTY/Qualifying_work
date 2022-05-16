@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Reflection;
 
 namespace Qualifying_work
 {
@@ -18,19 +19,25 @@ namespace Qualifying_work
         public FormCreateN(Npg npg_)
         {
             InitializeComponent();
+            typeof(DataGridView).InvokeMember("DoubleBuffered", BindingFlags.NonPublic |
+                BindingFlags.Instance | BindingFlags.SetProperty, null,
+                dgv, new object[] { true });
             npg = npg_;
             ResizeDgvs(4, 10);
         }
 
         private void dgv_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            
             if (dgv[e.ColumnIndex, e.RowIndex].Style.BackColor != Color.Black)
             {
                 dgv[e.ColumnIndex, e.RowIndex].Style.BackColor = Color.Black;
+                dgv[e.ColumnIndex, e.RowIndex].Style.SelectionBackColor = Color.White;
             }
             else
             {
-                dgv[e.ColumnIndex, e.RowIndex].Style.BackColor = Color.Empty;
+                dgv[e.ColumnIndex, e.RowIndex].Style.BackColor = Color.White;
+                dgv[e.ColumnIndex, e.RowIndex].Style.SelectionBackColor = Color.Black;
             }
             dgv.ClearSelection();
         }
@@ -61,6 +68,7 @@ namespace Qualifying_work
 
             this.Width = dgv.Left + dgv.Width + 40;
             this.Height = Math.Max(dgv.Top + dgv.Height + 50, 289);
+            dgv.ClearSelection();
         }
 
         private void resizeButton_Click(object sender, EventArgs e)
@@ -137,6 +145,23 @@ namespace Qualifying_work
             npg.StartWork();
             npg.Query("insert into nonograms(blocks_descriptions) values(array[" + sb + "])");
             npg.FinishWork();
+        }
+
+        private void dgv_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgv[e.ColumnIndex, e.RowIndex].Style.BackColor != Color.Black)
+            {
+                dgv[e.ColumnIndex, e.RowIndex].Style.SelectionBackColor = Color.Black;
+            }
+            else
+            {
+                dgv[e.ColumnIndex, e.RowIndex].Style.SelectionBackColor = Color.White;
+            }
+        }
+
+        private void dgv_MouseEnter(object sender, EventArgs e)
+        {
+            dgv.ClearSelection();
         }
     }
 }
