@@ -8,38 +8,14 @@ namespace Qualifying_work
 {
     public static class AutoSolve
     {
-        public static int[,] Solve(int[] blocksDescs)
+        public static void Solve(Nonogram nonogram)
         {
-            int rowC = blocksDescs[0];
-            int colC = blocksDescs[1];
-            bool[,] res = new bool[rowC, colC];
-            Line[][] lines = new Line[2][];
-            lines[0] = new Line[rowC];
-            lines[1] = new Line[colC];
-            int blocksCount = 0;
-            for (int i = 2, currLine = 0; currLine < rowC + colC; i += blocksCount + 1, currLine++)
-            {
-                blocksCount = blocksDescs[i];
-                int[] blL = new int[blocksCount];
-                Array.Copy(blocksDescs, i + 1, blL, 0, blocksCount);
-                if (currLine < rowC)
-                {
-                    lines[0][currLine] = new Line(blocksCount, blL);
-                }
-                else
-                {
-                    lines[1][currLine - rowC] = new Line(blocksCount, blL);
-                }
-            }
+            int rowC = nonogram.RowCount;
+            int colC = nonogram.ColumnCount;
 
             bool[][] needRefresh = new bool[2][];
             needRefresh[0] = Enumerable.Repeat(true, rowC).ToArray();
             needRefresh[1] = Enumerable.Repeat(true, colC).ToArray();
-
-            int[,] pict = new int[rowC, colC];
-            for (int i = 0; i < rowC; i++)
-                for (int j = 0; j < colC; j++)
-                    pict[i, j] = 2;
 
             bool linesToAnalyze = false;
             do
@@ -49,30 +25,29 @@ namespace Qualifying_work
                 {
                     if (needRefresh[0][i])
                     {
-                        AnalyzeLine(pict, lines, needRefresh, 0, i);
+                        AnalyzeLine(nonogram, needRefresh, 0, i);
                         linesToAnalyze = true;
-                        
                     }
                 }
                 for (int i = 0; i < colC; i++)
                 {
                     if (needRefresh[1][i])
                     {
-                        AnalyzeLine(pict, lines, needRefresh, 1, i);
+                        AnalyzeLine(nonogram, needRefresh, 1, i);
                         linesToAnalyze = true;
                     }
                 }
             }
             while (linesToAnalyze);
-
-            return pict;
         }
 
-        private static bool AnalyzeLine(int[,] pict, Line[][] lines, bool[][] needRefresh, int kind, int lineNum)
+        private static bool AnalyzeLine(Nonogram nonogram, bool[][] needRefresh, int kind, int lineNum)
         {
+            Line[][] lines = nonogram.Lines;
+            int[,] pict = nonogram.Picture;
             const int nondef = -1;
             int lineLength = lines[kind * (-1) + 1].Length;
-            int[] cells = new int[lineLength];
+            int[] cells = new int[lineLength];//here will be lines elements
             if (kind == 0)
             {
                 for (int i = 0; i < lineLength; i++)
@@ -93,6 +68,8 @@ namespace Qualifying_work
             Array.Copy(lines[kind][lineNum].BlocksLengths, blL, blockCount);
             int blockLenghtsSum = blL.Sum();
             int[,] next = new int[blockLenghtsSum + blockCount, 2];//one "ready for the next block" before every block
+
+            //filling the transition table (next)
 
             int posI = -1;
             for (int i = 0; i < blockCount; i++)
@@ -118,26 +95,28 @@ namespace Qualifying_work
                 next[posI, 1] = nondef;
             }
 
+            //building a map with pathes (variants of how blocks can be placed)
+
             int posCount = posI + 1;
             int freeZeros = lineLength - blockLenghtsSum - (blockCount - 1);
             int[,] map = new int[freeZeros + 1, posCount];//+1 because situation when no zeros was read is possible too
-            map[0, 0] = 2;
-            for (int i = 1; i <= lineLength; i++)
+            map[0, 0] = 2;//first element can be reached
+            for (int i = 1; i <= lineLength; i++)//check all input symbols
             {
-                int jMin = i - freeZeros;
-                if (jMin < 0) jMin = 0;
-                int jMax = i;
-                if (jMax >= posCount) jMax = posCount - 1;
-                for (int j = jMin; j <= jMax; j++)
+                int jMin = i - freeZeros;//minimal position that can be reached by reading symbol [i]
+                if (jMin < 0) jMin = 0;//if too close to the start
+                int jMax = i;//maximal position that can be reached by reading symbol [i]
+                if (jMax >= posCount) jMax = posCount - 1;//if too close to the finish
+                for (int j = jMin; j <= jMax; j++)//check all positions which can be reached by reading symbol [i]
                 {
-                    if (i > j)//stay in the same position
+                    if (i > j)//impossible to get to point [i-j,j] by staying in j when current point is in the first row
                     {
                         if (map[i - j - 1, j] != 0 && next[j, 0] == j && cells[i - 1] % 2 == 0)
                         {
-                            map[i - j, j] += 4;
+                            map[i - j, j] += 4;//stay in the same position
                         }
                     }
-                    if (j > 0)
+                    if (j > 0)//impossible to get to point [i-j,j] by changing position when current point is in the first column
                     {
                         if (map[i - j, j - 1] != 0)
                         {
@@ -154,26 +133,28 @@ namespace Qualifying_work
                 }
             }
 
+            //backway to get know states of some *2* symbols
+
             if (map[freeZeros, posCount - 1] == 0) return false;//cant reach last position
-            for (int i = lineLength; i >= 1; i--)
+            for (int i = lineLength; i >= 1; i--)//check all input symbols
             {
-                int jMin = i - freeZeros;
+                int jMin = i - freeZeros;//the same
                 if (jMin < 0) jMin = 0;
                 int jMax = i;
                 if (jMax >= posCount) jMax = posCount - 1;
-                for (int j = jMin; j <= jMax; j++)//zero elements from which last position is unreachable
+                for (int j = jMin; j <= jMax; j++)//make zero elements from which last position is unreachable
                 {
                     if (map[i - j, j] != 0)
                     {
-                        if (j == posCount - 1 && i - j < freeZeros && map[i - j + 1, j] < 4)
+                        if (j == posCount - 1 && i - j < freeZeros && map[i - j + 1, j] < 4)//last column; check if possible to go down
                         {
                             map[i - j, j] = 0;
                         }
-                        if (j < posCount - 1 && i - j == freeZeros && map[i - j, j + 1] % 4 == 0)
+                        if (j < posCount - 1 && i - j == freeZeros && map[i - j, j + 1] % 4 == 0)//last row; check if possible to go right
                         {
                             map[i - j, j] = 0;
                         }
-                        if (j < posCount - 1 && i - j < freeZeros && map[i - j + 1, j] < 4 && map[i - j, j + 1] % 4 == 0)
+                        if (j < posCount - 1 && i - j < freeZeros && map[i - j + 1, j] < 4 && map[i - j, j + 1] % 4 == 0)//recent; check both
                         {
                             map[i - j, j] = 0;
                         }
@@ -182,18 +163,18 @@ namespace Qualifying_work
                 if (cells[i - 1] == 2)
                 {
                     bool canOne = false, canZero = false;
-                    for (int j = jMin; j <= jMax; j++)
+                    for (int j = jMin; j <= jMax; j++)//check if can be reached by...
                     {
-                        if (map[i - j, j] > 1)
+                        if (map[i - j, j] > 1)//...zero
                         {
                             canZero = true;
                         }
-                        if (map[i - j, j] % 2 != 0)
+                        if (map[i - j, j] % 2 != 0)//...one
                         {
                             canOne = true;
                         }
                     }
-                    if (canOne != canZero)
+                    if (canOne != canZero)//if can be reached only by one of them
                     {
                         needRefresh[kind * (-1) + 1][i - 1] = true;
                         if (canOne)
@@ -211,6 +192,137 @@ namespace Qualifying_work
                         else
                         {
                             pict[i - 1, lineNum] = cells[i - 1];
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+
+        public static bool AnalyzeLine(int[] cells, Line[][] lines, int kind, int lineNum)
+        {
+            const int nondef = -1;
+            int lineLength = lines[kind * (-1) + 1].Length;
+            int blockCount = lines[kind][lineNum].BlockCount;
+            int[] blL = new int[blockCount];
+            Array.Copy(lines[kind][lineNum].BlocksLengths, blL, blockCount);
+            int blockLenghtsSum = blL.Sum();
+            int[,] next = new int[blockLenghtsSum + blockCount, 2];//one "ready for the next block" before every block
+
+            //filling the transition table (next)
+
+            int posI = -1;
+            for (int i = 0; i < blockCount; i++)
+            {
+                posI++;//go to "ready for the next block" state
+                next[posI, 0] = posI;
+                next[posI, 1] = posI + 1;
+                posI++;//go to the start of block
+                for (int j = 0; j < blL[i] - 1; j++)//all blocks cells except the last one
+                {
+                    next[posI + j, 0] = nondef;
+                    next[posI + j, 1] = posI + j + 1;
+                }
+                posI += blL[i] - 1;
+                if (i < blockCount - 1)
+                {
+                    next[posI, 0] = posI + 1;
+                }
+                else
+                {
+                    next[posI, 0] = posI;
+                }
+                next[posI, 1] = nondef;
+            }
+
+            //building a map with pathes (variants of how blocks can be placed)
+
+            int posCount = posI + 1;
+            int freeZeros = lineLength - blockLenghtsSum - (blockCount - 1);
+            int[,] map = new int[freeZeros + 1, posCount];//+1 because situation when no zeros was read is possible too
+            map[0, 0] = 2;//first element can be reached
+            for (int i = 1; i <= lineLength; i++)//check all input symbols
+            {
+                int jMin = i - freeZeros;//minimal position that can be reached by reading symbol [i]
+                if (jMin < 0) jMin = 0;//if too close to the start
+                int jMax = i;//maximal position that can be reached by reading symbol [i]
+                if (jMax >= posCount) jMax = posCount - 1;//if too close to the finish
+                for (int j = jMin; j <= jMax; j++)//check all positions which can be reached by reading symbol [i]
+                {
+                    if (i > j)//impossible to get to point [i-j,j] by staying in j when current point is in the first row
+                    {
+                        if (map[i - j - 1, j] != 0 && next[j, 0] == j && cells[i - 1] % 2 == 0)
+                        {
+                            map[i - j, j] += 4;//stay in the same position
+                        }
+                    }
+                    if (j > 0)//impossible to get to point [i-j,j] by changing position when current point is in the first column
+                    {
+                        if (map[i - j, j - 1] != 0)
+                        {
+                            if (next[j - 1, 0] == j && cells[i - 1] % 2 == 0)//go by zero from the previous
+                            {
+                                map[i - j, j] += 2;
+                            }
+                            if (next[j - 1, 1] == j && cells[i - 1] > 0)//go by one from the previous
+                            {
+                                map[i - j, j] += 1;
+                            }
+                        }
+                    }
+                }
+            }
+
+            //backway to get know states of some *2* symbols
+
+            if (map[freeZeros, posCount - 1] == 0) return false;//cant reach last position
+            for (int i = lineLength; i >= 1; i--)//check all input symbols
+            {
+                int jMin = i - freeZeros;//the same
+                if (jMin < 0) jMin = 0;
+                int jMax = i;
+                if (jMax >= posCount) jMax = posCount - 1;
+                for (int j = jMin; j <= jMax; j++)//make zero elements from which last position is unreachable
+                {
+                    if (map[i - j, j] != 0)
+                    {
+                        if (j == posCount - 1 && i - j < freeZeros && map[i - j + 1, j] < 4)//last column; check if possible to go down
+                        {
+                            map[i - j, j] = 0;
+                        }
+                        if (j < posCount - 1 && i - j == freeZeros && map[i - j, j + 1] % 4 == 0)//last row; check if possible to go right
+                        {
+                            map[i - j, j] = 0;
+                        }
+                        if (j < posCount - 1 && i - j < freeZeros && map[i - j + 1, j] < 4 && map[i - j, j + 1] % 4 == 0)//recent; check both
+                        {
+                            map[i - j, j] = 0;
+                        }
+                    }
+                }
+                if (cells[i - 1] == 2)
+                {
+                    bool canOne = false, canZero = false;
+                    for (int j = jMin; j <= jMax; j++)//check if can be reached by...
+                    {
+                        if (map[i - j, j] > 1)//...zero
+                        {
+                            canZero = true;
+                        }
+                        if (map[i - j, j] % 2 != 0)//...one
+                        {
+                            canOne = true;
+                        }
+                    }
+                    if (canOne != canZero)//if can be reached only by one of them
+                    {
+                        if (canOne)
+                        {
+                            cells[i - 1] = 1;
+                        }
+                        else
+                        {
+                            cells[i - 1] = 0;
                         }
                     }
                 }

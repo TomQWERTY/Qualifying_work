@@ -6,14 +6,12 @@ using System.Threading.Tasks;
 
 namespace Qualifying_work
 {
-    public class Line
+    public class Line : IComparable<Line>
     {
-        int blN;
         int[] blL;
 
-        public Line(int blN_, int[] blL_)
+        public Line(int[] blL_)
         {
-            blN = blN_;
             blL = blL_;
         }
 
@@ -21,7 +19,7 @@ namespace Qualifying_work
         {
             get
             {
-                return blN;
+                return blL.Length;
             }
         }
 
@@ -31,6 +29,12 @@ namespace Qualifying_work
             {
                 return blL;
             }
+        }
+
+        public int CompareTo(Line that)
+        {
+            if (that == null) return 1;
+            return this.BlockCount.CompareTo(that.BlockCount);
         }
     }
 }

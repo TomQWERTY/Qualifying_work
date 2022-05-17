@@ -20,6 +20,7 @@ namespace Qualifying_work
         int cNum;
         string time;
         int[] blocksDescs;
+        Nonogram nonogram;
 
         public Form1(string username_)
         {
@@ -27,6 +28,7 @@ namespace Qualifying_work
             typeof(DataGridView).InvokeMember("DoubleBuffered", BindingFlags.NonPublic |
                 BindingFlags.Instance | BindingFlags.SetProperty, null,
                 dgvMain, new object[] { true });
+            
             npg = new Npg();
             ResizeDgvs(2, 2, 5, 5);
             cNum = 0;
@@ -135,17 +137,36 @@ namespace Qualifying_work
 
         private void dgvMain_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (dgvMain[e.ColumnIndex, e.RowIndex].Style.BackColor != Color.Black)
+            int[] row = new int[dgvMain.ColumnCount];
+            int[] col = new int[dgvMain.RowCount];
+            for (int i = 0; i < dgvMain.RowCount; i++)
             {
-                dgvMain[e.ColumnIndex, e.RowIndex].Style.BackColor = Color.Black;
-                dgvMain[e.ColumnIndex, e.RowIndex].Style.SelectionBackColor = Color.White;
+                col[i] = nonogram.Picture[i, e.ColumnIndex];
+            }
+            for (int j = 0; j < dgvMain.ColumnCount; j++)
+            {
+                row[j] = nonogram.Picture[e.RowIndex, j];
+            }
+            AutoSolve.AnalyzeLine(row, nonogram.Lines, 0, e.RowIndex);
+            AutoSolve.AnalyzeLine(col, nonogram.Lines, 1, e.ColumnIndex);
+            if (row[e.ColumnIndex] == 1 || col[e.RowIndex] == 1)
+            {
+                if (dgvMain[e.ColumnIndex, e.RowIndex].Style.BackColor != Color.Black)
+                {
+                    dgvMain[e.ColumnIndex, e.RowIndex].Style.BackColor = Color.Black;
+                    dgvMain[e.ColumnIndex, e.RowIndex].Style.SelectionBackColor = Color.White;
+                }
+                else
+                {
+                    dgvMain[e.ColumnIndex, e.RowIndex].Style.BackColor = Color.White;
+                    dgvMain[e.ColumnIndex, e.RowIndex].Style.SelectionBackColor = Color.Black;
+                }
+                dgvMain.ClearSelection();
             }
             else
             {
-                dgvMain[e.ColumnIndex, e.RowIndex].Style.BackColor = Color.White;
-                dgvMain[e.ColumnIndex, e.RowIndex].Style.SelectionBackColor = Color.Black;
+                MessageBox.Show("LOOOOH");
             }
-            dgvMain.ClearSelection();
         }
 
         private void CheckIfCorrect()
@@ -270,9 +291,6 @@ namespace Qualifying_work
         {
             //FormRecords formR = new FormRecords(npg);
             //formR.ShowDialog();
-            MessageBox.Show(dgvColDesc[0, 0].Value.ToString());
-            dgvColDesc[0, 0].Value = "10";
-            MessageBox.Show(dgvColDesc[0, 0].Value.ToString());
         }
 
         private void buttonWrite_Click(object sender, EventArgs e)
@@ -298,47 +316,27 @@ namespace Qualifying_work
         {
             npg.StartWork();
             ClearDgvs();
-            //blocksDescs = npg.Query("select * from n" + ++cNum);
             var temp_ = npg.Query("select blocks_descriptions from nonograms where idK=" + ++cNum).Rows[0].ItemArray[0];
             blocksDescs = (int[])temp_;
-            //currSol = npg.Query("select * from n" + cNum + "_s");
             npg.FinishWork();
-            int rowC = Convert.ToInt32(blocksDescs[0]);
-            int colC = Convert.ToInt32(blocksDescs[1]);
-            int maxRowB = 0;
-            int maxColB = 0;
-            int i = 2;
-            for (int j = 0; j < rowC; i++, j++)//find a row with the biggest count of blocks
+            nonogram = new Nonogram(blocksDescs);
+            int maxRowB = nonogram.Lines[0].Max().BlockCount;
+            int maxColB = nonogram.Lines[1].Max().BlockCount;
+            ResizeDgvs(maxRowB, maxColB, nonogram.ColumnCount, nonogram.RowCount);
+            for (int i = 0; i < nonogram.RowCount; i++)
             {
-                int temp = Convert.ToInt32(blocksDescs[i]);
-                if (temp > maxRowB) maxRowB = temp;
-                i += temp;//jump to the next rows block count
-            }
-            for (int j = 0; j < colC; i++, j++)//the same with columns
-            {
-                int temp = Convert.ToInt32(blocksDescs[i]);
-                if (temp > maxColB) maxColB = temp;
-                i += temp;
-            }
-            ResizeDgvs(maxRowB, maxColB, colC, rowC);
-
-            i = 2;
-            for (int j = 0; j < rowC; j++)
-            {
-                int blockCount = Convert.ToInt32(blocksDescs[i]);
-                i++;
-                for (int t = 0; t < blockCount; t++, i++)
+                int blockCount = nonogram.Lines[0][i].BlockCount;
+                for (int t = 0; t < blockCount; t++)
                 {
-                    dgvRowDesc[maxRowB - blockCount + t, j].Value = Convert.ToInt32(blocksDescs[i]);
+                    dgvRowDesc[maxRowB - blockCount + t, i].Value = nonogram.Lines[0][i].BlocksLengths[t];
                 }
             }
-            for (int j = 0; j < colC; j++)
+            for (int j = 0; j < nonogram.ColumnCount; j++)
             {
-                int blockCount = Convert.ToInt32(blocksDescs[i]);
-                i++;
-                for (int t = 0; t < blockCount; t++, i++)
+                int blockCount = nonogram.Lines[1][j].BlockCount;
+                for (int t = 0; t < blockCount; t++)
                 {
-                    dgvColDesc[j, maxColB - blockCount + t].Value = Convert.ToInt32(blocksDescs[i]);
+                    dgvColDesc[j, maxColB - blockCount + t].Value = nonogram.Lines[1][j].BlocksLengths[t];
                 }
             }
             dgvMain.ClearSelection();
@@ -368,7 +366,8 @@ namespace Qualifying_work
 
         private void button1_Click(object sender, EventArgs e)
         {
-            int[,] sol = AutoSolve.Solve(blocksDescs);
+            AutoSolve.Solve(nonogram);
+            int[,] sol = nonogram.Picture;
             for (int i1 = 0; i1 < dgvMain.RowCount; i1++)
             {
                 for (int j1 = 0; j1 < dgvMain.ColumnCount; j1++)
@@ -409,97 +408,5 @@ namespace Qualifying_work
         {
             dgvMain.ClearSelection();
         }
-
-
-
-
-        /*private void ChangeTableColCount(DataGridView dgvColDesc, DataGridView dgvMain, int newCount)
-        {
-            if (newCount < 2)
-            {
-                throw new Exception("Кількість стовпців не може бути меншою за 1.");
-            }
-            int oldCount = main.ColumnCount;
-            for (int i = oldCount; i < newCount; i++)
-            {
-                main.Columns.Add(i.ToString(), i.ToString());
-                main.Columns[i].Width = 50;
-                main[i, 0].Value = s + (i - 1);
-                main[i, 0].ReadOnly = true;
-                add.Columns.Add(i.ToString(), i.ToString());
-                add.Columns[i].Width = 50;
-            }
-            for (int i = 0; i < oldCount - newCount; i++)
-            {
-                main.Columns.RemoveAt(oldCount - i - 1);
-                add.Columns.RemoveAt(oldCount - i - 1);
-            }
-            main.Width = newCount * 50 + 4;
-            add.Width = newCount * 50 + 4;
-        }
-
-        private void ChangeTableRowCount(DataGridView main, DataGridView add, int newCount, string s, bool isInput)
-        {
-            if (newCount < 2)
-            {
-                throw new Exception("Кількість рядків не може бути меншою за 1.");
-            }
-            int oldCount;
-            if (automaton is MealyAut)
-            {
-                oldCount = add.RowCount;
-                if (isInput)
-                {
-                    for (int i = oldCount; i < newCount - 1; i++)
-                    {
-                        add.Rows.Add();
-                        add[0, i].Value = s + i;
-                        add[0, i].ReadOnly = true;
-                    }
-                }
-                else
-                {
-                    for (int i = oldCount - 1; i < newCount - 1; i++)
-                    {
-                        add.Rows.Add();
-                        add[0, i].Value = addTableIn[0, i].Value;
-                    }
-                    add.Rows.RemoveAt(add.RowCount - 1);
-                }
-                for (int i = 0; i < oldCount - newCount + 1; i++)
-                {
-                    add.Rows.RemoveAt(oldCount - i - 1);
-                }
-                add.Height = (newCount - 1) * 22 + 4;
-            }
-            oldCount = main.RowCount;
-            for (int i = oldCount; i < newCount; i++)
-            {
-                main.Rows.Add();
-                if (isInput)
-                {
-                    main[0, i].Value = s + (i - 1);
-                }
-                else
-                {
-                    main[0, i].Value = mainTableIn[0, i].Value;
-                }
-            }
-            for (int i = 0; i < oldCount - newCount; i++)
-            {
-                main.Rows.RemoveAt(oldCount - i - 1);
-            }
-            main.Height = newCount * 22 + 4;
-            if (automaton is MooreAut)
-            {
-                add.Top = 48;
-                main.Top = add.Top + add.Height + 5;
-            }
-            else
-            {
-                main.Top = 48;
-                add.Top = main.Top + main.Height + 5;
-            }
-        }*/
     }
 }

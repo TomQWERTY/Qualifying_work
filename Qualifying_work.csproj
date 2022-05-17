@@ -105,6 +105,7 @@
       <DependentUpon>FormCreateN.cs</DependentUpon>
     </Compile>
     <Compile Include="Line.cs" />
+    <Compile Include="Nonogram.cs" />
     <Compile Include="Npg.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
