@@ -12,6 +12,7 @@ namespace Qualifying_work
         protected int[,] pict;
         protected int rowC, colC;
         protected Line[][] lines;
+        protected NonogramType nType;
 
         public Nonogram(int[] blocksDescs)
         {
@@ -40,6 +41,7 @@ namespace Qualifying_work
                     lines[1][currLine - rowC] = new Line(blL);
                 }
             }
+            nType = NonogramType.OnlyILL;
         }
 
         public int[,] Picture
@@ -73,5 +75,22 @@ namespace Qualifying_work
                 return lines;
             }
         }
+
+        public NonogramType NonType
+        {
+            get
+            {
+                return nType;
+            }
+            set
+            {
+                nType = value;
+            }
+        }
+    }
+
+    public enum NonogramType
+    {
+        OnlyILL, NeedBacktracking, FewSolutions
     }
 }

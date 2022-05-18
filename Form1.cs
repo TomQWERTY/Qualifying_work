@@ -161,12 +161,12 @@ namespace Qualifying_work
                     dgvMain[e.ColumnIndex, e.RowIndex].Style.BackColor = Color.White;
                     dgvMain[e.ColumnIndex, e.RowIndex].Style.SelectionBackColor = Color.Black;
                 }
-                dgvMain.ClearSelection();
             }
             else
             {
                 MessageBox.Show("LOOOOH");
             }
+            dgvMain.ClearSelection();
         }
 
         private void CheckIfCorrect()
@@ -212,7 +212,7 @@ namespace Qualifying_work
                 }
             }
             int colNum = -1;
-            while (colNum < rowC - 1)
+            while (colNum < colC - 1)
             {
                 i++;
                 colNum++;
@@ -384,6 +384,7 @@ namespace Qualifying_work
                 }
             }
             CheckIfCorrect();
+            int a = 0;
         }
 
         private void createNButton_Click(object sender, EventArgs e)

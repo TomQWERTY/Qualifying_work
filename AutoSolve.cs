@@ -8,15 +8,75 @@ namespace Qualifying_work
 {
     public static class AutoSolve
     {
+        private static List<int[,]> copies = new List<int[,]>();
+        private static int[,] solutionStorage;
+
         public static void Solve(Nonogram nonogram)
+        {
+            bool[][] needRefresh = new bool[2][];
+            needRefresh[0] = Enumerable.Repeat(true, nonogram.RowCount).ToArray();
+            needRefresh[1] = Enumerable.Repeat(true, nonogram.ColumnCount).ToArray();
+            bool solFound = false;
+            solutionStorage = null;
+            Try(nonogram, 0, 0, needRefresh, ref solFound);
+            if (solutionStorage != null) Array.Copy(solutionStorage, nonogram.Picture, solutionStorage.Length);
+        }
+
+        private static void Try(Nonogram nonogram, int i, int j, bool[][] needRefresh, ref bool solFound)
+        {
+            if (!IterateLineLook(nonogram, needRefresh)) return;
+            while (i < nonogram.RowCount && nonogram.Picture[i, j] != 2)
+            {
+                if (j == nonogram.ColumnCount - 1)//line has ended
+                {
+                    //go to the next line
+                    j = 0;
+                    i++;
+                }
+                else
+                {
+                    j++;//go to the next element in line
+                }
+            }
+            if (i >= nonogram.RowCount)//all cells have known states
+            {
+                if (solFound) nonogram.NonType = NonogramType.FewSolutions;
+                else
+                {
+                    solFound = true;
+                    if (nonogram.NonType == NonogramType.NeedBacktracking)
+                    {
+                        solutionStorage = new int[nonogram.RowCount, nonogram.ColumnCount];
+                        Array.Copy(nonogram.Picture, solutionStorage, nonogram.Picture.Length);//becaues pict will be changed while looking for other sols
+                    }
+                }
+                return;
+            }
+            else//[i, j] is unknown
+            {
+                if (nonogram.NonType == NonogramType.OnlyILL) nonogram.NonType = NonogramType.NeedBacktracking;
+                copies.Add(new int[nonogram.RowCount, nonogram.ColumnCount]);
+                Array.Copy(nonogram.Picture, copies.Last(), nonogram.Picture.Length);//to check 0 and 1 with the same pict
+                nonogram.Picture[i, j] = 0;//maybe it is 0
+                needRefresh[0][i] = true;
+                needRefresh[1][j] = true;
+                Try(nonogram, i, j, needRefresh, ref solFound);
+                if (nonogram.NonType == NonogramType.FewSolutions) return;//because nonograms with few solutions banned
+                Array.Copy(copies.Last(), nonogram.Picture, copies.Last().Length);
+                copies.Remove(copies.Last());
+                nonogram.Picture[i, j] = 1;//maybe it is 1
+                needRefresh[0][i] = true;
+                needRefresh[1][j] = true;
+                Try(nonogram, i, j, needRefresh, ref solFound);
+            }
+        }
+
+        private static bool IterateLineLook(Nonogram nonogram, bool[][] needRefresh)
         {
             int rowC = nonogram.RowCount;
             int colC = nonogram.ColumnCount;
 
-            bool[][] needRefresh = new bool[2][];
-            needRefresh[0] = Enumerable.Repeat(true, rowC).ToArray();
-            needRefresh[1] = Enumerable.Repeat(true, colC).ToArray();
-
+            bool wasError = false;
             bool linesToAnalyze = false;
             do
             {
@@ -25,7 +85,7 @@ namespace Qualifying_work
                 {
                     if (needRefresh[0][i])
                     {
-                        AnalyzeLine(nonogram, needRefresh, 0, i);
+                        wasError = AnalyzeLine(nonogram, needRefresh, 0, i);
                         linesToAnalyze = true;
                     }
                 }
@@ -33,12 +93,13 @@ namespace Qualifying_work
                 {
                     if (needRefresh[1][i])
                     {
-                        AnalyzeLine(nonogram, needRefresh, 1, i);
+                        wasError = AnalyzeLine(nonogram, needRefresh, 1, i);
                         linesToAnalyze = true;
                     }
                 }
             }
             while (linesToAnalyze);
+            return wasError;
         }
 
         private static bool AnalyzeLine(Nonogram nonogram, bool[][] needRefresh, int kind, int lineNum)
