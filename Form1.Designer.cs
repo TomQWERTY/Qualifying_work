@@ -50,6 +50,8 @@ namespace Qualifying_work
             this.comboBoxPMode = new System.Windows.Forms.ComboBox();
             this.button1 = new System.Windows.Forms.Button();
             this.createNButton = new System.Windows.Forms.Button();
+            this.startButton = new System.Windows.Forms.Button();
+            this.comboBoxDiff = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvColDesc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRowDesc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).BeginInit();
@@ -87,7 +89,7 @@ namespace Qualifying_work
             // 
             // buttonDownload
             // 
-            this.buttonDownload.Location = new System.Drawing.Point(10, 140);
+            this.buttonDownload.Location = new System.Drawing.Point(10, 209);
             this.buttonDownload.Name = "buttonDownload";
             this.buttonDownload.Size = new System.Drawing.Size(75, 20);
             this.buttonDownload.TabIndex = 1;
@@ -97,7 +99,7 @@ namespace Qualifying_work
             // 
             // buttonReady
             // 
-            this.buttonReady.Location = new System.Drawing.Point(10, 77);
+            this.buttonReady.Location = new System.Drawing.Point(10, 115);
             this.buttonReady.Name = "buttonReady";
             this.buttonReady.Size = new System.Drawing.Size(75, 20);
             this.buttonReady.TabIndex = 2;
@@ -153,6 +155,7 @@ namespace Qualifying_work
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Transparent;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvMain.DefaultCellStyle = dataGridViewCellStyle3;
+            this.dgvMain.Enabled = false;
             this.dgvMain.Location = new System.Drawing.Point(321, 10);
             this.dgvMain.MultiSelect = false;
             this.dgvMain.Name = "dgvMain";
@@ -181,7 +184,7 @@ namespace Qualifying_work
             // 
             // buttonRecords
             // 
-            this.buttonRecords.Location = new System.Drawing.Point(10, 102);
+            this.buttonRecords.Location = new System.Drawing.Point(10, 140);
             this.buttonRecords.Name = "buttonRecords";
             this.buttonRecords.Size = new System.Drawing.Size(75, 20);
             this.buttonRecords.TabIndex = 6;
@@ -208,7 +211,7 @@ namespace Qualifying_work
             // 
             // buttonWrite
             // 
-            this.buttonWrite.Location = new System.Drawing.Point(10, 165);
+            this.buttonWrite.Location = new System.Drawing.Point(10, 234);
             this.buttonWrite.Name = "buttonWrite";
             this.buttonWrite.Size = new System.Drawing.Size(75, 20);
             this.buttonWrite.TabIndex = 9;
@@ -218,7 +221,7 @@ namespace Qualifying_work
             // 
             // buttonRead
             // 
-            this.buttonRead.Location = new System.Drawing.Point(10, 190);
+            this.buttonRead.Location = new System.Drawing.Point(10, 259);
             this.buttonRead.Name = "buttonRead";
             this.buttonRead.Size = new System.Drawing.Size(75, 20);
             this.buttonRead.TabIndex = 10;
@@ -244,7 +247,7 @@ namespace Qualifying_work
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(13, 216);
+            this.button1.Location = new System.Drawing.Point(13, 285);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 12;
@@ -254,7 +257,7 @@ namespace Qualifying_work
             // 
             // createNButton
             // 
-            this.createNButton.Location = new System.Drawing.Point(10, 245);
+            this.createNButton.Location = new System.Drawing.Point(10, 314);
             this.createNButton.Name = "createNButton";
             this.createNButton.Size = new System.Drawing.Size(75, 23);
             this.createNButton.TabIndex = 13;
@@ -262,11 +265,36 @@ namespace Qualifying_work
             this.createNButton.UseVisualStyleBackColor = true;
             this.createNButton.Click += new System.EventHandler(this.createNButton_Click);
             // 
+            // startButton
+            // 
+            this.startButton.Location = new System.Drawing.Point(10, 166);
+            this.startButton.Name = "startButton";
+            this.startButton.Size = new System.Drawing.Size(75, 23);
+            this.startButton.TabIndex = 14;
+            this.startButton.Text = "Start";
+            this.startButton.UseVisualStyleBackColor = true;
+            this.startButton.Click += new System.EventHandler(this.startButton_Click);
+            // 
+            // comboBoxDiff
+            // 
+            this.comboBoxDiff.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxDiff.FormattingEnabled = true;
+            this.comboBoxDiff.Items.AddRange(new object[] {
+            "With Hints",
+            "Standard",
+            "With Checks"});
+            this.comboBoxDiff.Location = new System.Drawing.Point(10, 79);
+            this.comboBoxDiff.Name = "comboBoxDiff";
+            this.comboBoxDiff.Size = new System.Drawing.Size(78, 21);
+            this.comboBoxDiff.TabIndex = 15;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(328, 308);
+            this.ClientSize = new System.Drawing.Size(328, 385);
+            this.Controls.Add(this.comboBoxDiff);
+            this.Controls.Add(this.startButton);
             this.Controls.Add(this.createNButton);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.comboBoxPMode);
@@ -311,6 +339,8 @@ namespace Qualifying_work
         private System.Windows.Forms.ComboBox comboBoxPMode;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button createNButton;
+        private System.Windows.Forms.Button startButton;
+        private System.Windows.Forms.ComboBox comboBoxDiff;
     }
 }
 

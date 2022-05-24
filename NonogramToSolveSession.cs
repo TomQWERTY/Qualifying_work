@@ -87,5 +87,11 @@ namespace Qualifying_work
             }
             return ok;
         }
+
+        public virtual int ChangeCell(int i, int j, int newVal)
+        {
+            nonogram.Picture[i, j] = newVal;
+            return 3;
+        }
     }
 }

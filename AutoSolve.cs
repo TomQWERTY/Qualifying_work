@@ -19,7 +19,14 @@ namespace Qualifying_work
             bool solFound = false;
             solutionStorage = null;
             Try(nonogram, 0, 0, needRefresh, ref solFound);
-            if (solutionStorage != null) Array.Copy(solutionStorage, nonogram.Picture, solutionStorage.Length);
+            if (solutionStorage != null) Array.Copy(solutionStorage, nonogram.CorrectPicture, solutionStorage.Length);
+            else
+            {
+                Array.Copy(nonogram.Picture, nonogram.CorrectPicture, nonogram.Picture.Length);
+                for (int i = 0; i < nonogram.RowCount; i++)
+                    for (int j = 0; j < nonogram.ColumnCount; j++)
+                        nonogram.Picture[i, j] = 2;
+            }
         }
 
         private static void Try(Nonogram nonogram, int i, int j, bool[][] needRefresh, ref bool solFound)

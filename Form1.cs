@@ -21,6 +21,7 @@ namespace Qualifying_work
         string time;
         int[] blocksDescs;
         Nonogram nonogram;
+        NonogramToSolveSession ses;
 
         public Form1(string username_)
         {
@@ -95,7 +96,7 @@ namespace Qualifying_work
             dgvMain.Left = dgvColDesc.Left;
             dgvMain.Top = dgvRowDesc.Top;
             this.Width = dgvMain.Left + dgvMain.Width + 40;
-            this.Height = Math.Max(dgvMain.Top + dgvMain.Height + 50, 289);
+            this.Height = Math.Max(dgvMain.Top + dgvMain.Height + 50, 400);
         }
 
         private void ClearDgvs()
@@ -137,21 +138,11 @@ namespace Qualifying_work
 
         private void dgvMain_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            int[] row = new int[dgvMain.ColumnCount];
-            int[] col = new int[dgvMain.RowCount];
-            for (int i = 0; i < dgvMain.RowCount; i++)
+            int newVal = dgvMain[e.ColumnIndex, e.RowIndex].Style.BackColor != Color.Black ? 1 : 0;
+            int opStatus = ses.ChangeCell(e.RowIndex, e.ColumnIndex, newVal);
+            if (opStatus == 3 || opStatus == 0 || opStatus == 1)
             {
-                col[i] = nonogram.Picture[i, e.ColumnIndex];
-            }
-            for (int j = 0; j < dgvMain.ColumnCount; j++)
-            {
-                row[j] = nonogram.Picture[e.RowIndex, j];
-            }
-            AutoSolve.AnalyzeLine(row, nonogram.Lines, 0, e.RowIndex);
-            AutoSolve.AnalyzeLine(col, nonogram.Lines, 1, e.ColumnIndex);
-            if (row[e.ColumnIndex] == 1 || col[e.RowIndex] == 1)
-            {
-                if (dgvMain[e.ColumnIndex, e.RowIndex].Style.BackColor != Color.Black)
+                if (newVal == 1)
                 {
                     dgvMain[e.ColumnIndex, e.RowIndex].Style.BackColor = Color.Black;
                     dgvMain[e.ColumnIndex, e.RowIndex].Style.SelectionBackColor = Color.White;
@@ -162,11 +153,12 @@ namespace Qualifying_work
                     dgvMain[e.ColumnIndex, e.RowIndex].Style.SelectionBackColor = Color.Black;
                 }
             }
-            else
-            {
-                MessageBox.Show("LOOOOH");
-            }
             dgvMain.ClearSelection();
+            if (ses.GetType() == typeof(NTSSWithChecks))
+            {
+                if (opStatus == 1) MessageBox.Show("you loh");
+                if (opStatus == 2) MessageBox.Show("you very loh");
+            }
         }
 
         private void CheckIfCorrect()
@@ -255,6 +247,8 @@ namespace Qualifying_work
             var temp_ = npg.Query("select blocks_descriptions from nonograms where idK=" + ++cNum).Rows[0].ItemArray[0];
             blocksDescs = (int[])temp_;
             npg.FinishWork();
+            ses = new NonogramToSolveSession(new Nonogram(blocksDescs));
+            
             nonogram = new Nonogram(blocksDescs);
             int maxRowB = nonogram.Lines[0].Max().BlockCount;
             int maxColB = nonogram.Lines[1].Max().BlockCount;
@@ -344,6 +338,15 @@ namespace Qualifying_work
         private void dgvMain_MouseEnter(object sender, EventArgs e)
         {
             dgvMain.ClearSelection();
+        }
+
+        private void startButton_Click(object sender, EventArgs e)
+        {
+            dgvMain.Enabled = true;
+            if (comboBoxDiff.SelectedIndex == 2)
+            {
+                ses = new NTSSWithChecks(ses.NGram);
+            }
         }
     }
 }
