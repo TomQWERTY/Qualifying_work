@@ -106,7 +106,11 @@
     </Compile>
     <Compile Include="Line.cs" />
     <Compile Include="Nonogram.cs" />
+    <Compile Include="NonogramSession.cs" />
+    <Compile Include="NonogramToSolveSession.cs" />
     <Compile Include="Npg.cs" />
+    <Compile Include="NTSSWithChecks.cs" />
+    <Compile Include="NTSSWithHints.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">

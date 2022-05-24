@@ -10,6 +10,7 @@ namespace Qualifying_work
     {
         protected int[] blocksDescriptions;
         protected int[,] pict;
+        protected int[,] correctPict;
         protected int rowC, colC;
         protected Line[][] lines;
         protected NonogramType nType;
@@ -42,6 +43,7 @@ namespace Qualifying_work
                 }
             }
             nType = NonogramType.OnlyILL;
+            correctPict = new int[rowC, colC];
         }
 
         public int[,] Picture
@@ -49,6 +51,14 @@ namespace Qualifying_work
             get
             {
                 return pict;
+            }
+        }
+
+        public int[,] CorrectPicture
+        {
+            get
+            {
+                return correctPict;
             }
         }
 

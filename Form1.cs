@@ -171,81 +171,17 @@ namespace Qualifying_work
 
         private void CheckIfCorrect()
         {
-            bool ok = true;
-            int rowC = Convert.ToInt32(blocksDescs[0]);
-            int colC = Convert.ToInt32(blocksDescs[1]);
-            int i = 1;
-            int rowNum = -1;
-            while (rowNum < rowC - 1)
+            NTSSWithChecks nt = new NTSSWithChecks(nonogram);
+            int[,] pictToCheck = new int[nonogram.RowCount, nonogram.ColumnCount];
+            for (int i = 0; i < nonogram.RowCount; i++)
             {
-                i++;
-                rowNum++;
-                if (!ok)
+                for (int j = 0; j < nonogram.ColumnCount; j++)
                 {
-                    continue;
+                    pictToCheck[i, j] = dgvMain[j, i].Style.BackColor == Color.Black ? 1 : 0;
                 }
-                int k = -1;
-                int rowBlockCount = Convert.ToInt32(blocksDescs[i]);
-                for (int j = 0; j < rowBlockCount; j++)
-                {
-                    i++;
-                    int currBlockLength = Convert.ToInt32(blocksDescs[i]);
-                    int blackCount = 0;
+            }
 
-                    while (blackCount < currBlockLength)
-                    {
-                        k++;
-                        if (k >= colC)
-                        {
-                            break;
-                        }
-                        if (dgvMain[k, rowNum].Style.BackColor == Color.Black)
-                        {
-                            blackCount++;
-                        }
-                    }
-                    if (blackCount != currBlockLength)
-                    {
-                        ok = false;
-                        break;
-                    }
-                }
-            }
-            int colNum = -1;
-            while (colNum < colC - 1)
-            {
-                i++;
-                colNum++;
-                if (!ok)
-                {
-                    continue;
-                }
-                int k = -1;
-                int colBlockCount = Convert.ToInt32(blocksDescs[i]);
-                for (int j = 0; j < colBlockCount; j++)
-                {
-                    i++;
-                    int currBlockLength = Convert.ToInt32(blocksDescs[i]);
-                    int blackCount = 0;
-                    while (blackCount < currBlockLength)
-                    {
-                        k++;
-                        if (k >= rowC)
-                        {
-                            break;
-                        }
-                        if (dgvMain[colNum, k].Style.BackColor == Color.Black)
-                        {
-                            blackCount++;
-                        }
-                    }
-                    if (blackCount != currBlockLength)
-                    {
-                        ok = false;
-                        break;
-                    }
-                }                
-            }
+            bool ok = nt.CheckByLines(pictToCheck);
             if (ok)
             {
                 if (comboBoxPMode.SelectedIndex == 0)

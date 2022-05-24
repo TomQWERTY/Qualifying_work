@@ -8,7 +8,7 @@ namespace Qualifying_work
 {
     public static class AutoSolve
     {
-        private static List<int[,]> copies = new List<int[,]>();
+        private static Stack<int[,]> copies = new Stack<int[,]>();
         private static int[,] solutionStorage;
 
         public static void Solve(Nonogram nonogram)
@@ -55,15 +55,15 @@ namespace Qualifying_work
             else//[i, j] is unknown
             {
                 if (nonogram.NonType == NonogramType.OnlyILL) nonogram.NonType = NonogramType.NeedBacktracking;
-                copies.Add(new int[nonogram.RowCount, nonogram.ColumnCount]);
-                Array.Copy(nonogram.Picture, copies.Last(), nonogram.Picture.Length);//to check 0 and 1 with the same pict
+                copies.Push(new int[nonogram.RowCount, nonogram.ColumnCount]);
+                Array.Copy(nonogram.Picture, copies.Peek(), nonogram.Picture.Length);//to check 0 and 1 with the same pict
                 nonogram.Picture[i, j] = 0;//maybe it is 0
                 needRefresh[0][i] = true;
                 needRefresh[1][j] = true;
                 Try(nonogram, i, j, needRefresh, ref solFound);
                 if (nonogram.NonType == NonogramType.FewSolutions) return;//because nonograms with few solutions banned
-                Array.Copy(copies.Last(), nonogram.Picture, copies.Last().Length);
-                copies.Remove(copies.Last());
+                Array.Copy(copies.Peek(), nonogram.Picture, copies.Peek().Length);
+                copies.Pop();
                 nonogram.Picture[i, j] = 1;//maybe it is 1
                 needRefresh[0][i] = true;
                 needRefresh[1][j] = true;
