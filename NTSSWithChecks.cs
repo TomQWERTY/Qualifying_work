@@ -13,34 +13,6 @@ namespace Qualifying_work
             SolveEntire();
         }
 
-        public bool CheckByPict(int[,] pictToCheck)
-        {
-            bool ok = true;
-            for (int i = 0; i < nonogram.RowCount; i++)
-            {
-                for (int j = 0; j < nonogram.ColumnCount; j++)
-                {
-                    if (pictToCheck[i, j] != nonogram.CorrectPicture[i, j])
-                    {
-                        ok = false;
-                        break;
-                    }
-                }
-                if (!ok) break;
-            }
-            return ok;
-        }
-
-        public bool CheckCell(int i, int j)
-        {
-            bool ok = true;
-            if (nonogram.CorrectPicture[i, j] == 0)
-            {
-                ok = false;
-            }
-            return ok;
-        }
-
         public override int ChangeCell(int i, int j, int newVal)
         {
             if (newVal != 1)
@@ -74,11 +46,6 @@ namespace Qualifying_work
 
             base.ChangeCell(i, j, newVal);
             return (row[j] == 1 || col[i] == 1) ? 0 : 1;
-        }
-
-        private void SolveEntire()
-        {
-            AutoSolve.Solve(nonogram);
         }
     }
 }

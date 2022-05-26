@@ -95,7 +95,7 @@ namespace Qualifying_work
             dgvMain.Left = dgvColDesc.Left;
             dgvMain.Top = dgvRowDesc.Top;
             this.Width = dgvMain.Left + dgvMain.Width + 25;
-            this.Height = Math.Max(dgvMain.Top + dgvMain.Height + 70, 330);
+            this.Height = Math.Max(dgvMain.Top + dgvMain.Height + 70, groupBox2.Top + groupBox2.Height + 70);
         }
 
         private void ClearDgvs()
@@ -125,7 +125,7 @@ namespace Qualifying_work
 
         private void dgvMain_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            int newVal = dgvMain[e.ColumnIndex, e.RowIndex].Style.BackColor != Color.Black ? 1 : 0;
+            int newVal = dgvMain[e.ColumnIndex, e.RowIndex].Style.BackColor != Color.Black ? 1 : 2;
             int opStatus = ses.ChangeCell(e.RowIndex, e.ColumnIndex, newVal);
             if (opStatus == 3 || opStatus == 0 || opStatus == 1)
             {
@@ -217,28 +217,18 @@ namespace Qualifying_work
             dgvMain.ClearSelection();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void buttonHint_Click(object sender, EventArgs e)
         {
-            /*AutoSolve.Solve(ses.NGram);
-            int[,] sol = ses.NGram.CorrectPicture;
-            for (int i1 = 0; i1 < dgvMain.RowCount; i1++)
+            int[] cell = (ses as NTSSWithHints).OpenCell();
+            if (cell[0] != -1)
             {
-                for (int j1 = 0; j1 < dgvMain.ColumnCount; j1++)
-                {
-                    if (sol[i1, j1] == 1)
-                    //if (Convert.ToBoolean(currSol.Rows[i1][j1]))
-                    {
-                        dgvMain[j1, i1].Style.BackColor = Color.Black;
-                    }
-                    else if (sol[i1, j1] == 2)
-                    {
-                        dgvMain[j1, i1].Style.BackColor = Color.DarkGray;
-                    }
-                }
-            }*/
-            Array.Copy(ses.NGram.CorrectPicture, ses.NGram.Picture, ses.NGram.CorrectPicture.Length);
-            CheckIfCorrect();
-            //int a = 0;
+                dgvMain[cell[1], cell[0]].Style.BackColor = Color.Black;
+                ses.ChangeCell(cell[0], cell[1], 1);
+            }
+            else
+            {
+                MessageBox.Show("All cells are already colored!");
+            }
         }
 
         private void dgvMain_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
@@ -269,6 +259,17 @@ namespace Qualifying_work
             {
                 ses = new NTSSWithChecks(ses.NGram);
             }
+            if (comboBoxDiff.SelectedIndex == 0)
+            {
+                ses = new NTSSWithHints(ses.NGram);
+                groupBox2.Height = 83;
+                buttonHint.Visible = true;
+            }
+            else
+            {
+                groupBox2.Height = 54;
+                buttonHint.Visible = false;
+            }
         }
 
         private void solveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -280,6 +281,7 @@ namespace Qualifying_work
             dgvColDesc.ForeColor = Color.Silver;
             dgvRowDesc.ForeColor = Color.Silver;
             groupBox1.Enabled = true;
+            groupBox2.Enabled = false;
             if (comboBoxPMode.SelectedIndex == 1)
             {
                 solTime = 0;
@@ -341,6 +343,30 @@ namespace Qualifying_work
             //FormRecords formR = new FormRecords(npg);
             //formR.ShowDialog();
             toolStripStatusLabelScore2.Visible = false;
+        }
+
+        private void testToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            /*AutoSolve.Solve(ses.NGram);
+            int[,] sol = ses.NGram.CorrectPicture;
+            for (int i1 = 0; i1 < dgvMain.RowCount; i1++)
+            {
+                for (int j1 = 0; j1 < dgvMain.ColumnCount; j1++)
+                {
+                    if (sol[i1, j1] == 1)
+                    //if (Convert.ToBoolean(currSol.Rows[i1][j1]))
+                    {
+                        dgvMain[j1, i1].Style.BackColor = Color.Black;
+                    }
+                    else if (sol[i1, j1] == 2)
+                    {
+                        dgvMain[j1, i1].Style.BackColor = Color.DarkGray;
+                    }
+                }
+            }*/
+            Array.Copy(ses.NGram.CorrectPicture, ses.NGram.Picture, ses.NGram.CorrectPicture.Length);
+            CheckIfCorrect();
+            //int a = 0;
         }
     }
 }

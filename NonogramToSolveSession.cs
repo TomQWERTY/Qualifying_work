@@ -10,7 +10,7 @@ namespace Qualifying_work
     {
         public NonogramToSolveSession(Nonogram n_) : base(n_) { }
 
-        public bool CheckByLines(int[,] pictToCheck)
+        public virtual bool CheckByLines(int[,] pictToCheck)
         {
             bool ok = true;
             int rowC = nonogram.RowCount;
@@ -92,6 +92,39 @@ namespace Qualifying_work
         {
             nonogram.Picture[i, j] = newVal;
             return 3;
+        }
+
+        public bool CheckByPict(int[,] pictToCheck)
+        {
+            bool ok = true;
+            for (int i = 0; i < nonogram.RowCount; i++)
+            {
+                for (int j = 0; j < nonogram.ColumnCount; j++)
+                {
+                    if (pictToCheck[i, j] != nonogram.CorrectPicture[i, j])
+                    {
+                        ok = false;
+                        break;
+                    }
+                }
+                if (!ok) break;
+            }
+            return ok;
+        }
+
+        public bool CheckCell(int i, int j)
+        {
+            bool ok = true;
+            if (nonogram.CorrectPicture[i, j] == 0)
+            {
+                ok = false;
+            }
+            return ok;
+        }
+
+        protected void SolveEntire()
+        {
+            AutoSolve.Solve(nonogram);
         }
     }
 }

@@ -23,10 +23,10 @@ namespace Qualifying_work
             else
             {
                 Array.Copy(nonogram.Picture, nonogram.CorrectPicture, nonogram.Picture.Length);
-                for (int i = 0; i < nonogram.RowCount; i++)
-                    for (int j = 0; j < nonogram.ColumnCount; j++)
-                        nonogram.Picture[i, j] = 2;
             }
+            for (int i = 0; i < nonogram.RowCount; i++)
+                for (int j = 0; j < nonogram.ColumnCount; j++)
+                    nonogram.Picture[i, j] = 2;
         }
 
         private static void Try(Nonogram nonogram, int i, int j, bool[][] needRefresh, ref bool solFound)
@@ -267,7 +267,7 @@ namespace Qualifying_work
             return true;
         }
 
-        public static bool AnalyzeLine(int[] cells, Line[][] lines, int kind, int lineNum)
+        public static int AnalyzeLine(int[] cells, Line[][] lines, int kind, int lineNum)
         {
             const int nondef = -1;
             int lineLength = lines[kind * (-1) + 1].Length;
@@ -343,7 +343,7 @@ namespace Qualifying_work
 
             //backway to get know states of some *2* symbols
 
-            if (map[freeZeros, posCount - 1] == 0) return false;//cant reach last position
+            //if (map[freeZeros, posCount - 1] == 0) return false;//cant reach last position
             for (int i = lineLength; i >= 1; i--)//check all input symbols
             {
                 int jMin = i - freeZeros;//the same
@@ -387,6 +387,7 @@ namespace Qualifying_work
                         if (canOne)
                         {
                             cells[i - 1] = 1;
+                            return i - 1;
                         }
                         else
                         {
@@ -395,7 +396,7 @@ namespace Qualifying_work
                     }
                 }
             }
-            return true;
+            return -1;
         }
     }
 }

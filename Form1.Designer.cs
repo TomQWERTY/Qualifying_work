@@ -30,9 +30,9 @@ namespace Qualifying_work
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvColDesc = new System.Windows.Forms.DataGridView();
             this.buttonReady = new System.Windows.Forms.Button();
             this.dgvRowDesc = new System.Windows.Forms.DataGridView();
@@ -42,7 +42,7 @@ namespace Qualifying_work
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.comboBoxPMode = new System.Windows.Forms.ComboBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.buttonHint = new System.Windows.Forms.Button();
             this.startButton = new System.Windows.Forms.Button();
             this.comboBoxDiff = new System.Windows.Forms.ComboBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -51,11 +51,12 @@ namespace Qualifying_work
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.solveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.recordsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.accountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logInToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logOutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.signUpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.recordsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabelScore = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabelScore2 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -84,14 +85,14 @@ namespace Qualifying_work
             this.dgvColDesc.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvColDesc.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvColDesc.ColumnHeadersVisible = false;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 9F);
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvColDesc.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Segoe UI", 9F);
+            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvColDesc.DefaultCellStyle = dataGridViewCellStyle10;
             this.dgvColDesc.Enabled = false;
             this.dgvColDesc.Location = new System.Drawing.Point(91, 27);
             this.dgvColDesc.MultiSelect = false;
@@ -124,14 +125,14 @@ namespace Qualifying_work
             this.dgvRowDesc.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvRowDesc.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvRowDesc.ColumnHeadersVisible = false;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvRowDesc.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvRowDesc.DefaultCellStyle = dataGridViewCellStyle11;
             this.dgvRowDesc.Enabled = false;
             this.dgvRowDesc.Location = new System.Drawing.Point(106, 108);
             this.dgvRowDesc.MultiSelect = false;
@@ -154,14 +155,14 @@ namespace Qualifying_work
             this.dgvMain.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvMain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvMain.ColumnHeadersVisible = false;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI", 9F);
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Transparent;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvMain.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle12.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Segoe UI", 9F);
+            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.Color.Transparent;
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvMain.DefaultCellStyle = dataGridViewCellStyle12;
             this.dgvMain.Enabled = false;
             this.dgvMain.Location = new System.Drawing.Point(322, 27);
             this.dgvMain.MultiSelect = false;
@@ -205,15 +206,16 @@ namespace Qualifying_work
             this.comboBoxPMode.Size = new System.Drawing.Size(75, 21);
             this.comboBoxPMode.TabIndex = 11;
             // 
-            // button1
+            // buttonHint
             // 
-            this.button1.Location = new System.Drawing.Point(6, 48);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 12;
-            this.button1.Text = "test";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.buttonHint.Location = new System.Drawing.Point(6, 48);
+            this.buttonHint.Name = "buttonHint";
+            this.buttonHint.Size = new System.Drawing.Size(75, 23);
+            this.buttonHint.TabIndex = 12;
+            this.buttonHint.Text = "Open cell";
+            this.buttonHint.UseVisualStyleBackColor = true;
+            this.buttonHint.Visible = false;
+            this.buttonHint.Click += new System.EventHandler(this.buttonHint_Click);
             // 
             // startButton
             // 
@@ -245,10 +247,11 @@ namespace Qualifying_work
             this.solveToolStripMenuItem,
             this.createToolStripMenuItem,
             this.recordsToolStripMenuItem,
-            this.accountToolStripMenuItem});
+            this.accountToolStripMenuItem,
+            this.testToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(328, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(325, 24);
             this.menuStrip1.TabIndex = 16;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -289,6 +292,13 @@ namespace Qualifying_work
             this.createToolStripMenuItem.Text = "Create";
             this.createToolStripMenuItem.Click += new System.EventHandler(this.createToolStripMenuItem_Click);
             // 
+            // recordsToolStripMenuItem
+            // 
+            this.recordsToolStripMenuItem.Name = "recordsToolStripMenuItem";
+            this.recordsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.recordsToolStripMenuItem.Text = "Records";
+            this.recordsToolStripMenuItem.Click += new System.EventHandler(this.recordsToolStripMenuItem_Click);
+            // 
             // accountToolStripMenuItem
             // 
             this.accountToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -302,28 +312,28 @@ namespace Qualifying_work
             // logInToolStripMenuItem
             // 
             this.logInToolStripMenuItem.Name = "logInToolStripMenuItem";
-            this.logInToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.logInToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.logInToolStripMenuItem.Text = "Log In";
             // 
             // logOutToolStripMenuItem
             // 
             this.logOutToolStripMenuItem.Name = "logOutToolStripMenuItem";
-            this.logOutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.logOutToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.logOutToolStripMenuItem.Text = "Log Out";
             this.logOutToolStripMenuItem.Visible = false;
             // 
             // signUpToolStripMenuItem
             // 
             this.signUpToolStripMenuItem.Name = "signUpToolStripMenuItem";
-            this.signUpToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.signUpToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.signUpToolStripMenuItem.Text = "Sign Up";
             // 
-            // recordsToolStripMenuItem
+            // testToolStripMenuItem
             // 
-            this.recordsToolStripMenuItem.Name = "recordsToolStripMenuItem";
-            this.recordsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
-            this.recordsToolStripMenuItem.Text = "Records";
-            this.recordsToolStripMenuItem.Click += new System.EventHandler(this.recordsToolStripMenuItem_Click);
+            this.testToolStripMenuItem.Name = "testToolStripMenuItem";
+            this.testToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
+            this.testToolStripMenuItem.Text = "Test";
+            this.testToolStripMenuItem.Click += new System.EventHandler(this.testToolStripMenuItem_Click);
             // 
             // statusStrip1
             // 
@@ -334,7 +344,7 @@ namespace Qualifying_work
             this.toolStripStatusLabelTime2});
             this.statusStrip1.Location = new System.Drawing.Point(0, 269);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(328, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(325, 22);
             this.statusStrip1.TabIndex = 17;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -395,11 +405,11 @@ namespace Qualifying_work
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.buttonReady);
-            this.groupBox2.Controls.Add(this.button1);
+            this.groupBox2.Controls.Add(this.buttonHint);
             this.groupBox2.Enabled = false;
             this.groupBox2.Location = new System.Drawing.Point(10, 175);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(88, 83);
+            this.groupBox2.Size = new System.Drawing.Size(88, 54);
             this.groupBox2.TabIndex = 21;
             this.groupBox2.TabStop = false;
             // 
@@ -407,7 +417,7 @@ namespace Qualifying_work
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(328, 291);
+            this.ClientSize = new System.Drawing.Size(325, 291);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.statusStrip1);
@@ -446,7 +456,7 @@ namespace Qualifying_work
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.ComboBox comboBoxPMode;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonHint;
         private System.Windows.Forms.Button startButton;
         private System.Windows.Forms.ComboBox comboBoxDiff;
         private System.Windows.Forms.MenuStrip menuStrip1;
@@ -469,6 +479,7 @@ namespace Qualifying_work
         private System.Windows.Forms.Label labelDiff;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.ToolStripMenuItem testToolStripMenuItem;
     }
 }
 
