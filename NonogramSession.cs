@@ -22,5 +22,10 @@ namespace Qualifying_work
                 return nonogram;
             }
         }
+
+        protected void SolveEntire()
+        {
+            AutoSolve.Solve(nonogram);
+        }
     }
 }

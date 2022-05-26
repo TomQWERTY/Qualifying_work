@@ -121,10 +121,5 @@ namespace Qualifying_work
             }
             return ok;
         }
-
-        protected void SolveEntire()
-        {
-            AutoSolve.Solve(nonogram);
-        }
     }
 }

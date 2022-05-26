@@ -19,7 +19,7 @@ namespace Qualifying_work
         public int[] OpenCell()
         {
             Random rnd = new Random();
-            if (nonogram.NonType == NonogramType.OnlyILL)
+            if (nonogram.Type == NonogramType.OnlyILL)
             {
                 int lineCount = nonogram.Lines[0].Length;
                 int lineNum = rnd.Next(0, lineCount);
@@ -122,7 +122,7 @@ namespace Qualifying_work
                 if (CheckCell(i, j))
                 {
                     base.ChangeCell(i, j, newVal);
-                    if (nonogram.NonType == NonogramType.OnlyILL)
+                    if (nonogram.Type == NonogramType.OnlyILL)
                     {
                         int[] row = new int[nonogram.ColumnCount];
                         int[] col = new int[nonogram.RowCount];

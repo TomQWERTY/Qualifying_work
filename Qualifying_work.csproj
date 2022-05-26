@@ -113,6 +113,7 @@
     <Compile Include="Line.cs" />
     <Compile Include="Nonogram.cs" />
     <Compile Include="NonogramSession.cs" />
+    <Compile Include="NonogramToAddSession.cs" />
     <Compile Include="NonogramToSolveSession.cs" />
     <Compile Include="Npg.cs" />
     <Compile Include="NTSSWithChecks.cs" />

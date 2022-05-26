@@ -15,6 +15,7 @@ namespace Qualifying_work
     {
         const int cellSize = 25;
         Npg npg;
+        NonogramToAddSession ses;
 
         public FormCreateN(Npg npg_)
         {
@@ -78,11 +79,9 @@ namespace Qualifying_work
 
         private void insertNButton_Click(object sender, EventArgs e)
         {
-            StringBuilder sb = new StringBuilder();
-            sb.Append(dgv.RowCount);
-            sb.Append(", ");
-            sb.Append(dgv.ColumnCount);
-            sb.Append(", ");
+            List<int> bD = new List<int>();
+            bD.Add(dgv.RowCount);
+            bD.Add(dgv.ColumnCount);
             for (int i = 0; i < dgv.RowCount; i++)
             {
                 List<int> blocksLengths = new List<int>();
@@ -104,12 +103,10 @@ namespace Qualifying_work
                         }
                     }
                 }
-                sb.Append(blockNum + 1);
-                sb.Append(", ");
+                bD.Add(blockNum + 1);
                 foreach (int blLen in blocksLengths)
                 {
-                    sb.Append(blLen);
-                    sb.Append(", ");
+                    bD.Add(blLen);
                 }
             }
             for (int j = 0; j < dgv.ColumnCount; j++)
@@ -133,18 +130,17 @@ namespace Qualifying_work
                         }
                     }
                 }
-                sb.Append(blockNum + 1);
-                sb.Append(", ");
+                bD.Add(blockNum + 1);
                 foreach (int blLen in blocksLengths)
                 {
-                    sb.Append(blLen);
-                    sb.Append(", ");
+                    bD.Add(blLen);
                 }
-            }
-            sb.Remove(sb.Length - 2, 2);
-            npg.StartWork();
-            npg.Query("insert into nonograms(blocks_descriptions) values(array[" + sb + "])");
-            npg.FinishWork();
+            }            
+            ses = new NonogramToAddSession(new Nonogram(bD.ToArray()));
+            MessageBox.Show(ses.NonType.ToString());
+            /*npg.StartWork();
+            npg.Query("insert into nonograms(blocks_descriptions) values(array[" + ses.NGram.ToString() + "])");
+            npg.FinishWork();*/
         }
 
         private void dgv_CellMouseEnter(object sender, DataGridViewCellEventArgs e)

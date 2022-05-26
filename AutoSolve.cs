@@ -13,6 +13,7 @@ namespace Qualifying_work
 
         public static void Solve(Nonogram nonogram)
         {
+            nonogram.Type = NonogramType.OnlyILL;
             bool[][] needRefresh = new bool[2][];
             needRefresh[0] = Enumerable.Repeat(true, nonogram.RowCount).ToArray();
             needRefresh[1] = Enumerable.Repeat(true, nonogram.ColumnCount).ToArray();
@@ -47,11 +48,11 @@ namespace Qualifying_work
             }
             if (i >= nonogram.RowCount)//all cells have known states
             {
-                if (solFound) nonogram.NonType = NonogramType.FewSolutions;
+                if (solFound) nonogram.Type = NonogramType.FewSolutions;
                 else
                 {
                     solFound = true;
-                    if (nonogram.NonType == NonogramType.NeedBacktracking)
+                    if (nonogram.Type == NonogramType.NeedBacktracking)
                     {
                         solutionStorage = new int[nonogram.RowCount, nonogram.ColumnCount];
                         Array.Copy(nonogram.Picture, solutionStorage, nonogram.Picture.Length);//becaues pict will be changed while looking for other sols
@@ -61,14 +62,14 @@ namespace Qualifying_work
             }
             else//[i, j] is unknown
             {
-                if (nonogram.NonType == NonogramType.OnlyILL) nonogram.NonType = NonogramType.NeedBacktracking;
+                if (nonogram.Type == NonogramType.OnlyILL) nonogram.Type = NonogramType.NeedBacktracking;
                 copies.Push(new int[nonogram.RowCount, nonogram.ColumnCount]);
                 Array.Copy(nonogram.Picture, copies.Peek(), nonogram.Picture.Length);//to check 0 and 1 with the same pict
                 nonogram.Picture[i, j] = 0;//maybe it is 0
                 needRefresh[0][i] = true;
                 needRefresh[1][j] = true;
                 Try(nonogram, i, j, needRefresh, ref solFound);
-                if (nonogram.NonType == NonogramType.FewSolutions) return;//because nonograms with few solutions banned
+                if (nonogram.Type == NonogramType.FewSolutions) return;//because nonograms with few solutions banned
                 Array.Copy(copies.Peek(), nonogram.Picture, copies.Peek().Length);
                 copies.Pop();
                 nonogram.Picture[i, j] = 1;//maybe it is 1

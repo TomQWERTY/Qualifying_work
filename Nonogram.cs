@@ -42,7 +42,7 @@ namespace Qualifying_work
                     lines[1][currLine - rowC] = new Line(blL);
                 }
             }
-            nType = NonogramType.OnlyILL;
+            nType = NonogramType.Unknown;
             correctPict = new int[rowC, colC];
         }
 
@@ -86,7 +86,7 @@ namespace Qualifying_work
             }
         }
 
-        public NonogramType NonType
+        public NonogramType Type
         {
             get
             {
@@ -97,10 +97,22 @@ namespace Qualifying_work
                 nType = value;
             }
         }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (int i in blocksDescriptions)
+            {
+                sb.Append(i);
+                sb.Append(", ");
+            }
+            sb.Remove(sb.Length - 2, 2);
+            return sb.ToString();
+        }
     }
 
     public enum NonogramType
     {
-        OnlyILL, NeedBacktracking, FewSolutions
+        OnlyILL, NeedBacktracking, FewSolutions, Unknown
     }
 }
