@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Qualifying_work
 {
-    abstract class NonogramSession
+    abstract public class NonogramSession
     {
         protected Nonogram nonogram;
 

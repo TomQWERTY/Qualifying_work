@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Qualifying_work
 {
-    class NonogramToSolveSession : NonogramSession
+    public class NonogramToSolveSession : NonogramSession
     {
         public NonogramToSolveSession(Nonogram n_) : base(n_) { }
 

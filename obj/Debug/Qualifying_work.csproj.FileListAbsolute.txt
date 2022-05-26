@@ -134,3 +134,4 @@ E:\Univer\duplom\Qualifying_work\obj\Debug\Qualifying_work.csproj.CopyComplete
 E:\Univer\duplom\Qualifying_work\obj\Debug\Qualifying_work.exe
 E:\Univer\duplom\Qualifying_work\obj\Debug\Qualifying_work.pdb
 E:\Univer\duplom\Qualifying_work\obj\Debug\Qualifying_work.FormCreateN.resources
+E:\Univer\duplom\Qualifying_work\obj\Debug\Qualifying_work.DownloaderForm.resources

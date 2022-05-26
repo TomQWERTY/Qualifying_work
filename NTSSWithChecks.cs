@@ -63,6 +63,15 @@ namespace Qualifying_work
             }
             AutoSolve.AnalyzeLine(row, nonogram.Lines, 0, i);
             AutoSolve.AnalyzeLine(col, nonogram.Lines, 1, j);
+            for (int i1 = 0; i1 < nonogram.RowCount; i1++)
+            {
+                if (col[i1] == 0) nonogram.Picture[i1, j] = 0;
+            }
+            for (int j1 = 0; j1 < nonogram.ColumnCount; j1++)
+            {
+                if (row[j1] == 0) nonogram.Picture[i, j1] = 0;
+            }
+
             base.ChangeCell(i, j, newVal);
             return (row[j] == 1 || col[i] == 1) ? 0 : 1;
         }

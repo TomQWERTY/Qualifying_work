@@ -15,13 +15,11 @@ namespace Qualifying_work
     public partial class Form1 : Form
     {
         const int cellSize = 25;
-        Npg npg;
+        public Npg npg;
         int solTime;
         int cNum;
         string time;
-        int[] blocksDescs;
-        Nonogram nonogram;
-        NonogramToSolveSession ses;
+        public NonogramToSolveSession ses;
 
         public Form1(string username_)
         {
@@ -34,8 +32,9 @@ namespace Qualifying_work
             ResizeDgvs(2, 2, 5, 5);
             cNum = 0;
             time = "";
-            labelUser.Text = username_;
+            //labelUser.Text = username_;
             comboBoxPMode.SelectedIndex = 0;
+            comboBoxDiff.SelectedIndex = 2;
         }
 
         private void ResizeDgvs(int maxRowB, int maxColB, int newCC, int newRC)
@@ -124,18 +123,6 @@ namespace Qualifying_work
             }
         }
 
-        private void buttonDownload_Click(object sender, EventArgs e)
-        {
-            Download();
-            if (comboBoxPMode.SelectedIndex == 1)
-            {
-                solTime = 0;
-                timer1.Interval = 1000;
-                timer1.Start();
-                timerLabel.Text = "00:00:00";
-            }
-        }
-
         private void dgvMain_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             int newVal = dgvMain[e.ColumnIndex, e.RowIndex].Style.BackColor != Color.Black ? 1 : 0;
@@ -163,17 +150,7 @@ namespace Qualifying_work
 
         private void CheckIfCorrect()
         {
-            NTSSWithChecks nt = new NTSSWithChecks(nonogram);
-            int[,] pictToCheck = new int[nonogram.RowCount, nonogram.ColumnCount];
-            for (int i = 0; i < nonogram.RowCount; i++)
-            {
-                for (int j = 0; j < nonogram.ColumnCount; j++)
-                {
-                    pictToCheck[i, j] = dgvMain[j, i].Style.BackColor == Color.Black ? 1 : 0;
-                }
-            }
-
-            bool ok = nt.CheckByLines(pictToCheck);
+            bool ok = ses.CheckByLines(ses.NGram.Picture);
             if (ok)
             {
                 if (comboBoxPMode.SelectedIndex == 0)
@@ -189,7 +166,7 @@ namespace Qualifying_work
                     int[] currRec = Array.ConvertAll(readTime.Split(':'), Convert.ToInt32);
                     if (solTime < currRec[0] * 3600 + currRec[1] * 60 + currRec[2])
                     {
-                        npg.Query("update records set r_time = \'" + time + "\', username = \'" + labelUser.Text + "\' where n_name = \'" + cNum + "\'");
+                        //npg.Query("update records set r_time = \'" + time + "\', username = \'" + labelUser.Text + "\' where n_name = \'" + cNum + "\'");
                         MessageBox.Show("Вітаємо, Ви встановили новий рекорд! Колишній рекорд: " + readTime);
                     }
                     npg.FinishWork();
@@ -215,89 +192,35 @@ namespace Qualifying_work
             timerLabel.Text = time;
         }
 
-        private void buttonRecords_Click(object sender, EventArgs e)
+        private void MatchDgvs()
         {
-            //FormRecords formR = new FormRecords(npg);
-            //formR.ShowDialog();
-        }
-
-        private void buttonWrite_Click(object sender, EventArgs e)
-        {
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                string address = saveFileDialog1.FileName;
-                StreamWriter strwr = new StreamWriter(address);
-                strwr.WriteLine(cNum);
-                for (int i = 0; i < dgvMain.RowCount; i++)
-                {
-                    for (int j = 0; j < dgvMain.ColumnCount; j++)
-                    {
-                        strwr.Write(dgvMain[j, i].Style.BackColor == Color.Black ? '1' : '0');
-                    }
-                    strwr.WriteLine();
-                }
-                strwr.Close();
-            }
-        }
-
-        private void Download()
-        {
-            npg.StartWork();
+            int maxRowB = ses.NGram.Lines[0].Max().BlockCount;
+            int maxColB = ses.NGram.Lines[1].Max().BlockCount;
             ClearDgvs();
-            var temp_ = npg.Query("select blocks_descriptions from nonograms where idK=" + ++cNum).Rows[0].ItemArray[0];
-            blocksDescs = (int[])temp_;
-            npg.FinishWork();
-            ses = new NonogramToSolveSession(new Nonogram(blocksDescs));
-            
-            nonogram = new Nonogram(blocksDescs);
-            int maxRowB = nonogram.Lines[0].Max().BlockCount;
-            int maxColB = nonogram.Lines[1].Max().BlockCount;
-            ResizeDgvs(maxRowB, maxColB, nonogram.ColumnCount, nonogram.RowCount);
-            for (int i = 0; i < nonogram.RowCount; i++)
+            ResizeDgvs(maxRowB, maxColB, ses.NGram.ColumnCount, ses.NGram.RowCount);
+            for (int i = 0; i < ses.NGram.RowCount; i++)
             {
-                int blockCount = nonogram.Lines[0][i].BlockCount;
+                int blockCount = ses.NGram.Lines[0][i].BlockCount;
                 for (int t = 0; t < blockCount; t++)
                 {
-                    dgvRowDesc[maxRowB - blockCount + t, i].Value = nonogram.Lines[0][i].BlocksLengths[t];
+                    dgvRowDesc[maxRowB - blockCount + t, i].Value = ses.NGram.Lines[0][i].BlocksLengths[t];
                 }
             }
-            for (int j = 0; j < nonogram.ColumnCount; j++)
+            for (int j = 0; j < ses.NGram.ColumnCount; j++)
             {
-                int blockCount = nonogram.Lines[1][j].BlockCount;
+                int blockCount = ses.NGram.Lines[1][j].BlockCount;
                 for (int t = 0; t < blockCount; t++)
                 {
-                    dgvColDesc[j, maxColB - blockCount + t].Value = nonogram.Lines[1][j].BlocksLengths[t];
+                    dgvColDesc[j, maxColB - blockCount + t].Value = ses.NGram.Lines[1][j].BlocksLengths[t];
                 }
             }
             dgvMain.ClearSelection();
         }
 
-        private void buttonRead_Click(object sender, EventArgs e)
-        {
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                string address = openFileDialog1.FileName;
-                StreamReader strrd = new StreamReader(address);
-                cNum = Convert.ToInt32(strrd.ReadLine()) - 1;
-                Download();
-                for (int i = 0; i < dgvMain.RowCount; i++)
-                {
-                    string line = strrd.ReadLine();
-                    for (int j = 0; j < dgvMain.ColumnCount; j++)
-                    {
-                        dgvMain[j, i].Style.BackColor = line[j] == '1' ?  Color.Black : Color.Empty;
-                    }
-                }
-                strrd.Close();
-                timer1.Stop();
-                timerLabel.Text = "";
-            }
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
-            AutoSolve.Solve(nonogram);
-            int[,] sol = nonogram.Picture;
+            /*AutoSolve.Solve(ses.NGram);
+            int[,] sol = ses.NGram.CorrectPicture;
             for (int i1 = 0; i1 < dgvMain.RowCount; i1++)
             {
                 for (int j1 = 0; j1 < dgvMain.ColumnCount; j1++)
@@ -312,15 +235,10 @@ namespace Qualifying_work
                         dgvMain[j1, i1].Style.BackColor = Color.DarkGray;
                     }
                 }
-            }
+            }*/
+            Array.Copy(ses.NGram.CorrectPicture, ses.NGram.Picture, ses.NGram.CorrectPicture.Length);
             CheckIfCorrect();
-            int a = 0;
-        }
-
-        private void createNButton_Click(object sender, EventArgs e)
-        {
-            FormCreateN fcn = new FormCreateN(npg);
-            fcn.ShowDialog();
+            //int a = 0;
         }
 
         private void dgvMain_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
@@ -342,11 +260,81 @@ namespace Qualifying_work
 
         private void startButton_Click(object sender, EventArgs e)
         {
-            dgvMain.Enabled = true;
+            dgvMain.Visible = true;
             if (comboBoxDiff.SelectedIndex == 2)
             {
                 ses = new NTSSWithChecks(ses.NGram);
             }
+        }
+
+        private void solveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DownloaderForm df = new DownloaderForm(this);
+            df.ShowDialog();
+            MatchDgvs();
+            //dgvMain.Visible = false;
+            //dgvMain.Color
+            if (comboBoxPMode.SelectedIndex == 1)
+            {
+                solTime = 0;
+                timer1.Interval = 1000;
+                timer1.Start();
+                timerLabel.Text = "00:00:00";
+            }
+        }
+
+        private void createToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormCreateN fcn = new FormCreateN(npg);
+            fcn.ShowDialog();
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                string address = saveFileDialog1.FileName;
+                StreamWriter strwr = new StreamWriter(address);
+                strwr.WriteLine(cNum);
+                for (int i = 0; i < dgvMain.RowCount; i++)
+                {
+                    for (int j = 0; j < dgvMain.ColumnCount; j++)
+                    {
+                        strwr.Write(dgvMain[j, i].Style.BackColor == Color.Black ? '1' : '0');
+                    }
+                    strwr.WriteLine();
+                }
+                strwr.Close();
+            }
+        }
+
+        private void loadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                string address = openFileDialog1.FileName;
+                StreamReader strrd = new StreamReader(address);
+                cNum = Convert.ToInt32(strrd.ReadLine()) - 1;
+                MatchDgvs();
+                for (int i = 0; i < dgvMain.RowCount; i++)
+                {
+                    string line = strrd.ReadLine();
+                    for (int j = 0; j < dgvMain.ColumnCount; j++)
+                    {
+                        dgvMain[j, i].Style.BackColor = line[j] == '1' ? Color.Black : Color.Empty;
+                    }
+                }
+                strrd.Close();
+                timer1.Stop();
+                timerLabel.Text = "";
+            }
+        }
+
+        private void recordsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //FormRecords formR = new FormRecords(npg);
+            //formR.ShowDialog();
+            toolStripStatusLabelScore2.Visible = false;
         }
     }
 }
