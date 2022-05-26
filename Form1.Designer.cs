@@ -30,9 +30,9 @@ namespace Qualifying_work
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvColDesc = new System.Windows.Forms.DataGridView();
             this.buttonReady = new System.Windows.Forms.Button();
             this.dgvRowDesc = new System.Windows.Forms.DataGridView();
@@ -63,11 +63,15 @@ namespace Qualifying_work
             this.toolStripStatusLabelTime2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.labelMode = new System.Windows.Forms.Label();
             this.labelDiff = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvColDesc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRowDesc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // dgvColDesc
@@ -80,14 +84,14 @@ namespace Qualifying_work
             this.dgvColDesc.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvColDesc.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvColDesc.ColumnHeadersVisible = false;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvColDesc.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 9F);
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvColDesc.DefaultCellStyle = dataGridViewCellStyle4;
             this.dgvColDesc.Enabled = false;
             this.dgvColDesc.Location = new System.Drawing.Point(91, 27);
             this.dgvColDesc.MultiSelect = false;
@@ -102,9 +106,9 @@ namespace Qualifying_work
             // 
             // buttonReady
             // 
-            this.buttonReady.Location = new System.Drawing.Point(10, 148);
+            this.buttonReady.Location = new System.Drawing.Point(6, 19);
             this.buttonReady.Name = "buttonReady";
-            this.buttonReady.Size = new System.Drawing.Size(75, 20);
+            this.buttonReady.Size = new System.Drawing.Size(75, 23);
             this.buttonReady.TabIndex = 2;
             this.buttonReady.Text = "Done!";
             this.buttonReady.UseVisualStyleBackColor = true;
@@ -120,16 +124,16 @@ namespace Qualifying_work
             this.dgvRowDesc.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvRowDesc.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvRowDesc.ColumnHeadersVisible = false;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvRowDesc.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvRowDesc.DefaultCellStyle = dataGridViewCellStyle5;
             this.dgvRowDesc.Enabled = false;
-            this.dgvRowDesc.Location = new System.Drawing.Point(91, 102);
+            this.dgvRowDesc.Location = new System.Drawing.Point(106, 108);
             this.dgvRowDesc.MultiSelect = false;
             this.dgvRowDesc.Name = "dgvRowDesc";
             this.dgvRowDesc.ReadOnly = true;
@@ -150,14 +154,15 @@ namespace Qualifying_work
             this.dgvMain.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvMain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvMain.ColumnHeadersVisible = false;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 9F);
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Transparent;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvMain.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI", 9F);
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Transparent;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvMain.DefaultCellStyle = dataGridViewCellStyle6;
+            this.dgvMain.Enabled = false;
             this.dgvMain.Location = new System.Drawing.Point(322, 27);
             this.dgvMain.MultiSelect = false;
             this.dgvMain.Name = "dgvMain";
@@ -195,14 +200,14 @@ namespace Qualifying_work
             this.comboBoxPMode.Items.AddRange(new object[] {
             "Casual",
             "Competitive"});
-            this.comboBoxPMode.Location = new System.Drawing.Point(10, 40);
+            this.comboBoxPMode.Location = new System.Drawing.Point(6, 32);
             this.comboBoxPMode.Name = "comboBoxPMode";
             this.comboBoxPMode.Size = new System.Drawing.Size(75, 21);
             this.comboBoxPMode.TabIndex = 11;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(10, 174);
+            this.button1.Location = new System.Drawing.Point(6, 48);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 12;
@@ -212,7 +217,7 @@ namespace Qualifying_work
             // 
             // startButton
             // 
-            this.startButton.Location = new System.Drawing.Point(10, 107);
+            this.startButton.Location = new System.Drawing.Point(6, 108);
             this.startButton.Name = "startButton";
             this.startButton.Size = new System.Drawing.Size(75, 23);
             this.startButton.TabIndex = 14;
@@ -228,7 +233,7 @@ namespace Qualifying_work
             "With Hints",
             "Standard",
             "With Checks"});
-            this.comboBoxDiff.Location = new System.Drawing.Point(10, 80);
+            this.comboBoxDiff.Location = new System.Drawing.Point(6, 72);
             this.comboBoxDiff.Name = "comboBoxDiff";
             this.comboBoxDiff.Size = new System.Drawing.Size(75, 21);
             this.comboBoxDiff.TabIndex = 15;
@@ -327,7 +332,7 @@ namespace Qualifying_work
             this.toolStripStatusLabelScore2,
             this.toolStripStatusLabelTime,
             this.toolStripStatusLabelTime2});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 363);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 269);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(328, 22);
             this.statusStrip1.TabIndex = 17;
@@ -358,7 +363,7 @@ namespace Qualifying_work
             // labelMode
             // 
             this.labelMode.AutoSize = true;
-            this.labelMode.Location = new System.Drawing.Point(10, 24);
+            this.labelMode.Location = new System.Drawing.Point(6, 16);
             this.labelMode.Name = "labelMode";
             this.labelMode.Size = new System.Drawing.Size(37, 13);
             this.labelMode.TabIndex = 18;
@@ -367,28 +372,48 @@ namespace Qualifying_work
             // labelDiff
             // 
             this.labelDiff.AutoSize = true;
-            this.labelDiff.Location = new System.Drawing.Point(10, 64);
+            this.labelDiff.Location = new System.Drawing.Point(6, 56);
             this.labelDiff.Name = "labelDiff";
             this.labelDiff.Size = new System.Drawing.Size(50, 13);
             this.labelDiff.TabIndex = 19;
             this.labelDiff.Text = "Difficulty:";
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.labelMode);
+            this.groupBox1.Controls.Add(this.labelDiff);
+            this.groupBox1.Controls.Add(this.comboBoxPMode);
+            this.groupBox1.Controls.Add(this.startButton);
+            this.groupBox1.Controls.Add(this.comboBoxDiff);
+            this.groupBox1.Enabled = false;
+            this.groupBox1.Location = new System.Drawing.Point(10, 27);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(88, 142);
+            this.groupBox1.TabIndex = 20;
+            this.groupBox1.TabStop = false;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.buttonReady);
+            this.groupBox2.Controls.Add(this.button1);
+            this.groupBox2.Enabled = false;
+            this.groupBox2.Location = new System.Drawing.Point(10, 175);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(88, 83);
+            this.groupBox2.TabIndex = 21;
+            this.groupBox2.TabStop = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(328, 385);
-            this.Controls.Add(this.labelDiff);
-            this.Controls.Add(this.labelMode);
+            this.ClientSize = new System.Drawing.Size(328, 291);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.comboBoxDiff);
-            this.Controls.Add(this.startButton);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.comboBoxPMode);
             this.Controls.Add(this.timerLabel);
             this.Controls.Add(this.dgvMain);
             this.Controls.Add(this.dgvRowDesc);
-            this.Controls.Add(this.buttonReady);
             this.Controls.Add(this.dgvColDesc);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -402,6 +427,9 @@ namespace Qualifying_work
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -439,6 +467,8 @@ namespace Qualifying_work
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelTime2;
         private System.Windows.Forms.Label labelMode;
         private System.Windows.Forms.Label labelDiff;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBox2;
     }
 }
 

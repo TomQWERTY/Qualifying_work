@@ -94,8 +94,8 @@ namespace Qualifying_work
             dgvColDesc.Left = dgvRowDesc.Left + dgvRowDesc.Width + 5;
             dgvMain.Left = dgvColDesc.Left;
             dgvMain.Top = dgvRowDesc.Top;
-            this.Width = dgvMain.Left + dgvMain.Width + 40;
-            this.Height = Math.Max(dgvMain.Top + dgvMain.Height + 50, 400);
+            this.Width = dgvMain.Left + dgvMain.Width + 25;
+            this.Height = Math.Max(dgvMain.Top + dgvMain.Height + 70, 330);
         }
 
         private void ClearDgvs()
@@ -260,7 +260,11 @@ namespace Qualifying_work
 
         private void startButton_Click(object sender, EventArgs e)
         {
-            dgvMain.Visible = true;
+            dgvMain.Enabled = true;
+            dgvColDesc.ForeColor = Color.Black;
+            dgvRowDesc.ForeColor = Color.Black;
+            groupBox1.Enabled = false;
+            groupBox2.Enabled = true;
             if (comboBoxDiff.SelectedIndex == 2)
             {
                 ses = new NTSSWithChecks(ses.NGram);
@@ -272,8 +276,10 @@ namespace Qualifying_work
             DownloaderForm df = new DownloaderForm(this);
             df.ShowDialog();
             MatchDgvs();
-            //dgvMain.Visible = false;
-            //dgvMain.Color
+            dgvMain.Enabled = false;
+            dgvColDesc.ForeColor = Color.Silver;
+            dgvRowDesc.ForeColor = Color.Silver;
+            groupBox1.Enabled = true;
             if (comboBoxPMode.SelectedIndex == 1)
             {
                 solTime = 0;
