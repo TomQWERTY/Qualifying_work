@@ -11,11 +11,82 @@ namespace Qualifying_work
         protected int[] blocksDescriptions;
         protected int[,] pict;
         protected int[,] correctPict;
+        protected int[,] initialPict;
         protected int rowC, colC;
         protected Line[][] lines;
         protected NonogramType nType;
 
         public Nonogram(int[] blocksDescs)
+        {
+            ConstructorCommon(blocksDescs);
+        }
+
+        public Nonogram(int[,] pict)
+        {
+            initialPict = pict;
+            List<int> bD = new List<int>();
+            int rowC = pict.GetLength(0);
+            int colC = pict.GetLength(1);
+            bD.Add(rowC);
+            bD.Add(colC);
+            for (int i = 0; i < rowC; i++)
+            {
+                List<int> blocksLengths = new List<int>();
+                int blockNum = -1;
+                for (int j = 0; j < colC; j++)
+                {
+                    if (pict[i, j] == 1)
+                    {
+                        blockNum++;
+                        blocksLengths.Add(1);
+                        while (j < colC - 1)
+                        {
+                            j++;
+                            if (pict[i, j] == 1)
+                            {
+                                blocksLengths[blockNum]++;
+                            }
+                            else break;
+                        }
+                    }
+                }
+                bD.Add(blockNum + 1);
+                foreach (int blLen in blocksLengths)
+                {
+                    bD.Add(blLen);
+                }
+            }
+            for (int j = 0; j < colC; j++)
+            {
+                List<int> blocksLengths = new List<int>();
+                int blockNum = -1;
+                for (int i = 0; i < rowC; i++)
+                {
+                    if (pict[i, j] == 1)
+                    {
+                        blockNum++;
+                        blocksLengths.Add(1);
+                        while (i < rowC - 1)
+                        {
+                            i++;
+                            if (pict[i, j] == 1)
+                            {
+                                blocksLengths[blockNum]++;
+                            }
+                            else break;
+                        }
+                    }
+                }
+                bD.Add(blockNum + 1);
+                foreach (int blLen in blocksLengths)
+                {
+                    bD.Add(blLen);
+                }
+            }
+            ConstructorCommon(bD.ToArray());
+        }
+
+        private void ConstructorCommon(int[] blocksDescs)
         {
             blocksDescriptions = blocksDescs;
             rowC = blocksDescriptions[0];
@@ -59,6 +130,14 @@ namespace Qualifying_work
             get
             {
                 return correctPict;
+            }
+        }
+
+        public int[,] InitialPicture
+        {
+            get
+            {
+                return initialPict;
             }
         }
 

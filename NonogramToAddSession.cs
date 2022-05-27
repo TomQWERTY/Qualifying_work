@@ -6,9 +6,14 @@ using System.Threading.Tasks;
 
 namespace Qualifying_work
 {
-    class NonogramToAddSession : NonogramSession
+    public class NonogramToAddSession : NonogramSession
     {
-        public NonogramToAddSession(Nonogram n_) : base(n_) { }
+        private List<Nonogram> modVariants;
+
+        public NonogramToAddSession(Nonogram n_) : base(n_)
+        {
+            modVariants = new List<Nonogram>();
+        }
 
         public NonogramType NonType
         {
@@ -19,6 +24,31 @@ namespace Qualifying_work
                     SolveEntire();
                 }
                 return nonogram.Type;
+            }
+        }
+
+        public void BuildModVariants()
+        {
+            List<int> cellToMod = AutoSolve.GetCellsForMod(nonogram);
+            for (int i = 0; i < cellToMod.Count; i++)
+            {
+                int[,] newPict = new int[nonogram.RowCount, nonogram.ColumnCount];
+                Array.Copy(nonogram.InitialPicture, newPict, nonogram.InitialPicture.Length);
+                newPict[cellToMod[i] / nonogram.ColumnCount, cellToMod[i] % nonogram.ColumnCount] = 
+                    newPict[cellToMod[i] / nonogram.ColumnCount, cellToMod[i] % nonogram.ColumnCount] * (-1) + 1;
+                modVariants.Add(new Nonogram(newPict));
+                if (modVariants.Last().Type == NonogramType.FewSolutions)
+                {
+                    modVariants.Remove(modVariants.Last());
+                }
+            }
+        }
+
+        public List<Nonogram> ModVariants
+        {
+            get
+            {
+                return modVariants;
             }
         }
     }

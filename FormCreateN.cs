@@ -15,7 +15,7 @@ namespace Qualifying_work
     {
         const int cellSize = 25;
         Npg npg;
-        NonogramToAddSession ses;
+        public NonogramToAddSession ses;
 
         public FormCreateN(Npg npg_)
         {
@@ -79,65 +79,33 @@ namespace Qualifying_work
 
         private void insertNButton_Click(object sender, EventArgs e)
         {
-            List<int> bD = new List<int>();
-            bD.Add(dgv.RowCount);
-            bD.Add(dgv.ColumnCount);
+            int[,] pict = new int[dgv.RowCount, dgv.ColumnCount];
             for (int i = 0; i < dgv.RowCount; i++)
             {
-                List<int> blocksLengths = new List<int>();
-                int blockNum = -1;
                 for (int j = 0; j < dgv.ColumnCount; j++)
                 {
-                    if (dgv[j, i].Style.BackColor == Color.Black)
-                    {
-                        blockNum++;
-                        blocksLengths.Add(1);
-                        while (j < dgv.ColumnCount - 1)
-                        {
-                            j++;
-                            if (dgv[j, i].Style.BackColor == Color.Black)
-                            {
-                                blocksLengths[blockNum]++;
-                            }
-                            else break;
-                        }
-                    }
-                }
-                bD.Add(blockNum + 1);
-                foreach (int blLen in blocksLengths)
-                {
-                    bD.Add(blLen);
+                    pict[i, j] = dgv[j, i].Style.BackColor == Color.Black ? 1 : 0;
                 }
             }
-            for (int j = 0; j < dgv.ColumnCount; j++)
+            ses = new NonogramToAddSession(new Nonogram(pict));
+            MessageBox.Show(ses.NonType.ToString());
+            if (ses.NonType == NonogramType.FewSolutions)
             {
-                List<int> blocksLengths = new List<int>();
-                int blockNum = -1;
-                for (int i = 0; i < dgv.RowCount; i++)
+                WantModForm wmf = new WantModForm();
+                if (wmf.ShowDialog() == DialogResult.OK)
                 {
-                    if (dgv[j, i].Style.BackColor == Color.Black)
+                    ses.BuildModVariants();
+                    if (ses.ModVariants.Count > 0)
                     {
-                        blockNum++;
-                        blocksLengths.Add(1);
-                        while (i < dgv.RowCount - 1)
-                        {
-                            i++;
-                            if (dgv[j, i].Style.BackColor == Color.Black)
-                            {
-                                blocksLengths[blockNum]++;
-                            }
-                            else break;
-                        }
+                        ModVarsForm mvForm = new ModVarsForm(this);
+                        mvForm.ShowDialog();
+                    }
+                    else
+                    {
+                        MessageBox.Show("На жаль, дане зображення не вдається модифікувати.");
                     }
                 }
-                bD.Add(blockNum + 1);
-                foreach (int blLen in blocksLengths)
-                {
-                    bD.Add(blLen);
-                }
-            }            
-            ses = new NonogramToAddSession(new Nonogram(bD.ToArray()));
-            MessageBox.Show(ses.NonType.ToString());
+            }
             /*npg.StartWork();
             npg.Query("insert into nonograms(blocks_descriptions) values(array[" + ses.NGram.ToString() + "])");
             npg.FinishWork();*/

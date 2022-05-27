@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Qualifying_work
 {
@@ -11,7 +12,7 @@ namespace Qualifying_work
         private static Stack<int[,]> copies = new Stack<int[,]>();
         private static int[,] solutionStorage;
 
-        public static void Solve(Nonogram nonogram)
+        private static List<int> SolveIns(Nonogram nonogram, bool collect)
         {
             nonogram.Type = NonogramType.OnlyILL;
             bool[][] needRefresh = new bool[2][];
@@ -19,7 +20,8 @@ namespace Qualifying_work
             needRefresh[1] = Enumerable.Repeat(true, nonogram.ColumnCount).ToArray();
             bool solFound = false;
             solutionStorage = null;
-            Try(nonogram, 0, 0, needRefresh, ref solFound);
+            List<int> cellsForMod = new List<int>();
+            Try(nonogram, 0, 0, needRefresh, ref solFound, ref collect, cellsForMod);
             if (solutionStorage != null) Array.Copy(solutionStorage, nonogram.CorrectPicture, solutionStorage.Length);
             else
             {
@@ -28,9 +30,20 @@ namespace Qualifying_work
             for (int i = 0; i < nonogram.RowCount; i++)
                 for (int j = 0; j < nonogram.ColumnCount; j++)
                     nonogram.Picture[i, j] = 2;
+            return cellsForMod;
         }
 
-        private static void Try(Nonogram nonogram, int i, int j, bool[][] needRefresh, ref bool solFound)
+        public static void Solve(Nonogram nonogram)
+        {
+            SolveIns(nonogram, false);
+        }
+
+        public static List<int> GetCellsForMod(Nonogram nonogram)
+        {
+            return SolveIns(nonogram, true);
+        }
+
+        private static void Try(Nonogram nonogram, int i, int j, bool[][] needRefresh, ref bool solFound, ref bool collect, List<int> cellsForMod)
         {
             if (!IterateLineLook(nonogram, needRefresh)) return;
             while (i < nonogram.RowCount && nonogram.Picture[i, j] != 2)
@@ -68,14 +81,15 @@ namespace Qualifying_work
                 nonogram.Picture[i, j] = 0;//maybe it is 0
                 needRefresh[0][i] = true;
                 needRefresh[1][j] = true;
-                Try(nonogram, i, j, needRefresh, ref solFound);
-                if (nonogram.Type == NonogramType.FewSolutions) return;//because nonograms with few solutions banned
+                if (collect && !cellsForMod.Contains(i * nonogram.ColumnCount + j)) cellsForMod.Add(i * nonogram.ColumnCount + j);
+                Try(nonogram, i, j, needRefresh, ref solFound, ref collect, cellsForMod);
+                if (!collect && nonogram.Type == NonogramType.FewSolutions) return;//because nonograms with few solutions banned
                 Array.Copy(copies.Peek(), nonogram.Picture, copies.Peek().Length);
                 copies.Pop();
                 nonogram.Picture[i, j] = 1;//maybe it is 1
                 needRefresh[0][i] = true;
                 needRefresh[1][j] = true;
-                Try(nonogram, i, j, needRefresh, ref solFound);
+                Try(nonogram, i, j, needRefresh, ref solFound, ref collect, cellsForMod);
             }
         }
 
