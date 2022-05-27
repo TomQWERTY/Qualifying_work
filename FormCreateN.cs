@@ -43,6 +43,35 @@ namespace Qualifying_work
             dgv.ClearSelection();
         }
 
+        private void DisplayNonogram()
+        {
+            ClearDgvs();
+            int rowC = ses.NGram.RowCount;
+            int colC = ses.NGram.ColumnCount;
+            for (int i = 0; i < rowC; i++)
+            {
+                for (int j = 0; j < colC; j++)
+                {
+                    if (ses.NGram.InitialPicture[i, j] == 1)
+                    {
+                        dgv[j, i].Style.BackColor = Color.Black;
+                    }
+                }
+            }
+            dgv.ClearSelection();
+        }
+
+        private void ClearDgvs()
+        {
+            for (int i = 0; i < dgv.RowCount; i++)
+            {
+                for (int j = 0; j < dgv.ColumnCount; j++)
+                {
+                    dgv[j, i].Style.BackColor = Color.Empty;
+                }
+            }
+        }
+
         private void ResizeDgvs(int newCC, int newRC)
         {
             int oldRC = dgv.RowCount;
@@ -98,7 +127,10 @@ namespace Qualifying_work
                     if (ses.ModVariants.Count > 0)
                     {
                         ModVarsForm mvForm = new ModVarsForm(this);
-                        mvForm.ShowDialog();
+                        if (mvForm.ShowDialog() == DialogResult.OK)
+                        {
+                            DisplayNonogram();
+                        }
                     }
                     else
                     {

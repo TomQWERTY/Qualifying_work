@@ -36,10 +36,52 @@ namespace Qualifying_work
                 Array.Copy(nonogram.InitialPicture, newPict, nonogram.InitialPicture.Length);
                 newPict[cellToMod[i] / nonogram.ColumnCount, cellToMod[i] % nonogram.ColumnCount] = 
                     newPict[cellToMod[i] / nonogram.ColumnCount, cellToMod[i] % nonogram.ColumnCount] * (-1) + 1;
-                modVariants.Add(new Nonogram(newPict));
-                if (modVariants.Last().Type == NonogramType.FewSolutions)
+                bool causesProblem = false;
+                for (int i1 = 0; i1 < nonogram.RowCount; i1++)
                 {
-                    modVariants.Remove(modVariants.Last());
+                    bool hasOne = false;
+                    for (int j = 0; j < nonogram.ColumnCount; j++)
+                    {
+                        if (newPict[i1, j] == 1)
+                        {
+                            hasOne = true;
+                            break;
+                        }
+                    }
+                    if (!hasOne)
+                    {
+                        causesProblem = true;
+                        break;
+                    }
+                }
+                if (!causesProblem)
+                {
+                    for (int j = 0; j < nonogram.ColumnCount; j++)
+                    {
+                        bool hasOne = false;
+                        for (int i1 = 0; i1 < nonogram.RowCount; i1++)
+                            {
+                            if (newPict[i1, j] == 1)
+                            {
+                                hasOne = true;
+                                break;
+                            }
+                        }
+                        if (!hasOne)
+                        {
+                            causesProblem = true;
+                            break;
+                        }
+                    }
+                }
+                if (!causesProblem)
+                {
+                    modVariants.Add(new Nonogram(newPict));
+                    SolveEntire(modVariants[modVariants.Count - 1]);
+                    if (modVariants[modVariants.Count - 1].Type == NonogramType.FewSolutions)
+                    {
+                        modVariants.Remove(modVariants.Last());
+                    }
                 }
             }
         }
@@ -50,6 +92,16 @@ namespace Qualifying_work
             {
                 return modVariants;
             }
+        }
+
+        public void ModifyNonogram(Nonogram newN)
+        {
+            nonogram = newN;
+        }
+
+        protected void SolveEntire(Nonogram non)
+        {
+            AutoSolve.Solve(non);
         }
     }
 }

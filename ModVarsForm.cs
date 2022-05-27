@@ -31,6 +31,7 @@ namespace Qualifying_work
 
         private void DisplayVar(int num)
         {
+            ClearDgvs();
             int rowC = fcn.ses.NGram.RowCount;
             int colC = fcn.ses.NGram.ColumnCount;
             for (int i = 0; i < rowC; i++)
@@ -43,6 +44,7 @@ namespace Qualifying_work
                     }
                 }
             }
+            dgv[0, 0].Style.SelectionBackColor = dgv[0, 0].Style.BackColor;
             dgv.ClearSelection();
         }
 
@@ -70,7 +72,7 @@ namespace Qualifying_work
             dgv.Width = newCC * cellSize + 4;
             dgv.Height = newRC * cellSize + 4;
 
-            this.Width = dgv.Left + dgv.Width + 40;
+            this.Width = Math.Max(dgv.Left + dgv.Width + 40, 322);
             this.Height = Math.Max(dgv.Top + dgv.Height + 50, 289);
             dgv.ClearSelection();
         }
@@ -89,7 +91,6 @@ namespace Qualifying_work
         private void buttonPrev_Click(object sender, EventArgs e)
         {
             currVar--;
-            ClearDgvs();
             DisplayVar(currVar);
             CheckButtons();
         }
@@ -97,7 +98,6 @@ namespace Qualifying_work
         private void buttonNext_Click(object sender, EventArgs e)
         {
             currVar++;
-            ClearDgvs();
             DisplayVar(currVar);
             CheckButtons();
         }
@@ -120,6 +120,12 @@ namespace Qualifying_work
             {
                 buttonNext.Enabled = true;
             }
+        }
+
+        private void buttonOK_Click(object sender, EventArgs e)
+        {
+            fcn.ses.ModifyNonogram(vars[currVar]);
+            this.DialogResult = DialogResult.OK;
         }
     }
 }
