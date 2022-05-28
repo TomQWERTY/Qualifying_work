@@ -107,13 +107,7 @@ namespace Qualifying_work
 
         private void ClearDgvs()
         {
-            for (int i = 0; i < dgvMain.RowCount; i++)
-            {
-                for (int j = 0; j < dgvMain.ColumnCount; j++)
-                {
-                    dgvMain[j, i].Style.BackColor = Color.Empty;
-                }
-            }
+            ClearGameField();
             for (int i = 0; i < dgvRowDesc.RowCount; i++)
             {
                 for (int j = 0; j < dgvRowDesc.ColumnCount; j++)
@@ -126,6 +120,31 @@ namespace Qualifying_work
                 for (int j = 0; j < dgvColDesc.ColumnCount; j++)
                 {
                     dgvColDesc[j, i].Value = "";
+                }
+            }
+        }
+
+        private void MakeGameFieldInactive()
+        {
+            for (int i = 0; i < dgvMain.RowCount; i++)
+            {
+                for (int j = 0; j < dgvMain.ColumnCount; j++)
+                {
+                    if (dgvMain[j, i].Style.BackColor == Color.Black)
+                    {
+                        dgvMain[j, i].Style.BackColor = Color.DarkGray;
+                    }
+                }
+            }
+        }
+
+        private void ClearGameField()
+        {
+            for (int i = 0; i < dgvMain.RowCount; i++)
+            {
+                for (int j = 0; j < dgvMain.ColumnCount; j++)
+                {
+                    dgvMain[j, i].Style.BackColor = Color.Empty;
                 }
             }
         }
@@ -178,6 +197,12 @@ namespace Qualifying_work
                     }
                     npg.FinishWork();
                 }
+                groupBox1.Enabled = true;
+                groupBox2.Enabled = false;
+                dgvMain.Enabled = false;
+                dgvColDesc.ForeColor = Color.Silver;
+                dgvRowDesc.ForeColor = Color.Silver;
+                MakeGameFieldInactive();
             }
             else
             {
@@ -257,6 +282,7 @@ namespace Qualifying_work
 
         private void startButton_Click(object sender, EventArgs e)
         {
+            ClearGameField();
             dgvMain.Enabled = true;
             dgvColDesc.ForeColor = Color.Black;
             dgvRowDesc.ForeColor = Color.Black;
@@ -266,7 +292,7 @@ namespace Qualifying_work
             {
                 ses = new NTSSWithChecks(ses.NGram);
             }
-            if (comboBoxDiff.SelectedIndex == 0)
+            else if (comboBoxDiff.SelectedIndex == 0)
             {
                 ses = new NTSSWithHints(ses.NGram);
                 groupBox2.Height = 83;
@@ -277,6 +303,7 @@ namespace Qualifying_work
                 groupBox2.Height = 54;
                 buttonHint.Visible = false;
             }
+            ses.NGram.PictRestart();
         }
 
         private void solveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -349,7 +376,6 @@ namespace Qualifying_work
         {
             //FormRecords formR = new FormRecords(npg);
             //formR.ShowDialog();
-            toolStripStatusLabelScore2.Visible = false;
         }
 
         private void testToolStripMenuItem_Click(object sender, EventArgs e)

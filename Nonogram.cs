@@ -92,9 +92,7 @@ namespace Qualifying_work
             rowC = blocksDescriptions[0];
             colC = blocksDescriptions[1];
             pict = new int[rowC, colC];
-            for (int i = 0; i < rowC; i++)
-                for (int j = 0; j < colC; j++)
-                    pict[i, j] = 2;
+            PictRestart();
             lines = new Line[2][];
             lines[0] = new Line[rowC];
             lines[1] = new Line[colC];
@@ -115,6 +113,13 @@ namespace Qualifying_work
             }
             nType = NonogramType.Unknown;
             correctPict = new int[rowC, colC];
+        }
+
+        public void PictRestart()
+        {
+            for (int i = 0; i < rowC; i++)
+                for (int j = 0; j < colC; j++)
+                    pict[i, j] = 2;
         }
 
         public int[,] Picture
