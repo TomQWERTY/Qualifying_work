@@ -127,12 +127,19 @@
     <Compile Include="NonogramSession.cs" />
     <Compile Include="NonogramToAddSession.cs" />
     <Compile Include="NonogramToSolveSession.cs" />
+    <Compile Include="NonogramToVerifySession.cs" />
     <Compile Include="Npg.cs" />
     <Compile Include="NTSSWithChecks.cs" />
     <Compile Include="NTSSWithHints.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User.cs" />
+    <Compile Include="VerifyNonForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VerifyNonForm.Designer.cs">
+      <DependentUpon>VerifyNonForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="WantModForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -163,6 +170,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="VerifyNonForm.resx">
+      <DependentUpon>VerifyNonForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WantModForm.resx">
       <DependentUpon>WantModForm.cs</DependentUpon>
     </EmbeddedResource>

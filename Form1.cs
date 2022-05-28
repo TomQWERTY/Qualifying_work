@@ -101,7 +101,8 @@ namespace Qualifying_work
         private void ResizeForm()
         {
             this.Width = Math.Max(dgvMain.Left + dgvMain.Width + 25, 175 + accountToolStripMenuItem.Width +
-                (createToolStripMenuItem.Visible ? createToolStripMenuItem.Width : 0));
+                (createToolStripMenuItem.Visible ? createToolStripMenuItem.Width : 0) +
+                (adminToolStripMenuItem.Visible ? adminToolStripMenuItem.Width : 0));
             this.Height = Math.Max(dgvMain.Top + dgvMain.Height + 70, groupBox2.Top + groupBox2.Height + 70);
         }
 
@@ -389,30 +390,6 @@ namespace Qualifying_work
             //formR.ShowDialog();
         }
 
-        private void testToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            /*AutoSolve.Solve(ses.NGram);
-            int[,] sol = ses.NGram.CorrectPicture;
-            for (int i1 = 0; i1 < dgvMain.RowCount; i1++)
-            {
-                for (int j1 = 0; j1 < dgvMain.ColumnCount; j1++)
-                {
-                    if (sol[i1, j1] == 1)
-                    //if (Convert.ToBoolean(currSol.Rows[i1][j1]))
-                    {
-                        dgvMain[j1, i1].Style.BackColor = Color.Black;
-                    }
-                    else if (sol[i1, j1] == 2)
-                    {
-                        dgvMain[j1, i1].Style.BackColor = Color.DarkGray;
-                    }
-                }
-            }*/
-            Array.Copy(ses.NGram.CorrectPicture, ses.NGram.Picture, ses.NGram.CorrectPicture.Length);
-            CheckIfCorrect();
-            //int a = 0;
-        }
-
         private void signUpToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FormPassword fp = new FormPassword(this, Mode.Create);
@@ -439,6 +416,10 @@ namespace Qualifying_work
                 signUpToolStripMenuItem.Visible = false;
                 logOutToolStripMenuItem.Visible = true;
                 changePasswordToolStripMenuItem.Visible = true;
+                if (user.IsAdmin)
+                {
+                    adminToolStripMenuItem.Visible = true;
+                }
                 ResizeForm();
             }
         }
@@ -452,6 +433,7 @@ namespace Qualifying_work
             signUpToolStripMenuItem.Visible = true;
             logOutToolStripMenuItem.Visible = false;
             changePasswordToolStripMenuItem.Visible = false;
+            adminToolStripMenuItem.Visible = false;
             ResizeForm();
         }
 
@@ -459,6 +441,37 @@ namespace Qualifying_work
         {
             FormPassword fp = new FormPassword(this, Mode.Change);
             fp.ShowDialog();
+        }
+
+        private void verifyNonogramsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            npg.StartWork();
+            DataTable res = npg.Query("select * from nonograms where id=(select min(id) from (select * from nonograms where verified=false) as unver)");
+            npg.FinishWork();
+            if (res.Rows.Count > 0)
+            {
+                int nonId = Convert.ToInt32(res.Rows[0][0]);
+                var temp_ = res.Rows[0].ItemArray[1];
+                int[] blocksDescs = (int[])temp_;
+                VerifyNonForm vnf = new VerifyNonForm(blocksDescs, nonId);
+                DialogResult dr = vnf.ShowDialog();
+                if (dr == DialogResult.Yes)
+                {
+                    npg.StartWork();
+                    npg.Query("update nonograms set verified=true where id=" + nonId);
+                    npg.FinishWork();
+                }
+                else if (dr == DialogResult.No)
+                {
+                    npg.StartWork();
+                    npg.Query("delete from nonograms where id=" + nonId);
+                    npg.FinishWork();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Наразі немає неперевірених кросвордів.");
+            }
         }
     }
 }

@@ -74,10 +74,10 @@ namespace Qualifying_work
                         DataTable res = npg.Query("select * from users where username=\'" + textBoxLogin.Text + "\'");
                         if (res.Rows.Count > 0)
                         {
-                            rightPassword = res.Rows[0][1].ToString();
+                            rightPassword = res.Rows[0][2].ToString();
                             if (hashedPassword == rightPassword)
                             {
-                                form1.user = new User(Convert.ToInt32(res.Rows[0][0]), textBoxLogin.Text, Convert.ToBoolean(res.Rows[0][2]));
+                                form1.user = new User(Convert.ToInt32(res.Rows[0][0]), textBoxLogin.Text, Convert.ToBoolean(res.Rows[0][3]));
                                 this.DialogResult = DialogResult.OK;
                             }
                             else

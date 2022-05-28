@@ -148,8 +148,9 @@ namespace Qualifying_work
             else
             {
                 npg.StartWork();
-                npg.Query("insert into nonograms(blocks_descriptions, need_backtracking, author_id) values(array[" + ses.NGram.ToString() + "], " +
-                    (ses.NonType == NonogramType.NeedBacktracking ? true : false) + ", " + form1.user.Id + ")");
+                npg.Query("insert into nonograms(blocks_descriptions, need_backtracking, author_id, verified) " +
+                    "values(array[" + ses.NGram.ToString() + "], " +
+                    (ses.NonType == NonogramType.NeedBacktracking ? true : false) + ", " + form1.user.Id + ", false)");
                 npg.FinishWork();
             }
         }
