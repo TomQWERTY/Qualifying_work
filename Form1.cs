@@ -310,6 +310,17 @@ namespace Qualifying_work
         {
             DownloaderForm df = new DownloaderForm(this);
             df.ShowDialog();
+            if (ses.NGram.Type == NonogramType.NeedBacktracking)
+            {
+                comboBoxDiff.Items.RemoveAt(2);
+            }
+            else
+            {
+                if (comboBoxDiff.Items.Count < 3)
+                {
+                    comboBoxDiff.Items.Add("With Checks");
+                }
+            }
             MatchDgvs();
             dgvMain.Enabled = false;
             dgvColDesc.ForeColor = Color.Silver;

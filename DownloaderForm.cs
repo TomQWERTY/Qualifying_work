@@ -23,10 +23,12 @@ namespace Qualifying_work
         private void buttonDownload_Click(object sender, EventArgs e)
         {
             f1.npg.StartWork();
-            var temp_ = f1.npg.Query("select blocks_descriptions from nonograms where id=" + textBox1.Text).Rows[0].ItemArray[0];
+            DataTable res = f1.npg.Query("select blocks_descriptions, need_backtracking from nonograms where id=" + textBox1.Text);
+            var temp_ = res.Rows[0].ItemArray[0];
             int[] blocksDescs = (int[])temp_;
             f1.npg.FinishWork();
             f1.ses = new NonogramToSolveSession(new Nonogram(blocksDescs));
+            f1.ses.NGram.Type = Convert.ToBoolean(res.Rows[0][1]) ? NonogramType.NeedBacktracking : NonogramType.OnlyILL;
             this.Close();
         }
     }
