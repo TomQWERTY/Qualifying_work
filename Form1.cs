@@ -327,7 +327,7 @@ namespace Qualifying_work
 
         private void createToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FormCreateN fcn = new FormCreateN(npg);
+            FormCreateN fcn = new FormCreateN(this);
             fcn.ShowDialog();
         }
 

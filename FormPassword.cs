@@ -71,13 +71,13 @@ namespace Qualifying_work
             {
                 case (Mode.Login):
                     {
-                        DataTable res = npg.Query("select password, is_admin from users where username=\'" + textBoxLogin.Text + "\'");
+                        DataTable res = npg.Query("select * from users where username=\'" + textBoxLogin.Text + "\'");
                         if (res.Rows.Count > 0)
                         {
-                            rightPassword = res.Rows[0][0].ToString();
+                            rightPassword = res.Rows[0][1].ToString();
                             if (hashedPassword == rightPassword)
                             {
-                                form1.user = new User(textBoxLogin.Text, Convert.ToBoolean(res.Rows[0][1]));
+                                form1.user = new User(Convert.ToInt32(res.Rows[0][0]), textBoxLogin.Text, Convert.ToBoolean(res.Rows[0][2]));
                                 this.DialogResult = DialogResult.OK;
                             }
                             else
@@ -118,7 +118,8 @@ namespace Qualifying_work
                         if (npg.Query("insert into users(username, password, is_admin)" +
                             " values(\'" + textBoxLogin.Text + "\', \'" + hashedPassword + "\', false)") != null)
                         {
-                            form1.user = new User(textBoxLogin.Text, false);
+                            form1.user = new User(Convert.ToInt32(npg.Query("select id from users where username=\'" +
+                                textBoxLogin.Text + "\'").Rows[0][0]), textBoxLogin.Text, false);
                             this.DialogResult = DialogResult.OK;
                         }
                         break;

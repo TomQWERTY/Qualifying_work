@@ -15,15 +15,17 @@ namespace Qualifying_work
     {
         const int cellSize = 25;
         Npg npg;
+        Form1 form1;
         public NonogramToAddSession ses;
 
-        public FormCreateN(Npg npg_)
+        public FormCreateN(Form1 f1)
         {
             InitializeComponent();
             typeof(DataGridView).InvokeMember("DoubleBuffered", BindingFlags.NonPublic |
                 BindingFlags.Instance | BindingFlags.SetProperty, null,
                 dgv, new object[] { true });
-            npg = npg_;
+            form1 = f1;
+            npg = form1.npg;
             ResizeDgvs(4, 10);
         }
 
@@ -143,9 +145,13 @@ namespace Qualifying_work
                     }
                 }
             }
-            /*npg.StartWork();
-            npg.Query("insert into nonograms(blocks_descriptions) values(array[" + ses.NGram.ToString() + "])");
-            npg.FinishWork();*/
+            else
+            {
+                npg.StartWork();
+                npg.Query("insert into nonograms(blocks_descriptions, need_backtracking, author_id) values(array[" + ses.NGram.ToString() + "], " +
+                    (ses.NonType == NonogramType.NeedBacktracking ? true : false) + ", " + form1.user.Id + ")");
+                npg.FinishWork();
+            }
         }
 
         private void dgv_CellMouseEnter(object sender, DataGridViewCellEventArgs e)

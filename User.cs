@@ -8,13 +8,23 @@ namespace Qualifying_work
 {
     public class User
     {
+        int id;
         string userName;
         bool isAdmin;
 
-        public User(string userName_, bool isAdmin_)
+        public User(int id_, string userName_, bool isAdmin_)
         {
+            id = id_;
             userName = userName_;
             isAdmin = isAdmin_;
+        }
+
+        public int Id
+        {
+            get
+            {
+                return id;
+            }
         }
 
         public string UserName
