@@ -110,6 +110,12 @@
     <Compile Include="FormCreateN.Designer.cs">
       <DependentUpon>FormCreateN.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormPassword.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPassword.designer.cs">
+      <DependentUpon>FormPassword.cs</DependentUpon>
+    </Compile>
     <Compile Include="Line.cs" />
     <Compile Include="ModVarsForm.cs">
       <SubType>Form</SubType>
@@ -126,6 +132,7 @@
     <Compile Include="NTSSWithHints.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="User.cs" />
     <Compile Include="WantModForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -140,6 +147,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormCreateN.resx">
       <DependentUpon>FormCreateN.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormPassword.resx">
+      <DependentUpon>FormPassword.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ModVarsForm.resx">
       <DependentUpon>ModVarsForm.cs</DependentUpon>

@@ -97,6 +97,7 @@ namespace Qualifying_work
         public void ModifyNonogram(Nonogram newN)
         {
             nonogram = newN;
+            modVariants = new List<Nonogram>();
         }
 
         protected void SolveEntire(Nonogram non)

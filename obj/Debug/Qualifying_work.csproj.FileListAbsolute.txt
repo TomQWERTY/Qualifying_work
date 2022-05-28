@@ -137,3 +137,4 @@ E:\Univer\duplom\Qualifying_work\obj\Debug\Qualifying_work.FormCreateN.resources
 E:\Univer\duplom\Qualifying_work\obj\Debug\Qualifying_work.DownloaderForm.resources
 E:\Univer\duplom\Qualifying_work\obj\Debug\Qualifying_work.ModVarsForm.resources
 E:\Univer\duplom\Qualifying_work\obj\Debug\Qualifying_work.WantModForm.resources
+E:\Univer\duplom\Qualifying_work\obj\Debug\Qualifying_work.FormPassword.resources

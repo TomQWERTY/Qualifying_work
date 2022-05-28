@@ -20,6 +20,7 @@ namespace Qualifying_work
         int cNum;
         string time;
         public NonogramToSolveSession ses;
+        public User user;
 
         public Form1(string username_)
         {
@@ -367,6 +368,31 @@ namespace Qualifying_work
             Array.Copy(ses.NGram.CorrectPicture, ses.NGram.Picture, ses.NGram.CorrectPicture.Length);
             CheckIfCorrect();
             //int a = 0;
+        }
+
+        private void signUpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormPassword fp = new FormPassword(this, Mode.Set);
+            if (fp.ShowDialog() == DialogResult.OK)
+            {
+                createToolStripMenuItem.Visible = true;
+                accountToolStripMenuItem.Text += " (" + user.UserName + ")";
+                logInToolStripMenuItem.Visible = false;
+                signUpToolStripMenuItem.Visible = false;
+                logOutToolStripMenuItem.Visible = true;
+                changePasswordToolStripMenuItem.Visible = true;
+            }
+        }
+
+        private void logInToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormPassword fp = new FormPassword(this, Mode.Login);
+            if (fp.ShowDialog() == DialogResult.OK)
+            {
+                createToolStripMenuItem.Visible = true;
+                accountToolStripMenuItem.Text += " (" + user.UserName + ")";
+                MessageBox.Show(user.IsAdmin.ToString());
+            }
         }
     }
 }

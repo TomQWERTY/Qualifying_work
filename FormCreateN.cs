@@ -116,7 +116,12 @@ namespace Qualifying_work
                     pict[i, j] = dgv[j, i].Style.BackColor == Color.Black ? 1 : 0;
                 }
             }
-            ses = new NonogramToAddSession(new Nonogram(pict));
+            if (ses == null) ses = new NonogramToAddSession(new Nonogram(pict));
+            else
+            {
+                ses.ModifyNonogram(new Nonogram(pict));
+
+            }
             MessageBox.Show(ses.NonType.ToString());
             if (ses.NonType == NonogramType.FewSolutions)
             {

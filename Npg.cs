@@ -29,18 +29,31 @@ namespace Qualifying_work
 
         public DataTable Query(string queryText)
         {
+            bool wasError = false;
             comm.CommandText = queryText;
             try
             {
                 dtrdr = comm.ExecuteReader();
             }
-            catch (Exception e)
+            catch (PostgresException pe)
             {
-                MessageBox.Show(e.Message);
+                wasError = true;
+                if (pe.SqlState == "23505" && pe.ConstraintName == "unique_username")
+                {
+                    MessageBox.Show("Помилка! Даний логін вже зайнятий.");
+                }
+                else
+                {
+                    MessageBox.Show(pe.Message);
+                }
             }
-            dt = new DataTable();
-            dt.Load(dtrdr);
-            return dt;
+            if (!wasError)
+            {
+                dt = new DataTable();
+                dt.Load(dtrdr);
+                return dt;
+            }
+            return null;
         }
 
         public void FinishWork()
