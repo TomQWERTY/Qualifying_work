@@ -34,6 +34,8 @@
             this.checkBoxHidePassword = new System.Windows.Forms.CheckBox();
             this.labelLogin = new System.Windows.Forms.Label();
             this.textBoxLogin = new System.Windows.Forms.TextBox();
+            this.labelOldPass = new System.Windows.Forms.Label();
+            this.labelNewPass = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // labelPass
@@ -89,13 +91,35 @@
             this.textBoxLogin.Location = new System.Drawing.Point(22, 25);
             this.textBoxLogin.Name = "textBoxLogin";
             this.textBoxLogin.Size = new System.Drawing.Size(100, 20);
-            this.textBoxLogin.TabIndex = 8;
+            this.textBoxLogin.TabIndex = 0;
+            // 
+            // labelOldPass
+            // 
+            this.labelOldPass.AutoSize = true;
+            this.labelOldPass.Location = new System.Drawing.Point(28, 9);
+            this.labelOldPass.Name = "labelOldPass";
+            this.labelOldPass.Size = new System.Drawing.Size(94, 13);
+            this.labelOldPass.TabIndex = 8;
+            this.labelOldPass.Text = "Поточний пароль";
+            this.labelOldPass.Visible = false;
+            // 
+            // labelNewPass
+            // 
+            this.labelNewPass.AutoSize = true;
+            this.labelNewPass.Location = new System.Drawing.Point(30, 9);
+            this.labelNewPass.Name = "labelNewPass";
+            this.labelNewPass.Size = new System.Drawing.Size(78, 13);
+            this.labelNewPass.TabIndex = 9;
+            this.labelNewPass.Text = "Новий пароль";
+            this.labelNewPass.Visible = false;
             // 
             // FormPassword
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(157, 140);
+            this.Controls.Add(this.labelNewPass);
+            this.Controls.Add(this.labelOldPass);
             this.Controls.Add(this.textBoxLogin);
             this.Controls.Add(this.labelLogin);
             this.Controls.Add(this.checkBoxHidePassword);
@@ -118,5 +142,7 @@
         private System.Windows.Forms.CheckBox checkBoxHidePassword;
         private System.Windows.Forms.Label labelLogin;
         private System.Windows.Forms.TextBox textBoxLogin;
+        private System.Windows.Forms.Label labelOldPass;
+        private System.Windows.Forms.Label labelNewPass;
     }
 }

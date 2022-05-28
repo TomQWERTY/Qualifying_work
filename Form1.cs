@@ -95,7 +95,13 @@ namespace Qualifying_work
             dgvColDesc.Left = dgvRowDesc.Left + dgvRowDesc.Width + 5;
             dgvMain.Left = dgvColDesc.Left;
             dgvMain.Top = dgvRowDesc.Top;
-            this.Width = dgvMain.Left + dgvMain.Width + 25;
+            ResizeForm();
+        }
+
+        private void ResizeForm()
+        {
+            this.Width = Math.Max(dgvMain.Left + dgvMain.Width + 25, 175 + accountToolStripMenuItem.Width +
+                (createToolStripMenuItem.Visible ? createToolStripMenuItem.Width : 0));
             this.Height = Math.Max(dgvMain.Top + dgvMain.Height + 70, groupBox2.Top + groupBox2.Height + 70);
         }
 
@@ -372,7 +378,7 @@ namespace Qualifying_work
 
         private void signUpToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FormPassword fp = new FormPassword(this, Mode.Set);
+            FormPassword fp = new FormPassword(this, Mode.Create);
             if (fp.ShowDialog() == DialogResult.OK)
             {
                 createToolStripMenuItem.Visible = true;
@@ -381,18 +387,41 @@ namespace Qualifying_work
                 signUpToolStripMenuItem.Visible = false;
                 logOutToolStripMenuItem.Visible = true;
                 changePasswordToolStripMenuItem.Visible = true;
+                ResizeForm();
             }
         }
 
         private void logInToolStripMenuItem_Click(object sender, EventArgs e)
-        {
+        {           
             FormPassword fp = new FormPassword(this, Mode.Login);
             if (fp.ShowDialog() == DialogResult.OK)
             {
                 createToolStripMenuItem.Visible = true;
                 accountToolStripMenuItem.Text += " (" + user.UserName + ")";
-                MessageBox.Show(user.IsAdmin.ToString());
+                logInToolStripMenuItem.Visible = false;
+                signUpToolStripMenuItem.Visible = false;
+                logOutToolStripMenuItem.Visible = true;
+                changePasswordToolStripMenuItem.Visible = true;
+                ResizeForm();
             }
+        }
+
+        private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            user = null;
+            createToolStripMenuItem.Visible = false;
+            accountToolStripMenuItem.Text = accountToolStripMenuItem.Text.Split(' ')[0];
+            logInToolStripMenuItem.Visible = true;
+            signUpToolStripMenuItem.Visible = true;
+            logOutToolStripMenuItem.Visible = false;
+            changePasswordToolStripMenuItem.Visible = false;
+            ResizeForm();
+        }
+
+        private void changePasswordToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormPassword fp = new FormPassword(this, Mode.Change);
+            fp.ShowDialog();
         }
     }
 }

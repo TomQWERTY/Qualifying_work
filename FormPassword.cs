@@ -15,6 +15,7 @@ namespace Qualifying_work
     {
         Login,
         Change,
+        Create,
         Set
     }
 
@@ -23,16 +24,34 @@ namespace Qualifying_work
         Form1 form1;
         Mode mode;
         Npg npg;
-        int attempts;
 
         public FormPassword(Form1 f1, Mode m)
         {
             form1 = f1;
             mode = m;
-            //form1.FormClosed += (object sender, FormClosedEventArgs e) => this.Close();
             npg = form1.npg;
-            attempts = 0;
             InitializeComponent();
+            switch (mode)
+            {
+                case Mode.Login:
+                    {
+                        this.Text = "Вхід";
+                        break;
+                    }
+                case Mode.Change:
+                    {
+                        this.Text = "Зміна паролю";
+                        checkBoxHidePassword.Top += textBoxLogin.Top - textBoxPass.Top;
+                        buttonSignin.Top += textBoxLogin.Top - textBoxPass.Top;
+                        textBoxPass.Top = textBoxLogin.Top;
+                        textBoxLogin.Visible = false;
+                        labelLogin.Visible = false;
+                        labelPass.Visible = false;
+                        labelOldPass.Visible = true;
+                        this.Height = 133;
+                        break;
+                    }
+            }
         }
 
         private void buttonSignin_Click(object sender, EventArgs e)
@@ -47,11 +66,11 @@ namespace Qualifying_work
             {
                 hashedPassword += string.Format("{0:x2}", b);
             }
+            npg.StartWork();
             switch (mode)
             {
                 case (Mode.Login):
                     {
-                        npg.StartWork();
                         DataTable res = npg.Query("select password, is_admin from users where username=\'" + textBoxLogin.Text + "\'");
                         if (res.Rows.Count > 0)
                         {
@@ -70,60 +89,42 @@ namespace Qualifying_work
                         {
                             MessageBox.Show("Помилка! Користувача з даним логіном не існує.");
                         }
-                        npg.FinishWork();
                         break;
                     }
                 case (Mode.Change):
                     {
-                        rightPassword = npg.Query("select * from passwords").Rows[0][0].ToString();
+                        rightPassword =
+                            npg.Query("select password from users where username=\'" + form1.user.UserName + "\'").Rows[0][0].ToString();
                         if (hashedPassword == rightPassword)
                         {
-                            textBoxPass.Text = "";
-                            labelPass.Text = "Введіть новий пароль";
-                            labelPass.Location = new Point((this.Width - 20) / 2 - labelPass.Width / 2, labelPass.Location.Y);
                             mode = Mode.Set;
+                            labelOldPass.Visible = false;
+                            labelNewPass.Visible = true;
                         }
                         else
                         {
                             MessageBox.Show("Невірний пароль!");
-                            attempts++;
-                            if (attempts > 3)
-                            {
-                                textBoxPass.Text = "";
-                                textBoxPass.Enabled = false;
-                                buttonSignin.Enabled = false;
-                            }
                         }
                         break;
                     }
                 case (Mode.Set):
                     {
-                        npg.StartWork();
-                        if (npg.Query("insert into users(username, password) values(\'" + textBoxLogin.Text + "\', \'" + hashedPassword + "\')") != null)
+                        npg.Query("update users set password=\'" + hashedPassword + "\' where username=\'" + form1.user.UserName + "\'");
+                        this.DialogResult = DialogResult.OK;
+                        break;
+                    }
+                case (Mode.Create):
+                    {
+                        if (npg.Query("insert into users(username, password, is_admin)" +
+                            " values(\'" + textBoxLogin.Text + "\', \'" + hashedPassword + "\', false)") != null)
                         {
                             form1.user = new User(textBoxLogin.Text, false);
                             this.DialogResult = DialogResult.OK;
                         }
-                        npg.FinishWork();
                         break;
                     }
-            }  
-        }
-
-        private void buttonChange_Click(object sender, EventArgs e)
-        {
-            textBoxPass.Text = "";
-            labelPass.Text = "Введіть поточний пароль";
-            labelPass.Location = new Point((this.Width - 20) / 2 - labelPass.Width / 2, labelPass.Location.Y);
-            mode = Mode.Change;
-        }
-
-        private void buttonCancel_Click(object sender, EventArgs e)
-        {
-            mode = Mode.Login;
-            textBoxPass.Text = "";
-            labelPass.Text = "Пароль";
-            labelPass.Location = new Point((this.Width - 20) / 2 - labelPass.Width / 2, labelPass.Location.Y);
+            }
+            npg.FinishWork();
         }
 
         private void checkBoxHidePassword_CheckedChanged(object sender, EventArgs e)
