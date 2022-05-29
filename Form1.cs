@@ -35,7 +35,7 @@ namespace Qualifying_work
             time = "";
             //labelUser.Text = username_;
             comboBoxPMode.SelectedIndex = 0;
-            comboBoxDiff.SelectedIndex = 2;
+            comboBoxDiff.SelectedIndex = 0;
         }
 
         private void ResizeDgvs(int maxRowB, int maxColB, int newCC, int newRC)
@@ -176,7 +176,7 @@ namespace Qualifying_work
             }
         }
 
-        private void CheckIfCorrect()
+        private void buttonReady_Click(object sender, EventArgs e)
         {
             bool ok = ses.CheckByLines(ses.NGram.Picture);
             if (ok)
@@ -189,7 +189,7 @@ namespace Qualifying_work
                 {
                     timer1.Stop();
                     MessageBox.Show("Кросворд розв'язано правильно! Ваш час - " + time);
-                    npg.StartWork();
+                    /*npg.StartWork();
                     string readTime = npg.Query("select r_time from records where n_name = \'" + cNum + "\'").Rows[0][0].ToString();
                     int[] currRec = Array.ConvertAll(readTime.Split(':'), Convert.ToInt32);
                     if (solTime < currRec[0] * 3600 + currRec[1] * 60 + currRec[2])
@@ -197,7 +197,7 @@ namespace Qualifying_work
                         //npg.Query("update records set r_time = \'" + time + "\', username = \'" + labelUser.Text + "\' where n_name = \'" + cNum + "\'");
                         MessageBox.Show("Вітаємо, Ви встановили новий рекорд! Колишній рекорд: " + readTime);
                     }
-                    npg.FinishWork();
+                    npg.FinishWork();*/
                 }
                 groupBox1.Enabled = true;
                 groupBox2.Enabled = false;
@@ -212,18 +212,14 @@ namespace Qualifying_work
             }
         }
 
-        private void buttonReady_Click(object sender, EventArgs e)
-        {
-            CheckIfCorrect();
-        }
-
         private void timer1_Tick(object sender, EventArgs e)
         {
             solTime++;
             time = (solTime / 3600).ToString().PadLeft(2, '0') + ":";
             solTime %= 3600;
             time += (solTime / 60).ToString().PadLeft(2, '0') + ":" + (solTime % 60).ToString().PadLeft(2, '0');
-            timerLabel.Text = time;
+            //timerLabel.Text = time;
+            toolStripStatusLabelTime2.Text = time;
         }
 
         private void MatchDgvs()
@@ -297,15 +293,27 @@ namespace Qualifying_work
             else if (comboBoxDiff.SelectedIndex == 0)
             {
                 ses = new NTSSWithHints(ses.NGram);
-                groupBox2.Height = 83;
+                groupBox2.Height = 114;
                 buttonHint.Visible = true;
             }
             else
             {
-                groupBox2.Height = 54;
+                groupBox2.Height = 83;
                 buttonHint.Visible = false;
             }
+            ResizeForm();
             ses.NGram.PictRestart();
+            if (comboBoxPMode.SelectedIndex == 1)
+            {
+                solTime = 0;
+                timer1.Interval = 1000;
+                timer1.Start();
+                toolStripStatusLabelTime2.Text = "00:00:00";
+            }
+            else
+            {
+                toolStripStatusLabelTime2.Text = "";
+            }
         }
 
         private void solveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -313,7 +321,7 @@ namespace Qualifying_work
             DownloaderForm df = new DownloaderForm(this);
             if (df.ShowDialog() == DialogResult.OK)
             {
-                if (ses.NGram.Type == NonogramType.NeedBacktracking)
+                if (ses.NGram.Type == NonogramType.NeedBacktracking && comboBoxDiff.Items.Count > 2)
                 {
                     comboBoxDiff.Items.RemoveAt(2);
                 }
@@ -331,13 +339,6 @@ namespace Qualifying_work
                 groupBox1.Enabled = true;
                 groupBox2.Enabled = false;
                 recordsToolStripMenuItem.Visible = true;
-                if (comboBoxPMode.SelectedIndex == 1)
-                {
-                    solTime = 0;
-                    timer1.Interval = 1000;
-                    timer1.Start();
-                    timerLabel.Text = "00:00:00";
-                }
             }
         }
 
@@ -476,6 +477,19 @@ namespace Qualifying_work
             {
                 MessageBox.Show("Наразі немає неперевірених кросвордів.");
             }
+        }
+
+        private void buttonStop_Click(object sender, EventArgs e)
+        {
+            ClearGameField();
+            groupBox1.Enabled = true;
+            groupBox2.Enabled = false;
+            dgvMain.Enabled = false;
+            dgvColDesc.ForeColor = Color.Silver;
+            dgvRowDesc.ForeColor = Color.Silver;
+            MakeGameFieldInactive();
+            timer1.Stop();
+            toolStripStatusLabelTime2.Text = "";
         }
     }
 }
