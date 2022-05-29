@@ -146,12 +146,6 @@
     <Compile Include="VerifyNonForm.Designer.cs">
       <DependentUpon>VerifyNonForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="WantModForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="WantModForm.Designer.cs">
-      <DependentUpon>WantModForm.cs</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="DownloaderForm.resx">
       <DependentUpon>DownloaderForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -181,9 +175,6 @@
     </Compile>
     <EmbeddedResource Include="VerifyNonForm.resx">
       <DependentUpon>VerifyNonForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="WantModForm.resx">
-      <DependentUpon>WantModForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

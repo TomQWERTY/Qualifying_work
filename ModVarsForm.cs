@@ -46,6 +46,7 @@ namespace Qualifying_work
             }
             dgv[0, 0].Style.SelectionBackColor = dgv[0, 0].Style.BackColor;
             dgv.ClearSelection();
+            labelTypeInfo.Text = "*" + (vars[currVar].Type == NonogramType.OnlyILL ? "" : "не") + "можливо розв'язати без використання перебору.";
         }
 
         private void ResizeDgvs(int newCC, int newRC)
@@ -73,7 +74,7 @@ namespace Qualifying_work
             dgv.Height = newRC * cellSize + 4;
 
             this.Width = Math.Max(dgv.Left + dgv.Width + 40, 322);
-            this.Height = Math.Max(dgv.Top + dgv.Height + 50, 289);
+            this.Height = Math.Max(dgv.Top + dgv.Height + 60, 109);
             dgv.ClearSelection();
         }
 

@@ -167,8 +167,8 @@ namespace Qualifying_work
                 //MessageBox.Show(ses.NonType.ToString());
                 if (ses.NonType == NonogramType.FewSolutions)
                 {
-                    WantModForm wmf = new WantModForm();
-                    if (wmf.ShowDialog() == DialogResult.OK)
+                    if (MessageBox.Show("Запропоноване зображення неможливо конвертувати в кросворд з єдиним розв'язком. Спробувати модифікувати " + 
+                        "зображення?", "Невдача!", MessageBoxButtons.YesNo) == DialogResult.Yes)
                     {
                         ses.BuildModVariants();
                         if (ses.ModVariants.Count > 0)
@@ -185,7 +185,8 @@ namespace Qualifying_work
                         }
                     }
                 }
-                else
+                else if (MessageBox.Show("Даний кросворд є " + (ses.NonType == NonogramType.OnlyILL ? "" : "не") +
+                    "розв'язним без використання перебору. Додати в базу?", "Тип кросворду", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     npg.StartWork();
                     npg.Query("insert into nonograms(blocks_descriptions, need_backtracking, author_id, verified) " +
