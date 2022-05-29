@@ -282,7 +282,7 @@ namespace Qualifying_work
             return true;
         }
 
-        public static int AnalyzeLine(int[] cells, Line[][] lines, int kind, int lineNum)
+        public static int AnalyzeLine(int[] cells, Line[][] lines, int kind, int lineNum, bool forHint)
         {
             const int nondef = -1;
             int lineLength = lines[kind * (-1) + 1].Length;
@@ -402,7 +402,7 @@ namespace Qualifying_work
                         if (canOne)
                         {
                             cells[i - 1] = 1;
-                            return i - 1;
+                            if (forHint) return i - 1;
                         }
                         else
                         {

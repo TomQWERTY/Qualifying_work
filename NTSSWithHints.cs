@@ -30,7 +30,7 @@ namespace Qualifying_work
                     {
                         row[j1] = nonogram.Picture[i, j1];
                     }
-                    int ind = AutoSolve.AnalyzeLine(row, nonogram.Lines, 0, i);
+                    int ind = AutoSolve.AnalyzeLine(row, nonogram.Lines, 0, i, true);
                     if (ind != -1)
                     {
                         return new int[2] { i, ind };
@@ -43,7 +43,7 @@ namespace Qualifying_work
                     {
                         row[j1] = nonogram.Picture[i, j1];
                     }
-                    int ind = AutoSolve.AnalyzeLine(row, nonogram.Lines, 0, i);
+                    int ind = AutoSolve.AnalyzeLine(row, nonogram.Lines, 0, i, true);
                     if (ind != -1)
                     {
                         return new int[2] { i, ind };
@@ -58,7 +58,7 @@ namespace Qualifying_work
                     {
                         col[i1] = nonogram.Picture[i1, j];
                     }
-                    int ind = AutoSolve.AnalyzeLine(col, nonogram.Lines, 1, j);
+                    int ind = AutoSolve.AnalyzeLine(col, nonogram.Lines, 1, j, true);
                     if (ind != -1)
                     {
                         return new int[2] { ind, j };
@@ -71,7 +71,7 @@ namespace Qualifying_work
                     {
                         col[i1] = nonogram.Picture[i1, j];
                     }
-                    int ind = AutoSolve.AnalyzeLine(col, nonogram.Lines, 1, j);
+                    int ind = AutoSolve.AnalyzeLine(col, nonogram.Lines, 1, j, true);
                     if (ind != -1)
                     {
                         return new int[2] { ind, j };
@@ -134,8 +134,8 @@ namespace Qualifying_work
                         {
                             row[j1] = nonogram.Picture[i, j1];
                         }
-                        AutoSolve.AnalyzeLine(row, nonogram.Lines, 0, i);
-                        AutoSolve.AnalyzeLine(col, nonogram.Lines, 1, j);
+                        AutoSolve.AnalyzeLine(row, nonogram.Lines, 0, i, false);
+                        AutoSolve.AnalyzeLine(col, nonogram.Lines, 1, j, false);
                         for (int i1 = 0; i1 < nonogram.RowCount; i1++)
                         {
                             if (col[i1] == 0) nonogram.Picture[i1, j] = 0;

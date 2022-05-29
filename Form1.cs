@@ -16,9 +16,7 @@ namespace Qualifying_work
     {
         const int cellSize = 25;
         public Npg npg;
-        int solTime;
         int cNum;
-        string time;
         public NonogramToSolveSession ses;
         public User user;
 
@@ -32,7 +30,6 @@ namespace Qualifying_work
             npg = new Npg();
             ResizeDgvs(2, 2, 5, 5);
             cNum = 0;
-            time = "";
             //labelUser.Text = username_;
             comboBoxPMode.SelectedIndex = 0;
             comboBoxDiff.SelectedIndex = 0;
@@ -171,8 +168,21 @@ namespace Qualifying_work
             dgvMain.ClearSelection();
             if (ses.GetType() == typeof(NTSSWithChecks))
             {
-                if (opStatus == 1) MessageBox.Show("you loh");
-                if (opStatus == 2) MessageBox.Show("you very loh");
+                if (opStatus == 1)
+                {
+                    MessageBox.Show("Ризикований хід!");
+                }
+                if (opStatus == 2)
+                {
+                    MessageBox.Show("Помилка!");
+                    ses.Score = Math.Max(0, ses.Score - 10);
+                    toolStripStatusLabelScore2.Text = ses.Score.ToString();
+                }
+                if (opStatus == 0)
+                {
+                    ses.Score += 10;
+                    toolStripStatusLabelScore2.Text = ses.Score.ToString();
+                }
             }
         }
 
@@ -188,7 +198,8 @@ namespace Qualifying_work
                 else
                 {
                     timer1.Stop();
-                    MessageBox.Show("Кросворд розв'язано правильно! Ваш час - " + time);
+                    MessageBox.Show("Кросворд розв'язано правильно! " + "Ваш рахунок - " + ses.Score.ToString()
+                        + ". Ваш час - " + toolStripStatusLabelTime2.Text);
                     /*npg.StartWork();
                     string readTime = npg.Query("select r_time from records where n_name = \'" + cNum + "\'").Rows[0][0].ToString();
                     int[] currRec = Array.ConvertAll(readTime.Split(':'), Convert.ToInt32);
@@ -208,16 +219,18 @@ namespace Qualifying_work
             }
             else
             {
+                ses.Score = Math.Max(0, ses.Score - 10);
+                toolStripStatusLabelScore2.Text = ses.Score.ToString();
                 MessageBox.Show("Кросворд розв'язано неправильно!");
             }
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            solTime++;
-            time = (solTime / 3600).ToString().PadLeft(2, '0') + ":";
-            solTime %= 3600;
-            time += (solTime / 60).ToString().PadLeft(2, '0') + ":" + (solTime % 60).ToString().PadLeft(2, '0');
+            ses.SolTime++;
+            string time = (ses.SolTime / 3600).ToString().PadLeft(2, '0') + ":";
+            ses.SolTime %= 3600;
+            time += (ses.SolTime / 60).ToString().PadLeft(2, '0') + ":" + (ses.SolTime % 60).ToString().PadLeft(2, '0');
             //timerLabel.Text = time;
             toolStripStatusLabelTime2.Text = time;
         }
@@ -254,6 +267,8 @@ namespace Qualifying_work
             {
                 dgvMain[cell[1], cell[0]].Style.BackColor = Color.Black;
                 ses.ChangeCell(cell[0], cell[1], 1);
+                ses.Score = Math.Max(0, ses.Score - 10);
+                toolStripStatusLabelScore2.Text = ses.Score.ToString();
             }
             else
             {
@@ -305,10 +320,29 @@ namespace Qualifying_work
             ses.NGram.PictRestart();
             if (comboBoxPMode.SelectedIndex == 1)
             {
-                solTime = 0;
+                ses.SolTime = 0;
                 timer1.Interval = 1000;
                 timer1.Start();
                 toolStripStatusLabelTime2.Text = "00:00:00";
+                switch (comboBoxDiff.SelectedIndex)
+                {
+                    case (0):
+                        {
+                            ses.Score = ses.NGram.BlackCount / 2 * 10;
+                            break;
+                        }
+                    case (1):
+                        {
+                            ses.Score = 100;
+                            break;
+                        }
+                    case (2):
+                        {
+                            ses.Score = 0;
+                            break;
+                        }
+                }
+                toolStripStatusLabelScore2.Text = ses.Score.ToString();
             }
             else
             {
@@ -490,6 +524,7 @@ namespace Qualifying_work
             MakeGameFieldInactive();
             timer1.Stop();
             toolStripStatusLabelTime2.Text = "";
+            toolStripStatusLabelScore2.Text = "";
         }
     }
 }

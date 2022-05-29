@@ -16,6 +16,7 @@ namespace Qualifying_work
         protected Line[][] lines;
         protected NonogramType nType;
         protected int id;
+        protected int blackCount;
 
         public Nonogram(int[] blocksDescs)
         {
@@ -95,6 +96,7 @@ namespace Qualifying_work
 
         private void ConstructorCommon(int[] blocksDescs)
         {
+            blackCount = 0;
             blocksDescriptions = blocksDescs;
             rowC = blocksDescriptions[0];
             colC = blocksDescriptions[1];
@@ -112,6 +114,7 @@ namespace Qualifying_work
                 if (currLine < rowC)
                 {
                     lines[0][currLine] = new Line(blL);
+                    blackCount += blL.Sum();
                 }
                 else
                 {
@@ -127,6 +130,14 @@ namespace Qualifying_work
             for (int i = 0; i < rowC; i++)
                 for (int j = 0; j < colC; j++)
                     pict[i, j] = 2;
+        }
+
+        public int BlackCount
+        {
+            get
+            {
+                return blackCount;
+            }
         }
 
         public int Id

@@ -8,6 +8,9 @@ namespace Qualifying_work
 {
     public class NonogramToSolveSession : NonogramSession
     {
+        public int SolTime { get; set; }
+        public int Score { get; set; }
+
         public NonogramToSolveSession(Nonogram n_) : base(n_) { }
 
         public virtual bool CheckByLines(int[,] pictToCheck)
