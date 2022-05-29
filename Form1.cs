@@ -499,6 +499,13 @@ namespace Qualifying_work
             logOutToolStripMenuItem.Visible = false;
             changePasswordToolStripMenuItem.Visible = false;
             adminToolStripMenuItem.Visible = false;
+            ClearDgvs();
+            Stop();
+            ResizeDgvs(2, 2, 5, 5);
+            groupBox2.Height = 83;
+            buttonHint.Visible = false;
+            groupBox1.Enabled = false;
+            ses = null;
             ResizeForm();
         }
 

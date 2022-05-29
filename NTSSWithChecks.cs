@@ -34,7 +34,20 @@ namespace Qualifying_work
                 row[j1] = nonogram.Picture[i, j1];
             }
             AutoSolve.AnalyzeLine(row, nonogram.Lines, 0, i, false);
-            AutoSolve.AnalyzeLine(col, nonogram.Lines, 1, j, false);
+            if (row[j] == 1)
+            {
+                col[i] = 1;
+                AutoSolve.AnalyzeLine(col, nonogram.Lines, 1, j, false);
+            }
+            else
+            {
+                AutoSolve.AnalyzeLine(col, nonogram.Lines, 1, j, false);
+                if (col[i] == 1)
+                {
+                    row[j] = 1;
+                    AutoSolve.AnalyzeLine(row, nonogram.Lines, 0, i, false);
+                }
+            }
             for (int i1 = 0; i1 < nonogram.RowCount; i1++)
             {
                 if (col[i1] == 0) nonogram.Picture[i1, j] = 0;
@@ -43,7 +56,6 @@ namespace Qualifying_work
             {
                 if (row[j1] == 0) nonogram.Picture[i, j1] = 0;
             }
-
             base.ChangeCell(i, j, newVal);
             return (row[j] == 1 || col[i] == 1) ? 0 : 1;
         }

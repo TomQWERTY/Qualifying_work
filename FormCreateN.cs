@@ -99,7 +99,7 @@ namespace Qualifying_work
             dgv.Height = newRC * cellSize + 4;
 
             this.Width = dgv.Left + dgv.Width + 40;
-            this.Height = Math.Max(dgv.Top + dgv.Height + 50, 289);
+            this.Height = Math.Max(dgv.Top + dgv.Height + 50, 222);
             dgv.ClearSelection();
         }
 
@@ -118,40 +118,87 @@ namespace Qualifying_work
                     pict[i, j] = dgv[j, i].Style.BackColor == Color.Black ? 1 : 0;
                 }
             }
-            if (ses == null) ses = new NonogramToAddSession(new Nonogram(pict));
-            else
+            bool causesProblem = false;//check if all rows&cols has at least one one
+            for (int i = 0; i < dgv.RowCount; i++)
             {
-                ses.ModifyNonogram(new Nonogram(pict));
-
-            }
-            MessageBox.Show(ses.NonType.ToString());
-            if (ses.NonType == NonogramType.FewSolutions)
-            {
-                WantModForm wmf = new WantModForm();
-                if (wmf.ShowDialog() == DialogResult.OK)
+                bool hasOne = false;
+                for (int j = 0; j < dgv.ColumnCount; j++)
                 {
-                    ses.BuildModVariants();
-                    if (ses.ModVariants.Count > 0)
+                    if (pict[i, j] == 1)
                     {
-                        ModVarsForm mvForm = new ModVarsForm(this);
-                        if (mvForm.ShowDialog() == DialogResult.OK)
+                        hasOne = true;
+                        break;
+                    }
+                }
+                if (!hasOne)
+                {
+                    causesProblem = true;
+                    break;
+                }
+            }
+            if (!causesProblem)
+            {
+                for (int j = 0; j < dgv.ColumnCount; j++)
+                {
+                    bool hasOne = false;
+                    for (int i = 0; i < dgv.RowCount; i++)
+                    {
+                        if (pict[i, j] == 1)
                         {
-                            DisplayNonogram();
+                            hasOne = true;
+                            break;
                         }
                     }
-                    else
+                    if (!hasOne)
                     {
-                        MessageBox.Show("На жаль, дане зображення не вдається модифікувати.");
+                        causesProblem = true;
+                        break;
                     }
+                }
+            }
+            if (!causesProblem)
+            {
+                if (ses == null) ses = new NonogramToAddSession(new Nonogram(pict));
+                else
+                {
+                    ses.ModifyNonogram(new Nonogram(pict));
+
+                }
+                //MessageBox.Show(ses.NonType.ToString());
+                if (ses.NonType == NonogramType.FewSolutions)
+                {
+                    WantModForm wmf = new WantModForm();
+                    if (wmf.ShowDialog() == DialogResult.OK)
+                    {
+                        ses.BuildModVariants();
+                        if (ses.ModVariants.Count > 0)
+                        {
+                            ModVarsForm mvForm = new ModVarsForm(this);
+                            if (mvForm.ShowDialog() == DialogResult.OK)
+                            {
+                                DisplayNonogram();
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("На жаль, дане зображення не вдається модифікувати.");
+                        }
+                    }
+                }
+                else
+                {
+                    npg.StartWork();
+                    npg.Query("insert into nonograms(blocks_descriptions, need_backtracking, author_id, verified) " +
+                        "values(array[" + ses.NGram.ToString() + "], " +
+                        (ses.NonType == NonogramType.NeedBacktracking ? true : false) + ", " + form1.user.Id + ", false)");
+                    MessageBox.Show("Кросворд відправлено на перевірку адміністратором. Після проходження перевірки він буде доступний по ID " +
+                        npg.Query("select max(id) from nonograms").Rows[0][0].ToString());
+                    npg.FinishWork();
                 }
             }
             else
             {
-                npg.StartWork();
-                npg.Query("insert into nonograms(blocks_descriptions, need_backtracking, author_id, verified) " +
-                    "values(array[" + ses.NGram.ToString() + "], " +
-                    (ses.NonType == NonogramType.NeedBacktracking ? true : false) + ", " + form1.user.Id + ", false)");
-                npg.FinishWork();
+                MessageBox.Show("Помилка! Кожен рядок та кожен стовпчик обов'язково має містити хоча б одну зафарбовану клітинку.");
             }
         }
 

@@ -95,7 +95,7 @@ namespace Qualifying_work
             this.Controls.Add(this.labelDiff);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.dataGridView1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
             this.Name = "Form2";
             this.Text = "Таблиця рекордів";
