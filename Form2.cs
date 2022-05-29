@@ -27,9 +27,12 @@ namespace Qualifying_work
             d = new DataTable[3];
             InitializeComponent();
             npg.StartWork();
-            d[0] = npg.Query("select user_id, score, s_time from records where difficulty=0");
-            d[1] = npg.Query("select user_id, score, s_time from records where difficulty=1");
-            d[2] = npg.Query("select user_id, score, s_time from records where difficulty=2");
+            d[0] = npg.Query("select users.username, records.score, records.s_time from records" +
+                " left join users on records.user_id = users.id where records.nonogram_id=" + nonId + " and records.difficulty=0");
+            d[1] = npg.Query("select users.username, records.score, records.s_time from records" +
+                " left join users on records.user_id = users.id where records.nonogram_id=" + nonId + " and records.difficulty=1");
+            d[2] = npg.Query("select users.username, records.score, records.s_time from records" +
+                " left join users on records.user_id = users.id where records.nonogram_id=" + nonId + " and records.difficulty=2");
             npg.FinishWork();
             comboBox1.SelectedIndex = 0;
             dataGridView1.DataSource = d[comboBox1.SelectedIndex];
@@ -38,10 +41,22 @@ namespace Qualifying_work
 
         private void SetProperSizes()
         {
-            dataGridView1.Height = Math.Min(dataGridView1.Rows.Count * dataGridView1.Rows[0].Height + 40, Screen.PrimaryScreen.Bounds.Height - 70);
-            this.Height = dataGridView1.Height + 90;
-            dataGridView1.Width = Math.Min(dataGridView1.Columns.Count * dataGridView1.Columns[0].Width + 5, Screen.PrimaryScreen.Bounds.Width - 70);
-            this.Width = dataGridView1.Width + 50;
+            if (dataGridView1.Rows.Count > 0)
+            {
+                dataGridView1.Visible = true;
+                labelNoRecords.Text = "";
+                dataGridView1.Height = Math.Min(dataGridView1.Rows.Count * dataGridView1.Rows[0].Height + 40, Screen.PrimaryScreen.Bounds.Height - 70);
+                this.Height = dataGridView1.Height + 90;
+                dataGridView1.Width = Math.Min(dataGridView1.Columns.Count * dataGridView1.Columns[0].Width + 5, Screen.PrimaryScreen.Bounds.Width - 70);
+                this.Width = dataGridView1.Width + 50;
+            }
+            else
+            {
+                dataGridView1.Visible = false;
+                labelNoRecords.Text = "Поки що немає рекордів.";
+                this.Height = 100;
+                this.Width = 400;
+            }
             dataGridView1.ClearSelection();
         }
 

@@ -32,6 +32,7 @@ namespace Qualifying_work
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.labelDiff = new System.Windows.Forms.Label();
+            this.labelNoRecords = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -77,11 +78,20 @@ namespace Qualifying_work
             this.labelDiff.TabIndex = 2;
             this.labelDiff.Text = "Складність:";
             // 
+            // labelNoRecords
+            // 
+            this.labelNoRecords.AutoSize = true;
+            this.labelNoRecords.Location = new System.Drawing.Point(211, 9);
+            this.labelNoRecords.Name = "labelNoRecords";
+            this.labelNoRecords.Size = new System.Drawing.Size(0, 13);
+            this.labelNoRecords.TabIndex = 3;
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(686, 390);
+            this.Controls.Add(this.labelNoRecords);
             this.Controls.Add(this.labelDiff);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.dataGridView1);
@@ -100,5 +110,6 @@ namespace Qualifying_work
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label labelDiff;
+        private System.Windows.Forms.Label labelNoRecords;
     }
 }
