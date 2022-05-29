@@ -97,7 +97,7 @@ namespace Qualifying_work
 
         private void ResizeForm()
         {
-            this.Width = Math.Max(dgvMain.Left + dgvMain.Width + 25, 175 + accountToolStripMenuItem.Width +
+            this.Width = Math.Max(dgvMain.Left + dgvMain.Width + 25, 112 + accountToolStripMenuItem.Width +
                 (createToolStripMenuItem.Visible ? createToolStripMenuItem.Width : 0) +
                 (recordsToolStripMenuItem.Visible ? recordsToolStripMenuItem.Width : 0) +
                 (adminToolStripMenuItem.Visible ? adminToolStripMenuItem.Width : 0));
@@ -200,15 +200,40 @@ namespace Qualifying_work
                     timer1.Stop();
                     MessageBox.Show("Кросворд розв'язано правильно! " + "Ваш рахунок - " + ses.Score.ToString()
                         + ". Ваш час - " + toolStripStatusLabelTime2.Text);
-                    /*npg.StartWork();
-                    string readTime = npg.Query("select r_time from records where n_name = \'" + cNum + "\'").Rows[0][0].ToString();
-                    int[] currRec = Array.ConvertAll(readTime.Split(':'), Convert.ToInt32);
-                    if (solTime < currRec[0] * 3600 + currRec[1] * 60 + currRec[2])
+                    if (user != null)
                     {
-                        //npg.Query("update records set r_time = \'" + time + "\', username = \'" + labelUser.Text + "\' where n_name = \'" + cNum + "\'");
-                        MessageBox.Show("Вітаємо, Ви встановили новий рекорд! Колишній рекорд: " + readTime);
+                        npg.StartWork();
+                        DataTable oldRes = npg.Query("select score, s_time from records where user_id=" + user.Id + " and nonogram_id=" + ses.NGram.Id + 
+                            " and difficulty=" + comboBoxDiff.SelectedIndex);
+                        if (oldRes.Rows.Count > 0)
+                        {
+                            bool update = false;
+                            if (ses.Score > Convert.ToInt32(oldRes.Rows[0][0]))
+                            {
+                                update = true;
+                            }
+                            else if (ses.Score == Convert.ToInt32(oldRes.Rows[0][0]))
+                            {
+                                int[] currTime = Array.ConvertAll(oldRes.Rows[0][1].ToString().Split(':'), Convert.ToInt32);
+                                if (ses.SolTime < currTime[0] * 3600 + currTime[1] * 60 + currTime[2])
+                                {
+                                    update = true;
+                                }
+                            }
+                            if (update)
+                            {
+                                npg.Query("update records set score=" + ses.Score + ", s_time=\'" + toolStripStatusLabelTime2.Text +
+                                       "\' where user_id=" + user.Id + " and nonogram_id=" + ses.NGram.Id +
+                                       " and difficulty=" + comboBoxDiff.SelectedIndex);
+                            }
+                        }
+                        else
+                        {
+                            npg.Query("insert into records(score, s_time, user_id, nonogram_id, difficulty) values(" + ses.Score + ", \'" +
+                                toolStripStatusLabelTime2.Text + "\', " + user.Id + ", " + ses.NGram.Id + ", " + comboBoxDiff.SelectedIndex + ")");
+                        }
+                        npg.FinishWork();
                     }
-                    npg.FinishWork();*/
                 }
                 groupBox1.Enabled = true;
                 groupBox2.Enabled = false;
@@ -229,9 +254,8 @@ namespace Qualifying_work
         {
             ses.SolTime++;
             string time = (ses.SolTime / 3600).ToString().PadLeft(2, '0') + ":";
-            ses.SolTime %= 3600;
-            time += (ses.SolTime / 60).ToString().PadLeft(2, '0') + ":" + (ses.SolTime % 60).ToString().PadLeft(2, '0');
-            //timerLabel.Text = time;
+            int noHours = ses.SolTime % 3600;
+            time += (noHours / 60).ToString().PadLeft(2, '0') + ":" + (noHours % 60).ToString().PadLeft(2, '0');
             toolStripStatusLabelTime2.Text = time;
         }
 
@@ -301,6 +325,7 @@ namespace Qualifying_work
             dgvRowDesc.ForeColor = Color.Black;
             groupBox1.Enabled = false;
             groupBox2.Enabled = true;
+            ses.NGram.PictRestart();
             if (comboBoxDiff.SelectedIndex == 2)
             {
                 ses = new NTSSWithChecks(ses.NGram);
@@ -317,7 +342,7 @@ namespace Qualifying_work
                 buttonHint.Visible = false;
             }
             ResizeForm();
-            ses.NGram.PictRestart();
+            
             if (comboBoxPMode.SelectedIndex == 1)
             {
                 ses.SolTime = 0;
@@ -355,6 +380,7 @@ namespace Qualifying_work
             DownloaderForm df = new DownloaderForm(this);
             if (df.ShowDialog() == DialogResult.OK)
             {
+                Stop();
                 if (ses.NGram.Type == NonogramType.NeedBacktracking && comboBoxDiff.Items.Count > 2)
                 {
                     comboBoxDiff.Items.RemoveAt(2);
@@ -514,6 +540,11 @@ namespace Qualifying_work
         }
 
         private void buttonStop_Click(object sender, EventArgs e)
+        {
+            Stop();
+        }
+
+        private void Stop()
         {
             ClearGameField();
             groupBox1.Enabled = true;

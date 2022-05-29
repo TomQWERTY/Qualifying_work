@@ -25,6 +25,7 @@ namespace Qualifying_work
 
         protected void SolveEntire()
         {
+            nonogram.Type = NonogramType.Unknown;
             AutoSolve.Solve(nonogram);
         }
     }

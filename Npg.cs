@@ -16,15 +16,21 @@ namespace Qualifying_work
         NpgsqlDataReader dtrdr;
         DataTable dt;
 
-        public void StartWork()
+        public Npg()
         {
+            comm = new NpgsqlCommand();
+            dt = new DataTable();
             conn = new NpgsqlConnection("Server=localhost;Port=5432;Database=qualifyin;User ID=postgres;Password=123456789;");
             conn.Open();
-            comm = new NpgsqlCommand();
+            conn.Close();
             comm.Connection = conn;
             comm.CommandType = CommandType.Text;
-            dt = new DataTable();
-            Query("SET datestyle TO 'SQL,mdy';");
+        }
+
+        public void StartWork()
+        {
+            conn.Open();
+            //Query("SET datestyle TO 'SQL,mdy';");
         }
 
         public DataTable Query(string queryText)
@@ -47,6 +53,10 @@ namespace Qualifying_work
                     MessageBox.Show(pe.Message);
                 }
             }
+            finally
+            {
+                comm.Dispose();
+            }
             if (!wasError)
             {
                 dt = new DataTable();
@@ -58,7 +68,6 @@ namespace Qualifying_work
 
         public void FinishWork()
         {
-            comm.Dispose();
             conn.Close();
         }
     }
