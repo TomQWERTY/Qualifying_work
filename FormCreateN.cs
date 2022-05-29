@@ -99,7 +99,7 @@ namespace Qualifying_work
             dgv.Height = newRC * cellSize + 4;
 
             this.Width = dgv.Left + dgv.Width + 40;
-            this.Height = Math.Max(dgv.Top + dgv.Height + 50, 222);
+            this.Height = Math.Max(dgv.Top + dgv.Height + 50, 245);
             dgv.ClearSelection();
         }
 
@@ -217,6 +217,11 @@ namespace Qualifying_work
         private void dgv_MouseEnter(object sender, EventArgs e)
         {
             dgv.ClearSelection();
+        }
+
+        private void buttonClear_Click(object sender, EventArgs e)
+        {
+            ClearDgvs();
         }
     }
 }

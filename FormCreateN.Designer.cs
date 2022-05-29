@@ -36,6 +36,7 @@
             this.insertNButton = new System.Windows.Forms.Button();
             this.labelRows = new System.Windows.Forms.Label();
             this.labelCols = new System.Windows.Forms.Label();
+            this.buttonClear = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             this.SuspendLayout();
             // 
@@ -97,7 +98,7 @@
             // 
             // insertNButton
             // 
-            this.insertNButton.Location = new System.Drawing.Point(12, 141);
+            this.insertNButton.Location = new System.Drawing.Point(12, 170);
             this.insertNButton.Name = "insertNButton";
             this.insertNButton.Size = new System.Drawing.Size(75, 23);
             this.insertNButton.TabIndex = 8;
@@ -123,11 +124,22 @@
             this.labelCols.TabIndex = 10;
             this.labelCols.Text = "Стовпці";
             // 
+            // buttonClear
+            // 
+            this.buttonClear.Location = new System.Drawing.Point(12, 141);
+            this.buttonClear.Name = "buttonClear";
+            this.buttonClear.Size = new System.Drawing.Size(75, 23);
+            this.buttonClear.TabIndex = 11;
+            this.buttonClear.Text = "Очистити";
+            this.buttonClear.UseVisualStyleBackColor = true;
+            this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
+            // 
             // FormCreateN
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.buttonClear);
             this.Controls.Add(this.labelCols);
             this.Controls.Add(this.labelRows);
             this.Controls.Add(this.insertNButton);
@@ -153,5 +165,6 @@
         private System.Windows.Forms.Button insertNButton;
         private System.Windows.Forms.Label labelRows;
         private System.Windows.Forms.Label labelCols;
+        private System.Windows.Forms.Button buttonClear;
     }
 }

@@ -58,11 +58,12 @@ namespace Qualifying_work
                 }
                 f1.npg.StartWork();
                 res = f1.npg.Query("select blocks_descriptions, need_backtracking, verified from nonograms where " +
-                    "blocks_descriptions[1]*blocks_descriptions[2]>" + sizeStr[0] + " and blocks_descriptions[1]*blocks_descriptions[2]<" + sizeStr[1]);
+                    "blocks_descriptions[1]*blocks_descriptions[2]>" + sizeStr[0] + " and blocks_descriptions[1]*blocks_descriptions[2]<" + sizeStr[1] + 
+                    (checkBoxInclBacktr.Checked ? "" : " and need_backtracking=false"));
                 f1.npg.FinishWork();
                 if (res.Rows.Count < 1)
                 {
-                    MessageBox.Show("Помилка! Наразі на жаль немає кросвордів з обраними розмірами.");
+                    MessageBox.Show("Помилка! Наразі на жаль немає кросвордів з обраними параметрами.");
                     allOk = false;
                 }
                 else

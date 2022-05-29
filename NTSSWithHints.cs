@@ -10,6 +10,12 @@ namespace Qualifying_work
     {
         SortedSet<int> failedCells;
 
+        public NTSSWithHints(Nonogram n_, bool isFromLocal) : base(n_, isFromLocal)
+        {
+            SolveEntire();
+            failedCells = new SortedSet<int>();
+        }
+
         public NTSSWithHints(Nonogram n_) : base(n_)
         {
             SolveEntire();
@@ -168,6 +174,14 @@ namespace Qualifying_work
         public override bool CheckByLines(int[,] pictToCheck)
         {
             return base.CheckByLines(pictToCheck) && failedCells.Count == 0;
+        }
+
+        public SortedSet<int> FailedCells
+        {
+            get
+            {
+                return failedCells;
+            }
         }
     }
 }

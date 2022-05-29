@@ -18,6 +18,17 @@ namespace Qualifying_work
         protected int id;
         protected int blackCount;
 
+        public Nonogram(string blocksDescsInStr)
+        {
+            string[] str1 = blocksDescsInStr.Split(' ');
+            for (int i = 0; i < str1.Length; i++)
+            {
+                str1[i] = str1[i].TrimEnd(',');
+            }
+            int[] blocksDescs = Array.ConvertAll(str1, Convert.ToInt32);
+            ConstructorCommon(blocksDescs);
+        }
+
         public Nonogram(int[] blocksDescs)
         {
             ConstructorCommon(blocksDescs);

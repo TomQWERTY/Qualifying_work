@@ -10,8 +10,17 @@ namespace Qualifying_work
     {
         public int SolTime { get; set; }
         public int Score { get; set; }
+        public bool IsFromLocal { get; }
 
-        public NonogramToSolveSession(Nonogram n_) : base(n_) { }
+        public NonogramToSolveSession(Nonogram n_) : base(n_)
+        {
+            IsFromLocal = false;
+        }
+
+        public NonogramToSolveSession(Nonogram n_, bool isFromLocal) : this(n_)
+        {
+            IsFromLocal = isFromLocal;
+        }
 
         public virtual bool CheckByLines(int[,] pictToCheck)
         {

@@ -8,6 +8,11 @@ namespace Qualifying_work
 {
     class NTSSWithChecks : NonogramToSolveSession
     {
+        public NTSSWithChecks(Nonogram n_, bool isFromLocal) : base(n_, isFromLocal)
+        {
+            SolveEntire();
+        }
+
         public NTSSWithChecks(Nonogram n_) : base(n_)
         {
             SolveEntire();

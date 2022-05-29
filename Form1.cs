@@ -175,13 +175,19 @@ namespace Qualifying_work
                 if (opStatus == 2)
                 {
                     MessageBox.Show("Помилка!");
-                    ses.Score = Math.Max(0, ses.Score - 10);
-                    toolStripStatusLabelScore2.Text = ses.Score.ToString();
+                    if (comboBoxPMode.SelectedIndex == 1)
+                    {
+                        ses.Score = Math.Max(0, ses.Score - 10);
+                        toolStripStatusLabelScore2.Text = ses.Score.ToString();
+                    }
                 }
                 if (opStatus == 0)
                 {
-                    ses.Score += 10;
-                    toolStripStatusLabelScore2.Text = ses.Score.ToString();
+                    if (comboBoxPMode.SelectedIndex == 1)
+                    {
+                        ses.Score += 10;
+                        toolStripStatusLabelScore2.Text = ses.Score.ToString();
+                    }
                 }
             }
         }
@@ -235,7 +241,10 @@ namespace Qualifying_work
                         npg.FinishWork();
                     }
                 }
-                groupBox1.Enabled = true;
+                if (!ses.IsFromLocal)
+                {
+                    groupBox1.Enabled = true;
+                }
                 groupBox2.Enabled = false;
                 dgvMain.Enabled = false;
                 dgvColDesc.ForeColor = Color.Silver;
@@ -244,8 +253,11 @@ namespace Qualifying_work
             }
             else
             {
-                ses.Score = Math.Max(0, ses.Score - 10);
-                toolStripStatusLabelScore2.Text = ses.Score.ToString();
+                if (comboBoxPMode.SelectedIndex == 1)
+                {
+                    ses.Score = Math.Max(0, ses.Score - 10);
+                    toolStripStatusLabelScore2.Text = ses.Score.ToString();
+                }
                 MessageBox.Show("Кросворд розв'язано неправильно!");
             }
         }
@@ -399,6 +411,7 @@ namespace Qualifying_work
                 groupBox1.Enabled = true;
                 groupBox2.Enabled = false;
                 recordsToolStripMenuItem.Visible = true;
+                ResizeForm();
             }
         }
 
@@ -410,20 +423,44 @@ namespace Qualifying_work
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            if (buttonReady.Enabled)
             {
-                string address = saveFileDialog1.FileName;
-                StreamWriter strwr = new StreamWriter(address);
-                strwr.WriteLine(cNum);
-                for (int i = 0; i < dgvMain.RowCount; i++)
+                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
                 {
-                    for (int j = 0; j < dgvMain.ColumnCount; j++)
+                    string address = saveFileDialog1.FileName;
+                    StreamWriter strwr = new StreamWriter(address);
+                    strwr.WriteLine(comboBoxDiff.SelectedIndex);
+                    strwr.WriteLine(ses.NGram.Type == NonogramType.OnlyILL ? 0 : 1);
+                    strwr.WriteLine(ses.NGram.ToString());
+                    for (int i = 0; i < dgvMain.RowCount; i++)
                     {
-                        strwr.Write(dgvMain[j, i].Style.BackColor == Color.Black ? '1' : '0');
+                        for (int j = 0; j < dgvMain.ColumnCount; j++)
+                        {
+                            strwr.Write(dgvMain[j, i].Style.BackColor == Color.Black ? '1' : '0');
+                        }
+                        strwr.WriteLine();
                     }
-                    strwr.WriteLine();
+                    if (ses.GetType() == typeof(NTSSWithChecks) || ses.GetType() == typeof(NTSSWithHints))
+                    {
+                        for (int i = 0; i < ses.NGram.RowCount; i++)
+                        {
+                            for (int j = 0; j < ses.NGram.ColumnCount; j++)
+                            {
+                                strwr.Write(ses.NGram.Picture[i, j]);
+                            }
+                            strwr.WriteLine();
+                        }
+                    }
+                    if (ses.GetType() == typeof(NTSSWithHints))
+                    {
+                        //(ses as NTSSWithHints).FailedCells.
+                    }
+                    strwr.Close();
                 }
-                strwr.Close();
+            }
+            else
+            {
+                MessageBox.Show("Розв'язування не запущене!");
             }
         }
 
@@ -433,7 +470,26 @@ namespace Qualifying_work
             {
                 string address = openFileDialog1.FileName;
                 StreamReader strrd = new StreamReader(address);
-                cNum = Convert.ToInt32(strrd.ReadLine()) - 1;
+                int diff = Convert.ToInt32(strrd.ReadLine());
+                bool onlyILL = strrd.ReadLine() == "0";
+                switch (diff)
+                {
+                    case (0):
+                        {
+                            ses = new NonogramToSolveSession(new Nonogram(strrd.ReadLine()), true);
+                            break;
+                        }
+                    case (1):
+                        {
+                            ses = new NTSSWithHints(new Nonogram(strrd.ReadLine()), true);
+                            break;
+                        }
+                    case (2):
+                        {
+                            ses = new NTSSWithChecks(new Nonogram(strrd.ReadLine()), true);
+                            break;
+                        }
+                }
                 MatchDgvs();
                 for (int i = 0; i < dgvMain.RowCount; i++)
                 {
@@ -443,9 +499,29 @@ namespace Qualifying_work
                         dgvMain[j, i].Style.BackColor = line[j] == '1' ? Color.Black : Color.Empty;
                     }
                 }
+                if (ses.GetType() == typeof(NTSSWithChecks) || ses.GetType() == typeof(NTSSWithHints))
+                {
+                    for (int i = 0; i < ses.NGram.RowCount; i++)
+                    {
+                        string line = strrd.ReadLine();
+                        for (int j = 0; j < ses.NGram.ColumnCount; j++)
+                        {
+                            ses.NGram.Picture[i, j] = Convert.ToInt32(line[j].ToString());
+                        }
+                    }
+                }
                 strrd.Close();
                 timer1.Stop();
-                timerLabel.Text = "";
+                toolStripStatusLabelScore2.Text = "";
+                toolStripStatusLabelTime2.Text = "";
+                dgvMain.Enabled = true;
+                dgvColDesc.ForeColor = Color.Black;
+                dgvRowDesc.ForeColor = Color.Black;
+                groupBox1.Enabled = false;
+                groupBox2.Enabled = true;
+                comboBoxPMode.SelectedIndex = 0;
+                comboBoxDiff.SelectedIndex = diff;
+                ResizeForm();
             }
         }
 
@@ -501,11 +577,7 @@ namespace Qualifying_work
             adminToolStripMenuItem.Visible = false;
             ClearDgvs();
             Stop();
-            ResizeDgvs(2, 2, 5, 5);
-            groupBox2.Height = 83;
-            buttonHint.Visible = false;
-            groupBox1.Enabled = false;
-            ses = null;
+            SetToInit();
             ResizeForm();
         }
 
@@ -563,6 +635,20 @@ namespace Qualifying_work
             timer1.Stop();
             toolStripStatusLabelTime2.Text = "";
             toolStripStatusLabelScore2.Text = "";
+            if (ses != null && ses.IsFromLocal)
+            {
+                SetToInit();
+            }
+        }
+
+        private void SetToInit()
+        {
+            ResizeDgvs(2, 2, 5, 5);
+            ClearDgvs();
+            groupBox2.Height = 83;
+            buttonHint.Visible = false;
+            groupBox1.Enabled = false;
+            ses = null;
         }
     }
 }
