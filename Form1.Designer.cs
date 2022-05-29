@@ -58,6 +58,7 @@ namespace Qualifying_work
             this.signUpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changePasswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.adminToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.verifyNonogramsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabelScore = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabelScore2 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -67,7 +68,6 @@ namespace Qualifying_work
             this.labelDiff = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.verifyNonogramsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgvColDesc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRowDesc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).BeginInit();
@@ -300,6 +300,7 @@ namespace Qualifying_work
             this.recordsToolStripMenuItem.Name = "recordsToolStripMenuItem";
             this.recordsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.recordsToolStripMenuItem.Text = "Records";
+            this.recordsToolStripMenuItem.Visible = false;
             this.recordsToolStripMenuItem.Click += new System.EventHandler(this.recordsToolStripMenuItem_Click);
             // 
             // accountToolStripMenuItem
@@ -351,6 +352,13 @@ namespace Qualifying_work
             this.adminToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
             this.adminToolStripMenuItem.Text = "Admin";
             this.adminToolStripMenuItem.Visible = false;
+            // 
+            // verifyNonogramsToolStripMenuItem
+            // 
+            this.verifyNonogramsToolStripMenuItem.Name = "verifyNonogramsToolStripMenuItem";
+            this.verifyNonogramsToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.verifyNonogramsToolStripMenuItem.Text = "Verify nonograms";
+            this.verifyNonogramsToolStripMenuItem.Click += new System.EventHandler(this.verifyNonogramsToolStripMenuItem_Click);
             // 
             // statusStrip1
             // 
@@ -429,13 +437,6 @@ namespace Qualifying_work
             this.groupBox2.Size = new System.Drawing.Size(88, 54);
             this.groupBox2.TabIndex = 21;
             this.groupBox2.TabStop = false;
-            // 
-            // verifyNonogramsToolStripMenuItem
-            // 
-            this.verifyNonogramsToolStripMenuItem.Name = "verifyNonogramsToolStripMenuItem";
-            this.verifyNonogramsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.verifyNonogramsToolStripMenuItem.Text = "Verify nonograms";
-            this.verifyNonogramsToolStripMenuItem.Click += new System.EventHandler(this.verifyNonogramsToolStripMenuItem_Click);
             // 
             // Form1
             // 

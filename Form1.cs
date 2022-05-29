@@ -102,6 +102,7 @@ namespace Qualifying_work
         {
             this.Width = Math.Max(dgvMain.Left + dgvMain.Width + 25, 175 + accountToolStripMenuItem.Width +
                 (createToolStripMenuItem.Visible ? createToolStripMenuItem.Width : 0) +
+                (recordsToolStripMenuItem.Visible ? recordsToolStripMenuItem.Width : 0) +
                 (adminToolStripMenuItem.Visible ? adminToolStripMenuItem.Width : 0));
             this.Height = Math.Max(dgvMain.Top + dgvMain.Height + 70, groupBox2.Top + groupBox2.Height + 70);
         }
@@ -310,30 +311,33 @@ namespace Qualifying_work
         private void solveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DownloaderForm df = new DownloaderForm(this);
-            df.ShowDialog();
-            if (ses.NGram.Type == NonogramType.NeedBacktracking)
+            if (df.ShowDialog() == DialogResult.OK)
             {
-                comboBoxDiff.Items.RemoveAt(2);
-            }
-            else
-            {
-                if (comboBoxDiff.Items.Count < 3)
+                if (ses.NGram.Type == NonogramType.NeedBacktracking)
                 {
-                    comboBoxDiff.Items.Add("With Checks");
+                    comboBoxDiff.Items.RemoveAt(2);
                 }
-            }
-            MatchDgvs();
-            dgvMain.Enabled = false;
-            dgvColDesc.ForeColor = Color.Silver;
-            dgvRowDesc.ForeColor = Color.Silver;
-            groupBox1.Enabled = true;
-            groupBox2.Enabled = false;
-            if (comboBoxPMode.SelectedIndex == 1)
-            {
-                solTime = 0;
-                timer1.Interval = 1000;
-                timer1.Start();
-                timerLabel.Text = "00:00:00";
+                else
+                {
+                    if (comboBoxDiff.Items.Count < 3)
+                    {
+                        comboBoxDiff.Items.Add("With Checks");
+                    }
+                }
+                MatchDgvs();
+                dgvMain.Enabled = false;
+                dgvColDesc.ForeColor = Color.Silver;
+                dgvRowDesc.ForeColor = Color.Silver;
+                groupBox1.Enabled = true;
+                groupBox2.Enabled = false;
+                recordsToolStripMenuItem.Visible = true;
+                if (comboBoxPMode.SelectedIndex == 1)
+                {
+                    solTime = 0;
+                    timer1.Interval = 1000;
+                    timer1.Start();
+                    timerLabel.Text = "00:00:00";
+                }
             }
         }
 
@@ -386,8 +390,8 @@ namespace Qualifying_work
 
         private void recordsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //FormRecords formR = new FormRecords(npg);
-            //formR.ShowDialog();
+            Form2 form2 = new Form2(npg, ses.NGram.Id);
+            form2.ShowDialog();
         }
 
         private void signUpToolStripMenuItem_Click(object sender, EventArgs e)

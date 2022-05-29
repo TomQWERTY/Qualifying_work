@@ -15,9 +15,16 @@ namespace Qualifying_work
         protected int rowC, colC;
         protected Line[][] lines;
         protected NonogramType nType;
+        protected int id;
 
         public Nonogram(int[] blocksDescs)
         {
+            ConstructorCommon(blocksDescs);
+        }
+
+        public Nonogram(int[] blocksDescs, int id_)
+        {
+            id = id_;
             ConstructorCommon(blocksDescs);
         }
 
@@ -120,6 +127,14 @@ namespace Qualifying_work
             for (int i = 0; i < rowC; i++)
                 for (int j = 0; j < colC; j++)
                     pict[i, j] = 2;
+        }
+
+        public int Id
+        {
+            get
+            {
+                return id;
+            }
         }
 
         public int[,] Picture

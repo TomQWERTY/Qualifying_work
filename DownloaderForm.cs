@@ -27,9 +27,9 @@ namespace Qualifying_work
             var temp_ = res.Rows[0].ItemArray[0];
             int[] blocksDescs = (int[])temp_;
             f1.npg.FinishWork();
-            f1.ses = new NonogramToSolveSession(new Nonogram(blocksDescs));
+            f1.ses = new NonogramToSolveSession(new Nonogram(blocksDescs, Convert.ToInt32(textBox1.Text)));
             f1.ses.NGram.Type = Convert.ToBoolean(res.Rows[0][1]) ? NonogramType.NeedBacktracking : NonogramType.OnlyILL;
-            this.Close();
+            this.DialogResult = DialogResult.OK;
         }
     }
 }
