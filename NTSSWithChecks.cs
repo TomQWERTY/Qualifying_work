@@ -64,5 +64,15 @@ namespace Qualifying_work
             base.ChangeCell(i, j, newVal);
             return (row[j] == 1 || col[i] == 1) ? 0 : 1;
         }
+
+        protected override void AddStep(int cellNum)
+        {
+            return;
+        }
+
+        public override void UndoStep(int oldVal)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

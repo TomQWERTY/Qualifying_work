@@ -68,6 +68,7 @@ namespace Qualifying_work
             this.labelDiff = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.buttonUndo = new System.Windows.Forms.Button();
             this.buttonStop = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvColDesc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRowDesc)).BeginInit();
@@ -211,7 +212,7 @@ namespace Qualifying_work
             // 
             // buttonHint
             // 
-            this.buttonHint.Location = new System.Drawing.Point(6, 77);
+            this.buttonHint.Location = new System.Drawing.Point(6, 106);
             this.buttonHint.Name = "buttonHint";
             this.buttonHint.Size = new System.Drawing.Size(75, 23);
             this.buttonHint.TabIndex = 12;
@@ -368,7 +369,7 @@ namespace Qualifying_work
             this.toolStripStatusLabelScore2,
             this.toolStripStatusLabelTime,
             this.toolStripStatusLabelTime2});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 268);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 292);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(325, 22);
             this.statusStrip1.TabIndex = 17;
@@ -430,15 +431,27 @@ namespace Qualifying_work
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.buttonUndo);
+            this.groupBox2.Controls.Add(this.buttonHint);
             this.groupBox2.Controls.Add(this.buttonStop);
             this.groupBox2.Controls.Add(this.buttonReady);
-            this.groupBox2.Controls.Add(this.buttonHint);
             this.groupBox2.Enabled = false;
             this.groupBox2.Location = new System.Drawing.Point(10, 175);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(88, 83);
+            this.groupBox2.Size = new System.Drawing.Size(88, 110);
             this.groupBox2.TabIndex = 21;
             this.groupBox2.TabStop = false;
+            // 
+            // buttonUndo
+            // 
+            this.buttonUndo.Enabled = false;
+            this.buttonUndo.Location = new System.Drawing.Point(6, 77);
+            this.buttonUndo.Name = "buttonUndo";
+            this.buttonUndo.Size = new System.Drawing.Size(75, 23);
+            this.buttonUndo.TabIndex = 22;
+            this.buttonUndo.Text = "Назад";
+            this.buttonUndo.UseVisualStyleBackColor = true;
+            this.buttonUndo.Click += new System.EventHandler(this.buttonUndo_Click);
             // 
             // buttonStop
             // 
@@ -455,7 +468,7 @@ namespace Qualifying_work
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(325, 290);
+            this.ClientSize = new System.Drawing.Size(325, 314);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.statusStrip1);
@@ -521,6 +534,7 @@ namespace Qualifying_work
         private System.Windows.Forms.ToolStripMenuItem changePasswordToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem verifyNonogramsToolStripMenuItem;
         private System.Windows.Forms.Button buttonStop;
+        private System.Windows.Forms.Button buttonUndo;
     }
 }
 

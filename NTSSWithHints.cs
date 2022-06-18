@@ -9,17 +9,20 @@ namespace Qualifying_work
     class NTSSWithHints : NonogramToSolveSession
     {
         SortedSet<int> failedCells;
+        SortedSet<int>[,] zerosCanBeFound;
 
         public NTSSWithHints(Nonogram n_, bool isFromLocal) : base(n_, isFromLocal)
         {
             SolveEntire();
             failedCells = new SortedSet<int>();
+            zerosCanBeFound = new SortedSet<int>[NGram.RowCount, NGram.ColumnCount];
         }
 
         public NTSSWithHints(Nonogram n_) : base(n_)
         {
             SolveEntire();
             failedCells = new SortedSet<int>();
+            zerosCanBeFound = new SortedSet<int>[NGram.RowCount, NGram.ColumnCount];
         }
 
         public int[] OpenCell()
@@ -144,11 +147,27 @@ namespace Qualifying_work
                         AutoSolve.AnalyzeLine(col, nonogram.Lines, 1, j, false);
                         for (int i1 = 0; i1 < nonogram.RowCount; i1++)
                         {
-                            if (col[i1] == 0) nonogram.Picture[i1, j] = 0;
+                            if (col[i1] == 0)
+                            {
+                                nonogram.Picture[i1, j] = 0;
+                                if (zerosCanBeFound[i1, j] == null)
+                                {
+                                    zerosCanBeFound[i1, j] = new SortedSet<int>();
+                                }
+                                zerosCanBeFound[i1, j].Add(i * NGram.ColumnCount + j);
+                            }
                         }
                         for (int j1 = 0; j1 < nonogram.ColumnCount; j1++)
                         {
-                            if (row[j1] == 0) nonogram.Picture[i, j1] = 0;
+                            if (row[j1] == 0)
+                            {
+                                nonogram.Picture[i, j1] = 0;
+                                if (zerosCanBeFound[i, j1] == null)
+                                {
+                                    zerosCanBeFound[i, j1] = new SortedSet<int>();
+                                }
+                                zerosCanBeFound[i, j1].Add(i * NGram.ColumnCount + j);
+                            }
                         }
                     }
                 }
@@ -162,6 +181,29 @@ namespace Qualifying_work
                 if (CheckCell(i, j))
                 {
                     base.ChangeCell(i, j, newVal);
+                    for (int i1 = 0; i1 < nonogram.RowCount; i1++)
+                    {
+                        if (nonogram.Picture[i1, j] == 0)
+                        {
+                            zerosCanBeFound[i1, j].Remove(i * nonogram.ColumnCount + j);
+                            if (zerosCanBeFound[i1, j].Count == 0)
+                            {
+                                nonogram.Picture[i1, j] = 2;
+                            }
+                        }
+                    }
+                    for (int j1 = 0; j1 < nonogram.ColumnCount; j1++)
+                    {
+                        if (nonogram.Picture[i, j1] == 0)
+                        {
+                            zerosCanBeFound[i, j1].Remove(i * nonogram.ColumnCount + j);
+                            if (zerosCanBeFound[i, j1].Count == 0)
+                            {
+                                nonogram.Picture[i, j1] = 2;
+                            }
+                        }
+                    }
+
                 }
                 else
                 {

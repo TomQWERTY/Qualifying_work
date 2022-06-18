@@ -16,7 +16,6 @@ namespace Qualifying_work
     {
         const int cellSize = 25;
         public Npg npg;
-        int cNum;
         public NonogramToSolveSession ses;
         public User user;
 
@@ -29,7 +28,6 @@ namespace Qualifying_work
             
             npg = new Npg();
             ResizeDgvs(2, 2, 5, 5);
-            cNum = 0;
             //labelUser.Text = username_;
             comboBoxPMode.SelectedIndex = 0;
             comboBoxDiff.SelectedIndex = 0;
@@ -190,6 +188,10 @@ namespace Qualifying_work
                     }
                 }
             }
+            else
+            {
+                buttonUndo.Enabled = true;
+            }
         }
 
         private void buttonReady_Click(object sender, EventArgs e)
@@ -301,6 +303,7 @@ namespace Qualifying_work
             int[] cell = (ses as NTSSWithHints).OpenCell();
             if (cell[0] != -1)
             {
+                buttonUndo.Enabled = true;
                 dgvMain[cell[1], cell[0]].Style.BackColor = Color.Black;
                 ses.ChangeCell(cell[0], cell[1], 1);
                 ses.Score = Math.Max(0, ses.Score - 10);
@@ -341,17 +344,23 @@ namespace Qualifying_work
             if (comboBoxDiff.SelectedIndex == 2)
             {
                 ses = new NTSSWithChecks(ses.NGram);
+                groupBox2.Height = 83;
+                buttonHint.Visible = false;
+                buttonUndo.Visible = false;
             }
             else if (comboBoxDiff.SelectedIndex == 0)
             {
                 ses = new NTSSWithHints(ses.NGram);
-                groupBox2.Height = 114;
+                groupBox2.Height = 139;
                 buttonHint.Visible = true;
+                buttonUndo.Visible = true;
             }
             else
             {
-                groupBox2.Height = 83;
+                ses = new NonogramToSolveSession(ses.NGram);
+                groupBox2.Height = 114;
                 buttonHint.Visible = false;
+                buttonUndo.Visible = true;
             }
             ResizeForm();
             
@@ -393,9 +402,12 @@ namespace Qualifying_work
             if (df.ShowDialog() == DialogResult.OK)
             {
                 Stop();
-                if (ses.NGram.Type == NonogramType.NeedBacktracking && comboBoxDiff.Items.Count > 2)
+                if (ses.NGram.Type == NonogramType.NeedBacktracking)
                 {
-                    comboBoxDiff.Items.RemoveAt(2);
+                    if (comboBoxDiff.Items.Count > 2)
+                    {
+                        comboBoxDiff.Items.RemoveAt(2);
+                    }
                 }
                 else
                 {
@@ -645,10 +657,33 @@ namespace Qualifying_work
         {
             ResizeDgvs(2, 2, 5, 5);
             ClearDgvs();
-            groupBox2.Height = 83;
+            groupBox2.Height = 114;
             buttonHint.Visible = false;
             groupBox1.Enabled = false;
+            buttonUndo.Enabled = false;
             ses = null;
+        }
+
+        private void buttonUndo_Click(object sender, EventArgs e)
+        {
+            int temp = ses.LastStep;
+            int i = temp / ses.NGram.ColumnCount;
+            int j = temp % ses.NGram.ColumnCount;
+            int oldVal = 2;
+            if (dgvMain[j, i].Style.BackColor == Color.Black)
+            {
+                dgvMain[j, i].Style.BackColor = Color.White;
+                oldVal = 1;
+            }
+            else
+            {
+                dgvMain[j, i].Style.BackColor = Color.Black;
+            }
+            ses.UndoStep(oldVal);
+            if (ses.SavedStepsCount == 0)
+            {
+                buttonUndo.Enabled = false;
+            }
         }
     }
 }

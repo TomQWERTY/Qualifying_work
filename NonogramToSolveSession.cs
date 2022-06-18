@@ -11,10 +11,12 @@ namespace Qualifying_work
         public int SolTime { get; set; }
         public int Score { get; set; }
         public bool IsFromLocal { get; }
+        private List<int> stepHistory;
 
         public NonogramToSolveSession(Nonogram n_) : base(n_)
         {
             IsFromLocal = false;
+            stepHistory = new List<int>();
         }
 
         public NonogramToSolveSession(Nonogram n_, bool isFromLocal) : this(n_)
@@ -103,6 +105,7 @@ namespace Qualifying_work
         public virtual int ChangeCell(int i, int j, int newVal)
         {
             nonogram.Picture[i, j] = newVal;
+            AddStep(i * NGram.ColumnCount + j);
             return 3;
         }
 
@@ -132,6 +135,40 @@ namespace Qualifying_work
                 ok = false;
             }
             return ok;
+        }
+
+        protected virtual void AddStep(int cellNum)
+        {
+            stepHistory.Add(cellNum);
+            if (stepHistory.Count > 40)
+            {
+                stepHistory.RemoveAt(0);
+            }
+        }
+
+        public virtual void UndoStep(int oldVal)
+        {
+            int cellNum = stepHistory.Last();
+            stepHistory.RemoveAt(SavedStepsCount - 1);
+            ChangeCell(cellNum / NGram.ColumnCount, cellNum % NGram.ColumnCount, oldVal == 1 ? 2 : 1);
+            stepHistory.RemoveAt(SavedStepsCount - 1);
+            int a = 0;
+        }
+
+        public int LastStep
+        {
+            get
+            {
+                return stepHistory.Last();
+            }
+        }
+
+        public int SavedStepsCount
+        {
+            get
+            {
+                return stepHistory.Count;
+            }
         }
     }
 }
