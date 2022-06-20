@@ -18,7 +18,7 @@ namespace Qualifying_work
             bool[][] needRefresh = new bool[2][];
             needRefresh[0] = Enumerable.Repeat(true, nonogram.RowCount).ToArray();
             needRefresh[1] = Enumerable.Repeat(true, nonogram.ColumnCount).ToArray();
-            bool solFound = false;
+            int solFound = 0;
             solutionStorage = null;
             List<int> cellsForMod = new List<int>();
             Try(nonogram, 0, 0, needRefresh, ref solFound, ref collect, cellsForMod);
@@ -43,7 +43,7 @@ namespace Qualifying_work
             return SolveIns(nonogram, true);
         }
 
-        private static void Try(Nonogram nonogram, int i, int j, bool[][] needRefresh, ref bool solFound, ref bool collect, List<int> cellsForMod)
+        private static void Try(Nonogram nonogram, int i, int j, bool[][] needRefresh, ref int solFound, ref bool collect, List<int> cellsForMod)
         {
             if (!IterateLineLook(nonogram, needRefresh)) return;
             while (i < nonogram.RowCount && nonogram.Picture[i, j] != 2)
@@ -61,10 +61,14 @@ namespace Qualifying_work
             }
             if (i >= nonogram.RowCount)//all cells have known states
             {
-                if (solFound) nonogram.Type = NonogramType.FewSolutions;
+                if (solFound > 0)
+                {
+                    nonogram.Type = NonogramType.FewSolutions;
+                    solFound++;
+                }
                 else
                 {
-                    solFound = true;
+                    solFound++;
                     if (nonogram.Type == NonogramType.NeedBacktracking)
                     {
                         solutionStorage = new int[nonogram.RowCount, nonogram.ColumnCount];
@@ -83,7 +87,7 @@ namespace Qualifying_work
                 needRefresh[1][j] = true;
                 if (collect && !cellsForMod.Contains(i * nonogram.ColumnCount + j)) cellsForMod.Add(i * nonogram.ColumnCount + j);
                 Try(nonogram, i, j, needRefresh, ref solFound, ref collect, cellsForMod);
-                if (!collect && nonogram.Type == NonogramType.FewSolutions) return;//because nonograms with few solutions banned
+                if (!collect && nonogram.Type == NonogramType.FewSolutions || solFound > 1000) return;//because nonograms with few solutions banned
                 Array.Copy(copies.Peek(), nonogram.Picture, copies.Peek().Length);
                 copies.Pop();
                 nonogram.Picture[i, j] = 1;//maybe it is 1
