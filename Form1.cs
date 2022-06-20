@@ -99,7 +99,7 @@ namespace Qualifying_work
                 accountToolStripMenuItem.Width +
                 (createToolStripMenuItem.Visible ? createToolStripMenuItem.Width : 0) +
                 (recordsToolStripMenuItem.Visible ? recordsToolStripMenuItem.Width : 0) +
-                (adminToolStripMenuItem.Visible ? adminToolStripMenuItem.Width : 0));
+                (adminToolStripMenuItem.Visible ? adminToolStripMenuItem.Width : 0)) + 25;
             this.Height = Math.Max(dgvMain.Top + dgvMain.Height + 70, groupBox2.Top + groupBox2.Height + 70);
         }
 

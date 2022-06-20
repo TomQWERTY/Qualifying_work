@@ -115,7 +115,7 @@ namespace Qualifying_work
             this.buttonReady.Name = "buttonReady";
             this.buttonReady.Size = new System.Drawing.Size(75, 23);
             this.buttonReady.TabIndex = 2;
-            this.buttonReady.Text = "Done!";
+            this.buttonReady.Text = "Готово!";
             this.buttonReady.UseVisualStyleBackColor = true;
             this.buttonReady.Click += new System.EventHandler(this.buttonReady_Click);
             // 
@@ -203,8 +203,8 @@ namespace Qualifying_work
             this.comboBoxPMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxPMode.FormattingEnabled = true;
             this.comboBoxPMode.Items.AddRange(new object[] {
-            "Casual",
-            "Competitive"});
+            "Тренувальний",
+            "Змагальний"});
             this.comboBoxPMode.Location = new System.Drawing.Point(6, 32);
             this.comboBoxPMode.Name = "comboBoxPMode";
             this.comboBoxPMode.Size = new System.Drawing.Size(75, 21);
@@ -216,7 +216,7 @@ namespace Qualifying_work
             this.buttonHint.Name = "buttonHint";
             this.buttonHint.Size = new System.Drawing.Size(75, 23);
             this.buttonHint.TabIndex = 12;
-            this.buttonHint.Text = "Open cell";
+            this.buttonHint.Text = "Підказка";
             this.buttonHint.UseVisualStyleBackColor = true;
             this.buttonHint.Visible = false;
             this.buttonHint.Click += new System.EventHandler(this.buttonHint_Click);
@@ -227,7 +227,7 @@ namespace Qualifying_work
             this.startButton.Name = "startButton";
             this.startButton.Size = new System.Drawing.Size(75, 23);
             this.startButton.TabIndex = 14;
-            this.startButton.Text = "Start";
+            this.startButton.Text = "Старт";
             this.startButton.UseVisualStyleBackColor = true;
             this.startButton.Click += new System.EventHandler(this.startButton_Click);
             // 
@@ -236,9 +236,9 @@ namespace Qualifying_work
             this.comboBoxDiff.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxDiff.FormattingEnabled = true;
             this.comboBoxDiff.Items.AddRange(new object[] {
-            "With Hints",
-            "Standard",
-            "With Checks"});
+            "З підказками",
+            "Звичайний",
+            "З перевірками"});
             this.comboBoxDiff.Location = new System.Drawing.Point(6, 72);
             this.comboBoxDiff.Name = "comboBoxDiff";
             this.comboBoxDiff.Size = new System.Drawing.Size(75, 21);
@@ -255,7 +255,7 @@ namespace Qualifying_work
             this.adminToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(325, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(352, 24);
             this.menuStrip1.TabIndex = 16;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -265,43 +265,43 @@ namespace Qualifying_work
             this.saveToolStripMenuItem,
             this.loadToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-            this.fileToolStripMenuItem.Text = "File";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.fileToolStripMenuItem.Text = "Файл";
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
-            this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.Text = "Зберегти";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // loadToolStripMenuItem
             // 
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
-            this.loadToolStripMenuItem.Text = "Load";
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadToolStripMenuItem.Text = "Завантажити";
             this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
             // 
             // solveToolStripMenuItem
             // 
             this.solveToolStripMenuItem.Name = "solveToolStripMenuItem";
-            this.solveToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
-            this.solveToolStripMenuItem.Text = "Solve";
+            this.solveToolStripMenuItem.Size = new System.Drawing.Size(76, 20);
+            this.solveToolStripMenuItem.Text = "Розв\'язати";
             this.solveToolStripMenuItem.Click += new System.EventHandler(this.solveToolStripMenuItem_Click);
             // 
             // createToolStripMenuItem
             // 
             this.createToolStripMenuItem.Name = "createToolStripMenuItem";
-            this.createToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
-            this.createToolStripMenuItem.Text = "Create";
+            this.createToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
+            this.createToolStripMenuItem.Text = "Створити";
             this.createToolStripMenuItem.Visible = false;
             this.createToolStripMenuItem.Click += new System.EventHandler(this.createToolStripMenuItem_Click);
             // 
             // recordsToolStripMenuItem
             // 
             this.recordsToolStripMenuItem.Name = "recordsToolStripMenuItem";
-            this.recordsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
-            this.recordsToolStripMenuItem.Text = "Records";
+            this.recordsToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
+            this.recordsToolStripMenuItem.Text = "Рекорди";
             this.recordsToolStripMenuItem.Visible = false;
             this.recordsToolStripMenuItem.Click += new System.EventHandler(this.recordsToolStripMenuItem_Click);
             // 
@@ -313,36 +313,36 @@ namespace Qualifying_work
             this.signUpToolStripMenuItem,
             this.changePasswordToolStripMenuItem});
             this.accountToolStripMenuItem.Name = "accountToolStripMenuItem";
-            this.accountToolStripMenuItem.Size = new System.Drawing.Size(64, 20);
-            this.accountToolStripMenuItem.Text = "Account";
+            this.accountToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
+            this.accountToolStripMenuItem.Text = "Акаунт";
             // 
             // logInToolStripMenuItem
             // 
             this.logInToolStripMenuItem.Name = "logInToolStripMenuItem";
-            this.logInToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
-            this.logInToolStripMenuItem.Text = "Log In";
+            this.logInToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.logInToolStripMenuItem.Text = "Ввійти";
             this.logInToolStripMenuItem.Click += new System.EventHandler(this.logInToolStripMenuItem_Click);
             // 
             // logOutToolStripMenuItem
             // 
             this.logOutToolStripMenuItem.Name = "logOutToolStripMenuItem";
-            this.logOutToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
-            this.logOutToolStripMenuItem.Text = "Log Out";
+            this.logOutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.logOutToolStripMenuItem.Text = "Вийти";
             this.logOutToolStripMenuItem.Visible = false;
             this.logOutToolStripMenuItem.Click += new System.EventHandler(this.logOutToolStripMenuItem_Click);
             // 
             // signUpToolStripMenuItem
             // 
             this.signUpToolStripMenuItem.Name = "signUpToolStripMenuItem";
-            this.signUpToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
-            this.signUpToolStripMenuItem.Text = "Sign Up";
+            this.signUpToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.signUpToolStripMenuItem.Text = "Зареєструватися";
             this.signUpToolStripMenuItem.Click += new System.EventHandler(this.signUpToolStripMenuItem_Click);
             // 
             // changePasswordToolStripMenuItem
             // 
             this.changePasswordToolStripMenuItem.Name = "changePasswordToolStripMenuItem";
-            this.changePasswordToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
-            this.changePasswordToolStripMenuItem.Text = "Change password";
+            this.changePasswordToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.changePasswordToolStripMenuItem.Text = "Змінити пароль";
             this.changePasswordToolStripMenuItem.Visible = false;
             this.changePasswordToolStripMenuItem.Click += new System.EventHandler(this.changePasswordToolStripMenuItem_Click);
             // 
@@ -351,15 +351,15 @@ namespace Qualifying_work
             this.adminToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.verifyNonogramsToolStripMenuItem});
             this.adminToolStripMenuItem.Name = "adminToolStripMenuItem";
-            this.adminToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
-            this.adminToolStripMenuItem.Text = "Admin";
+            this.adminToolStripMenuItem.Size = new System.Drawing.Size(98, 20);
+            this.adminToolStripMenuItem.Text = "Адміністратор";
             this.adminToolStripMenuItem.Visible = false;
             // 
             // verifyNonogramsToolStripMenuItem
             // 
             this.verifyNonogramsToolStripMenuItem.Name = "verifyNonogramsToolStripMenuItem";
-            this.verifyNonogramsToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
-            this.verifyNonogramsToolStripMenuItem.Text = "Verify nonograms";
+            this.verifyNonogramsToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
+            this.verifyNonogramsToolStripMenuItem.Text = "Перевірити кросворд";
             this.verifyNonogramsToolStripMenuItem.Click += new System.EventHandler(this.verifyNonogramsToolStripMenuItem_Click);
             // 
             // statusStrip1
@@ -371,15 +371,15 @@ namespace Qualifying_work
             this.toolStripStatusLabelTime2});
             this.statusStrip1.Location = new System.Drawing.Point(0, 292);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(325, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(352, 22);
             this.statusStrip1.TabIndex = 17;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // toolStripStatusLabelScore
             // 
             this.toolStripStatusLabelScore.Name = "toolStripStatusLabelScore";
-            this.toolStripStatusLabelScore.Size = new System.Drawing.Size(39, 17);
-            this.toolStripStatusLabelScore.Text = "Score:";
+            this.toolStripStatusLabelScore.Size = new System.Drawing.Size(55, 17);
+            this.toolStripStatusLabelScore.Text = "Рахунок:";
             // 
             // toolStripStatusLabelScore2
             // 
@@ -389,8 +389,8 @@ namespace Qualifying_work
             // toolStripStatusLabelTime
             // 
             this.toolStripStatusLabelTime.Name = "toolStripStatusLabelTime";
-            this.toolStripStatusLabelTime.Size = new System.Drawing.Size(36, 17);
-            this.toolStripStatusLabelTime.Text = "Time:";
+            this.toolStripStatusLabelTime.Size = new System.Drawing.Size(30, 17);
+            this.toolStripStatusLabelTime.Text = "Час:";
             // 
             // toolStripStatusLabelTime2
             // 
@@ -402,18 +402,18 @@ namespace Qualifying_work
             this.labelMode.AutoSize = true;
             this.labelMode.Location = new System.Drawing.Point(6, 16);
             this.labelMode.Name = "labelMode";
-            this.labelMode.Size = new System.Drawing.Size(37, 13);
+            this.labelMode.Size = new System.Drawing.Size(45, 13);
             this.labelMode.TabIndex = 18;
-            this.labelMode.Text = "Mode:";
+            this.labelMode.Text = "Режим:";
             // 
             // labelDiff
             // 
             this.labelDiff.AutoSize = true;
             this.labelDiff.Location = new System.Drawing.Point(6, 56);
             this.labelDiff.Name = "labelDiff";
-            this.labelDiff.Size = new System.Drawing.Size(50, 13);
+            this.labelDiff.Size = new System.Drawing.Size(66, 13);
             this.labelDiff.TabIndex = 19;
-            this.labelDiff.Text = "Difficulty:";
+            this.labelDiff.Text = "Складність:";
             // 
             // groupBox1
             // 
@@ -459,7 +459,7 @@ namespace Qualifying_work
             this.buttonStop.Name = "buttonStop";
             this.buttonStop.Size = new System.Drawing.Size(75, 23);
             this.buttonStop.TabIndex = 13;
-            this.buttonStop.Text = "Stop";
+            this.buttonStop.Text = "Стоп";
             this.buttonStop.UseVisualStyleBackColor = true;
             this.buttonStop.Click += new System.EventHandler(this.buttonStop_Click);
             // 
@@ -468,7 +468,7 @@ namespace Qualifying_work
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(325, 314);
+            this.ClientSize = new System.Drawing.Size(352, 314);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.statusStrip1);
