@@ -95,7 +95,8 @@ namespace Qualifying_work
 
         private void ResizeForm()
         {
-            this.Width = Math.Max(dgvMain.Left + dgvMain.Width + 25, 112 + accountToolStripMenuItem.Width +
+            this.Width = Math.Max(dgvMain.Left + dgvMain.Width + 25, fileToolStripMenuItem.Width + solveToolStripMenuItem.Width +
+                accountToolStripMenuItem.Width +
                 (createToolStripMenuItem.Visible ? createToolStripMenuItem.Width : 0) +
                 (recordsToolStripMenuItem.Visible ? recordsToolStripMenuItem.Width : 0) +
                 (adminToolStripMenuItem.Visible ? adminToolStripMenuItem.Width : 0));
@@ -465,7 +466,11 @@ namespace Qualifying_work
                     }
                     if (ses.GetType() == typeof(NTSSWithHints))
                     {
-                        //(ses as NTSSWithHints).FailedCells.
+                        SortedSet<int> failedCells = (ses as NTSSWithHints).FailedCells;
+                        foreach (int cell in failedCells)
+                        {
+                            strwr.Write(cell + " ");
+                        }
                     }
                     strwr.Close();
                 }
@@ -488,12 +493,12 @@ namespace Qualifying_work
                 {
                     case (0):
                         {
-                            ses = new NonogramToSolveSession(new Nonogram(strrd.ReadLine()), true);
+                            ses = new NTSSWithHints(new Nonogram(strrd.ReadLine()), true);
                             break;
                         }
                     case (1):
                         {
-                            ses = new NTSSWithHints(new Nonogram(strrd.ReadLine()), true);
+                            ses = new NonogramToSolveSession(new Nonogram(strrd.ReadLine()), true);
                             break;
                         }
                     case (2):
@@ -520,6 +525,14 @@ namespace Qualifying_work
                         {
                             ses.NGram.Picture[i, j] = Convert.ToInt32(line[j].ToString());
                         }
+                    }
+                }
+                if (ses.GetType() == typeof(NTSSWithHints))
+                {
+                    string[] failedCellsStr = strrd.ReadLine().Trim().Split(' ');
+                    for (int j = 0; j < failedCellsStr.Length; j++)
+                    {
+                        (ses as NTSSWithHints).FailedCells.Add(Convert.ToInt32(failedCellsStr[j]));
                     }
                 }
                 strrd.Close();
