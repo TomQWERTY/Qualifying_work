@@ -698,5 +698,17 @@ namespace Qualifying_work
                 buttonUndo.Enabled = false;
             }
         }
+
+        private void linkLabelModeHelp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            MessageBox.Show("Змагальний режим на відміну від тренувального передбачає відображення рахунку і часу розв'язування, а також можливість " + 
+                "додати запис у таблицю рекордів.");
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            MessageBox.Show("Режим з підказками дозволяє відкривати невідомі клітинки взамін на деяку кількість очків. В режимі з перевірками " +
+                "рахунок збільшується лише якщо зроблений хід міг бути вирахуваним логічно,а за помилку рахунок зменшується.");
+        }
     }
 }
