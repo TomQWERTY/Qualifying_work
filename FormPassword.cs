@@ -115,12 +115,23 @@ namespace Qualifying_work
                     }
                 case (Mode.Create):
                     {
-                        if (npg.Query("insert into users(username, password, is_admin)" +
-                            " values(\'" + textBoxLogin.Text + "\', \'" + hashedPassword + "\', false)") != null)
+                        try
                         {
-                            form1.user = new User(Convert.ToInt32(npg.Query("select id from users where username=\'" +
-                                textBoxLogin.Text + "\'").Rows[0][0]), textBoxLogin.Text, false);
-                            this.DialogResult = DialogResult.OK;
+                            if (npg.Query("insert into users(username, password, is_admin)" +
+                            " values(\'" + textBoxLogin.Text + "\', \'" + hashedPassword + "\', false)") != null)
+                            {
+                                form1.user = new User(Convert.ToInt32(npg.Query("select id from users where username=\'" +
+                                    textBoxLogin.Text + "\'").Rows[0][0]), textBoxLogin.Text, false);
+                                this.DialogResult = DialogResult.OK;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            if (ex.Message == "login_taken")
+                            {
+                                MessageBox.Show("Помилка! Даний логін вже зайнятий.");
+                            }
+                            npg.FinishWork();
                         }
                         break;
                     }

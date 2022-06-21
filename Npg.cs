@@ -45,16 +45,12 @@ namespace Qualifying_work
                 wasError = true;
                 if (pe.SqlState == "23505" && pe.ConstraintName == "unique_username")
                 {
-                    MessageBox.Show("Помилка! Даний логін вже зайнятий.");
+                    throw new Exception("login_taken");
                 }
                 else
                 {
                     MessageBox.Show(pe.Message);
                 }
-            }
-            finally
-            {
-                comm.Dispose();
             }
             if (!wasError)
             {
