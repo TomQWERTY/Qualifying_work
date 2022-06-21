@@ -105,7 +105,14 @@ namespace Qualifying_work
 
         private void resizeButton_Click(object sender, EventArgs e)
         {
-            ResizeDgvs(Convert.ToInt32(colCountTB.Text), Convert.ToInt32(rowCountTB.Text));
+            try
+            {
+                ResizeDgvs(Convert.ToInt32(colCountTB.Text), Convert.ToInt32(rowCountTB.Text));
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show("Розміри кросворду мають бути числами!");
+            }
         }
 
         private void insertNButton_Click(object sender, EventArgs e)

@@ -120,6 +120,7 @@ namespace Qualifying_work
                     dgvColDesc[j, i].Value = "";
                 }
             }
+            dgvMain.ClearSelection();
         }
 
         private void MakeGameFieldInactive()
@@ -425,6 +426,7 @@ namespace Qualifying_work
                 groupBox2.Enabled = false;
                 recordsToolStripMenuItem.Visible = true;
                 ResizeForm();
+                toolStripStatusLabelID2.Text = ses.NGram.Id.ToString();
             }
         }
 
@@ -675,6 +677,8 @@ namespace Qualifying_work
             groupBox1.Enabled = false;
             buttonUndo.Enabled = false;
             ses = null;
+            toolStripStatusLabelID2.Text = "";
+            recordsToolStripMenuItem.Visible = false;
         }
 
         private void buttonUndo_Click(object sender, EventArgs e)

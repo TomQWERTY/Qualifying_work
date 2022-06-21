@@ -25,21 +25,32 @@ namespace Qualifying_work
         {
             int indInRes = 0;
             bool allOk = true;
-            DataTable res;
+            DataTable res = new DataTable();
             if (radioButtonID.Checked)
             {
                 f1.npg.StartWork();
-                res = f1.npg.Query("select blocks_descriptions, need_backtracking, verified from nonograms where id=" + textBox1.Text);
-                f1.npg.FinishWork();
-                if (res.Rows.Count < 1)
+                try
                 {
-                    MessageBox.Show("Помилка! Кросворду з таким Id не існує або він був видалений.");
+                    res = f1.npg.Query("select blocks_descriptions, need_backtracking, verified from nonograms where id=" + Convert.ToInt32(textBox1.Text));
+                    if (res.Rows.Count < 1)
+                    {
+                        MessageBox.Show("Помилка! Кросворду з таким Id не існує або він був видалений.");
+                        allOk = false;
+                    }
+                    else if (!Convert.ToBoolean(res.Rows[0][2]))
+                    {
+                        MessageBox.Show("Помилка! Даний кросворд ще не був перевірений адміністратором.");
+                        allOk = false;
+                    }
+                }
+                catch (FormatException)
+                {
+                    MessageBox.Show("ID кросворду має бути числом!");
                     allOk = false;
                 }
-                else if (!Convert.ToBoolean(res.Rows[0][2]))
+                finally
                 {
-                    MessageBox.Show("Помилка! Даний кросворд ще не був перевірений адміністратором.");
-                    allOk = false;
+                    f1.npg.FinishWork();
                 }
             }
             else
