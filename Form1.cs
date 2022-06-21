@@ -19,16 +19,14 @@ namespace Qualifying_work
         public NonogramToSolveSession ses;
         public User user;
 
-        public Form1(string username_)
+        public Form1()
         {
             InitializeComponent();
             typeof(DataGridView).InvokeMember("DoubleBuffered", BindingFlags.NonPublic |
                 BindingFlags.Instance | BindingFlags.SetProperty, null,
                 dgvMain, new object[] { true });
-            
             npg = new Npg();
             ResizeDgvs(2, 2, 5, 5);
-            //labelUser.Text = username_;
             comboBoxPMode.SelectedIndex = 0;
             comboBoxDiff.SelectedIndex = 0;
         }
@@ -120,7 +118,6 @@ namespace Qualifying_work
                     dgvColDesc[j, i].Value = "";
                 }
             }
-            dgvMain.ClearSelection();
         }
 
         private void MakeGameFieldInactive()
@@ -146,6 +143,7 @@ namespace Qualifying_work
                     dgvMain[j, i].Style.BackColor = Color.Empty;
                 }
             }
+            dgvMain.ClearSelection();
         }
 
         private void dgvMain_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -313,7 +311,7 @@ namespace Qualifying_work
             }
             else
             {
-                MessageBox.Show("All cells are already colored!");
+                MessageBox.Show("Всі клітинки вже зафарбовані!");
             }
         }
 

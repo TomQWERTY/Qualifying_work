@@ -152,7 +152,6 @@ namespace Qualifying_work
             stepHistory.RemoveAt(SavedStepsCount - 1);
             ChangeCell(cellNum / NGram.ColumnCount, cellNum % NGram.ColumnCount, oldVal == 1 ? 2 : 1);
             stepHistory.RemoveAt(SavedStepsCount - 1);
-            int a = 0;
         }
 
         public int LastStep

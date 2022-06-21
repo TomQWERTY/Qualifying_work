@@ -30,7 +30,6 @@ namespace Qualifying_work
         public void StartWork()
         {
             conn.Open();
-            //Query("SET datestyle TO 'SQL,mdy';");
         }
 
         public DataTable Query(string queryText)

@@ -16,7 +16,7 @@ namespace Qualifying_work
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1("billy"));
+            Application.Run(new Form1());
         }
     }
 }
